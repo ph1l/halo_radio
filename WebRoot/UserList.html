@@ -1,0 +1,54 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+	<br>
+	<H1>User List<A HREF=help/UserList.html>?</A></H1>
+	<TABLE >
+	<TR>
+		<TD class=resultsrow>id</td>
+		<TD class=resultsrow>name</td>
+		<TD tal:condition="is_admin" class=resultsrow>edit</td>
+		<TD class=resultsrow>reqs/kills</td>
+		<TD tal:condition="is_admin" class=resultsrow>email</td>
+	<TR tal:repeat="userlist userlist">
+		<td class=resultsrow tal:content="userlist/userid">1</td>
+		<!-- <B tal:content="userlist/rights">G</B> -->
+		<td class=resultsrow><A tal:attributes="href userlist/userlink" tal:content="userlist/username">StatItem</A></td>
+		<td tal:condition="is_admin" class=resultsrow>
+		  <A tal:attributes="href userlist/editlink">edit</A>
+		  <!-- <A tal:attributes="href userlist/deletelink">delete</A> -->
+		</td>
+		<TD class=resultsrow> (<b tal:content="userlist/requests">3</b>/<b tal:content="userlist/kills">1</b> ) </TD>
+		<TD tal:condition="is_admin" class=resultsrow> <A tal:attributes="href userlist/mailto"  tal:content="userlist/email">email</A></td>
+	</TR>
+	</TABLE>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

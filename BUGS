@@ -1,0 +1,9 @@
+- songs that have a path containing a double quote (") will not get decoded
+by lame due to bash expansion.
+- @40000000423fdf6b1651c884 playing 'rock/nirvana/nevermind/nirvana-nevermind-12-something_in_the_way.mp3' from users nato(v) elektron(m) joemoto650(m).
+Requests/Plays/Kills: 2/13/3
+User	Requests
+	
+User	Kills
+elektron(m)	2
+ezra(m)	1

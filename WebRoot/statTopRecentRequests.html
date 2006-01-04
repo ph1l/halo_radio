@@ -1,0 +1,41 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+<FORM tal:attributes="action formaction" METHOD="GET">
+<INPUT TYPE=HIDDEN NAME=action VALUE=statTopRecentRequests>
+<BR>
+Top <INPUT TYPE=TEXT NAME=num SIZE=7 tal:attributes="value num"> Requested Songs in the past <INPUT TYPE=TEXT NAME=days SIZE=7 tal:attributes="value days"> days.<INPUT TYPE=SUBMIT></FORM>
+<BR>
+	<OL>
+	<LI tal:repeat="songlist songlist">(<B tal:content="songlist/recent_plays">4</B>) <A tal:attributes="href songlist/songlink" tal:content="songlist/songname">StatItem</A></LI>
+	</OL>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

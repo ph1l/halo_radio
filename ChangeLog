@@ -1,0 +1,98 @@
+- 0.2.0pre7
+  - source daemon
+	- auto-normalization support disabled until bugs can be worked out.
+  - logic changes
+	- GetListeners changed to pull data from status2.xsl (included
+	   with recent versions of icecast.
+- 0.2.0pre6
+  - database changes
+  	> alter table request_queue add column hold int(1) unsigned NOT NULL
+	-> Default 0;
+  - config file changes ( see HaloRadio.ini-dist for details )
+	- rerequest_limit=0
+	- replay_limit=0
+  - web interface changes
+  	- added support to search multiple users requests. Advanced Search.
+	- added holding / releasing of requests.
+	- added support to view the held requests in the queue.
+- 0.2.0pre5
+  - database changes
+  	> alter table songs add column scale FLOAT default 0;
+  - web interface changes
+  	- fixed a bug in the newUser signup that was sending messages from
+	halo_radio@server.DOMAIN , now emails should come from
+	halo_radio@hostname.
+	- search function searches some id3 tags as well as the path and
+	filename. (artist, album, title)
+
+  - source daemon changes
+  	- added auto-normalization support.
+
+- 0.2.0pre4
+  - database changes ( see halo_radio.mysql for details )
+        - new table 'wall'. create it.
+  - config file changes ( see HaloRadio.ini-dist for details )
+	+ request_quota=2
+	+ do_fortune=1
+	+ active_user_weight=3
+  - web interface changes
+	- users over the Request Quota will silently fail adding requests
+	- kill moved from main menu to current info. this should cut
+	down on mistaken kills.
+	- CurrentInfo page refreshes automaticly at next song.
+	- Listeners page renamed to Activity. the page refreshes every ten
+	minutes.
+	- all verified users have access to browse other users stats.
+	- userstats page allows user to enter selected lengths of lists.
+  - source daemon changes
+	- will now resample files that are not 44,100 samples per second.
+	- active user weight for random songs tunable.
+  - utility changes
+	- DBSync.py now adds mp3's with samplerates other than 44.1 khz
+	- halostatcron.py - updated graphs to more acturatly display
+	historical data. also changed the colors of the graphs to make
+	them more 'halo'.
+	- filelist.py now helps you to create audio and mp3 cds based on
+	specific users tastes. (more info to come)
+	- rename.py added. this utility allows you to run search and
+	replaces on songs' paths in the db (for when you move mp3s around
+	in the archive and don't wanna loose stats)
+- 0.2.0pre3
+  - database changes
+	> DELETE FROM config where name = "announce_delay";
+  - config file changes, HaloRadio.ini
+  	  [general]
+	+ announce_path=halo_radio
+	+ announce_delay=120
+  - web interface changes
+  	- added Admin page, with a playlist selector (for which playlist to
+	select random songs from when there are no requests)
+	- fixed newUser setup to not cc: me, instead use the config file admin
+	email setting. :-)
+	- updated/fixed/added a bunch of help and stuff.
+	- songInfo page now shows per-user stats.
+	- userInfo/MyInfo page shows top100 and bottom 25 songs for the user.
+  - source daemon changes
+  	- added user specific random song request for active users. 33% of the
+	randomly played songs will use the active users to generate a
+	temporary list of popular songs for random selection from.
+- 0.2.0pre2
+  - database changes:
+  	mysql> alter table songs add column added_date DATETIME;
+	mysql> create index added_date ON songs (added_date);
+  - config file changes:
+    - Changed:
+    	general.stream_url: UNUSED REMOVE
+	general.guest_has_kill: [0/1] guest can kill random or own requests
+	general.guest_has_request: [0/1] guest can search and request
+	general.guest_has_songnfo: [0/1] guest can list songnfo (d/l link)
+	general.guest_has_signup: [0/1] guest can signup
+
+    	shout.url: UNUSED REMOVE
+    	shout.bitrate: now accepts comma separated list of bitrates
+
+
+- halo_radio-snap-20050106205155 (0.2.0pre1)
+
+  - geting ready for initial release. call this a pre-release. the fix
+    up docs and lingering bugs before initial public release.

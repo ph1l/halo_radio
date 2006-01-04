@@ -1,0 +1,12 @@
+- FUNCTIONALITY (needed)
+- make users disableable and add a disable/enable link to userlist
+- automaticly discoverr volue max of songs ad track in DB for normalization.
+
+- FUNCTIONALITY (request)
+- radio halo support rss?
+- theme support ( simple style-sheet selection for users)
+- favorite searches based on number or percentage.
+- adv search user logic: AND / OR
+
+- BUGS 
+- fix slowness of hitting the last page of the search results with LIMIT x,y

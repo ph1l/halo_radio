@@ -1,0 +1,49 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+	<H2 tal:content="username">UserName</H2>
+	<form name=edit tal:attributes="action formaction" METHOD="GET">
+	name:
+	<INPUT TYPE=TEXT size=16 NAME=username tal:attributes="value username">
+	<BR>
+	User Rights: 
+	<INPUT TYPE=TEXT size=4 NAME=rights tal:attributes="value rights">
+	<BR>
+	email:
+	<INPUT TYPE=TEXT size=32 NAME=email tal:attributes="value email">
+	<BR>
+	
+	<INPUT TYPE=HIDDEN NAME=action VALUE=editUserPost>
+	<INPUT TYPE=HIDDEN NAME=userid tal:attributes="value userid">
+	<INPUT TYPE=submit>
+	</form>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

@@ -1,0 +1,54 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+	<H2 tal:content="username">UserName</H2>
+	<H4 tal:content="rights">User Type</H4>
+	<h3>created on <b tal:content="createdate">2004-11-10 01:01:02</b>.</h3>
+	<OL><FORM name=top tal:attributes="action formaction" METHOD="GET">
+    Top <INPUT TYPE=TEXT NAME=numtop SIZE=7 tal:attributes="value numtop">
+    <INPUT tal:attributes="value id" TYPE=HIDDEN NAME=id>
+    <INPUT tal:attributes="value numbottom" TYPE=HIDDEN NAME=numbottom>
+    <INPUT tal:attributes="value action" TYPE=HIDDEN NAME=action>
+    <INPUT TYPE=SUBMIT></FORM>
+
+
+	<LI tal:repeat="songlist songlist">(<B tal:content="songlist/requests">4</B>/<B tal:content="songlist/kills">1</B>) <A tal:attributes="href songlist/songlink" tal:content="songlist/songname">StatItem</A></LI>
+</Ol>
+	<OL><FORM name=bottom tal:attributes="action formaction" METHOD="GET">
+    Bottom <INPUT TYPE=TEXT NAME=numbottom SIZE=7 tal:attributes="value numbottom">
+    <INPUT tal:attributes="value id" TYPE=HIDDEN NAME=id>
+    <INPUT tal:attributes="value numtop" TYPE=HIDDEN NAME=numtop>
+    <INPUT tal:attributes="value action" TYPE=HIDDEN NAME=action>
+    <INPUT TYPE=SUBMIT></FORM>
+	<LI tal:repeat="bsonglist bsonglist">(<B tal:content="bsonglist/requests">4</B>/<B tal:content="bsonglist/kills">1</B>) <A tal:attributes="href bsonglist/songlink" tal:content="bsonglist/songname">StatItem</A></LI>
+	</OL>
+  <!-- End Content -->  
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

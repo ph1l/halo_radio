@@ -1,0 +1,69 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+  <SCRIPT LANGUAGE="JavaScript" TYPE="TEXT/JAVASCRIPT"
+  SRC="WebRoot/select_all.js">
+  <!--
+  //-->
+  </SCRIPT>
+
+  <h2><B tal:content="numrequests">20</B> Requests</h2>
+  <form tal:attributes="action formaction" method=get name=queue>
+  <table>
+  <TR tal:repeat="request requestlist">
+  <td tal:attributes="class request/classname">
+  <input tal:attributes="value request/curid" type=checkbox NAME=requestids[]></td>
+  <td tal:attributes="class request/classname" tal:content="request/by">UserName</td>
+  <td tal:attributes="class request/classname"><a tal:attributes="class request/classname" tal:attributes="href request/downurl"><font face=times size=4>Down</font></A></td>
+  <td tal:attributes="class request/classname"><a tal:attributes="class request/classname" tal:attributes="href request/upurl"><font face=times size=4>Up</font></A></td>
+  <td tal:attributes="class request/classname"><a tal:attributes="class request/classname" tal:attributes="href request/songurl" tal:content="request/song">SongName</a></td>
+  <td tal:attributes="class request/classname" tal:content="request/songlen">SongLength</td>
+  </tr>
+
+  </table>
+  <p tal:condition="numrequests"><a href="javascript:checkall('queue','requestids',true)">Check All</a>&nbsp;|&nbsp;
+  <a href="javascript:checkall('queue','requestids',false)">Uncheck All</a></p>
+
+  <input type=submit name="action" tal:condition="deletecondition" value="deleteRequests">
+  <input type=submit name="action" tal:condition="deletecondition" value="randomizeRequests">
+  <A tal:condition="deletecondition" HREF="help/randomizeRequests.html">?</A>
+  <input tal:condition="zipcondition" type=submit name="action" value="zipRequests">
+  <A tal:condition="zipcondition" HREF="help/zipRequests.html">?</A>
+  <input tal:condition="holdrequestscondition" type=submit name="action" value="holdRequests">
+  <A tal:condition="holdrequestscondition" HREF="help/holdRequests.html">?</A>
+  <p tal:condition="releaserequestscondition">You currently have <B tal:content="heldrequests">20</B> requests on hold.  <input type=submit name="action" value="releaseRequests"></p>
+  <input type=hidden name="viewall" tal:attributes="value viewall">
+  <br tal:condition="viewalllinkcondition"><font tal:condition="viewalllinkcondition" size=-2>
+  <a tal:condition="viewalllinkcondition" tal:attributes="href viewalllink">View All Requests (including held)</a></font>
+  </form>
+
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot ><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

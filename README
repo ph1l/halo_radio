@@ -1,0 +1,246 @@
+                             Halo_Radio 
+
+
+             Copyright (c) 2001-2005, Kremlor Industries
+
+------------------------------------------------------------------------
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc.:
+        59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	
+    For more details see the file COPYING.
+
+------------------------------------------------------------------------
+
+[This software is maintained by phil@kremlor.net]
+
+What is halo_radio ?
+--------------------
+
+halo_radio is an automatic dj system for your mp3 collection. An icecast
+source daemon, a fully featured web interface, a back end MySQL database,
+and back end utilities to manage a web-based mp3 radio station. 
+
+the web interface allows for searching, making requests, managing the
+request queue, viewing recent activity, historical statistics for usage,
+and more. statistical analasys of requests and kills on a per-song basis,
+allow the system to automaticly maintain a a base playlist of popular songs.
+
+A backed library to the database makes python based clients trivial to
+code. The biggest problem now is documentation.
+
+
+Troubleshooting / Questions / Rants :
+--------------------------------------
+
+    http://kremlor.net/projects/halo_radio/
+
+    http://kremlor.net/mailman/listinfo/halo_radio
+
+
+Software Prerequisites
+----------------------
+
+HaloRadio makes use of existing software to provide some parts of its
+features and functionality.  For example the transport of mp3s is 
+provided by Icecast and the backed database is provided by MySQL.  
+There are quite a few prerequisite applications to be installed before 
+your streaming radio station is fully operational.  While the author 
+would like to provide installation and configuration help for all the
+software used in this project these issues are extensively covered by
+their respective maintainers.
+
+The author suggests recent versions of all programs listed below or
+a nice package management system like debian's apt.
+
+    Required -
+
+    Python: http://www.python.org/
+    SimpleTAL: http://www.owlfish.com/software/simpleTAL/
+    Mysql: http://www.mysql.org/
+    MySQL-python: http://sourceforge.net/projects/mysql-python
+    IceCast: http://www.icecast.org/
+    libshout-2.x: http://www.icecast.org/download.php
+    shout-python: http://www.icecast.org/download.php
+    Apache: http://www.apache.org/
+    Lame: http://lame.sourceforge.net/
+
+    Optional -
+
+    RRDTool: needed for listener stat graphs.
+    
+Installation
+------------
+
+1) Create a local user:
+
+    $ groupadd radio
+    $ useradd -m -g radio radio
+
+2) UN-tar your source distribution:
+
+    $ cd /home/radio/
+    $ tar -zxvf halo_radio-xxx.tar.gz
+    $ ln -s  halo_radio-xxx halo_radio
+
+3)  Setup your radio database:
+
+    Create a radio database:
+    mysql> create database radio;
+
+    Create a database user:
+    mysql> grant all on radio.* to radio@localhost  \
+    identified by 'password';
+
+    Populate your radio database:
+    $ mysql -u radio -p radio <  \
+    /home/radio/halo_radio/halo_radio.mysql
+
+4) Create your Configuration file (HaloRadio.ini)
+
+    Make a copy of the original dist file:
+    $ cp HaloRadio.ini-dist HaloRadio.ini
+
+    most options are documented in the config file.
+
+6) Sync the file system with the :
+
+    Run DBSync.py to make halo_radio aware of your mp3s:
+    $ ./DBSync.py -cfsp
+
+	( Later set up a cron job to at least update playlists regularly :
+
+		$ ./DBSync.py -p
+	)
+
+
+7) Create a crontab entry to sync your database:
+
+    $ crontab -e -u radio
+
+    12 * * * * /home/radio/halo_radio/DBSync.py -p
+    12 5 * * * /home/radio/halo_radio/DBSync.py -fscp
+
+
+    The first runs a quick scan of the file system, finds only files
+    that have been modified since the last time DBsync has been run.
+    The second entry runs a slow scan of the file system, finds all
+    files in your archive regardless of modified time. it also checks
+    to make sure all the files in the database are still on the disk,
+    removing stale entries.
+
+8) Configure apache for web interface:
+
+    Configure your web servers document root to point to your
+    Halo_Radio installation directory. An apache virtual entry
+    might look something like this:
+
+    <VirtualHost radio.mydomain.com:80>
+        DocumentRoot /home/haloradio/public_html
+        ServerName radio.mydomain.com
+    </VirtualHost>
+
+    You will then need to copy the needed files over to the
+    DocumentRoot. use the install_web.sh script as follows:
+
+    $ install_web.sh /home/haloradio/public_html
+
+    Notes
+    -----
+        - Your DocumentRoot should be separate from your
+	  install directory (Hi Ryan!)
+	- the install will copy a .htaccess into your
+	  DocumentRoot which may need to be edited
+
+Quick Start
+-----------
+
+To run Halo_Radio daemon, launch:
+
+    $ ./radiod.py
+
+To setup Halo_Radio daemon in Daniel J. Bernstein's daemontools:
+        
+    Install daemontools ( see http://cr.yp.to/daemontools/install.html)
+
+    Check radio-conf.sh for usernames and locations for install.
+    $ vi radio-conf.sh
+
+    Run the service directory install script
+    $ sh ./radio-conf.sh
+
+    Link the supervise directory to the service directory
+    $ ln -s /etc/radio /service/radio
+
+    The daemon should start.
+
+To use the web interface:
+
+    Point your browser at http://radio.mydomain.com/
+
+    help lives here : http://radio.mydomain.com/help
+
+    At this point you should have a fully functional installation of
+    HaloRadio.   
+
+To create your admin user:
+
+    use the MySQL monitor to manually add a row to the database for
+    for your admin user. see the bottom of halo_radio.mysql for an example.
+
+To create your m3u file:
+
+    To make it easier for others to listen radio broadcast you can 
+    create a m3u file that contains the following line:
+
+    http://radio.mydomain.com:8000/radio
+
+To connect with your mp3 client: 
+
+    Use xmms, winamp, mplayer etc. 
+
+    $ mplayer http://radio.mydomain.com:8000/radio
+   
+If the installation of Halo_Radio failed, check whether all the required
+software is correctly installed. If it still failed, please send bug
+report to the halo_radio mailing list mentioned near the beginning of
+this document.
+
+
+So, You're up and Running, What Now ?
+-------------------------------------
+
+- Turn halo_radio AutoAI mode on.
+
+When you ran DBSync.py -p, you created some playlists. halo_radio uses
+playlists to decide what to play when there are no requests in queue. You
+can change your default playlist with an admin(a) user on the Admin page.
+there are 4 playlists that DBSync.py builds:
+
+	- Master -
+		This contains all the valid mp3s in your archive.
+	- Requested - 
+		This playlist contains all songs that have been requested.
+	- AutoAI -
+		This playlist contains all the songs with a net positive
+		popularity. (Popularity is the number of requests - the number
+		of kills.
+
+You've got DBSync running in cron, right ? well, then after you've requested
+a bunch of songs, You can switch your playlist over to AutoAI. brand new
+PlayLogic in this release (0.2.0pre3) also uses active users to select some
+of it's random songs. see the ChangeLog for more info.
+
+
+

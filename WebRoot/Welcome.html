@@ -1,0 +1,81 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+    <h2>Welcome To Halo Radio!!</h2>
+    tune in here:
+    <TABLE Class=head>
+    <TR Class=head tal:repeat="streams streams">
+    <TD Class=head ><b tal:content="streams/bitrate">128</b>kbps
+    <TD Class=headlink><a tal:attributes="href streams/playlistlink" tal:content="streams/playlistlink">Playlist Link</a>
+    </TR>
+    </TABLE>
+  <BR>
+        <PRE>
+- Current
+  - source daemon
+        - auto-normalization support disabled until bugs can be worked out.
+  - logic changes
+        - GetListeners changed to pull data from status2.xsl (included
+           with recent versions of icecast.
+
+- 0.2.0pre6
+  - database changes
+        > alter table request_queue add column hold int(1) unsigned NOT NULL
+        -> Default 0;
+  - config file changes ( see HaloRadio.ini-dist for details )
+        - rerequest_limit=0
+        - replay_limit=0
+  - web interface changes
+        - added support to search multiple users requests. Advanced Search.
+        - added holding / releasing of requests.
+        - added support to view the held requests in the queue.
+
+- 0.2.0pre5
+  - database changes
+        > alter table songs add column scale FLOAT default 0;
+  - web interface changes
+        - fixed a bug in the newUser signup that was sending messages from
+        halo_radio@server.DOMAIN , now emails should come from
+        halo_radio@hostname.
+        - search function searches some id3 tags as well as the path and
+        filename. (artist, album, title)
+  - source daemon changes
+        - added auto-normalization support.
+
+	</PRE>
+  <BR>
+  <BR>
+  <BR>
+  <FONT SIZE=-1>contact -> <A HREF=mailto:phil@kremlor.net>phil@kremlor.net</A>
+  <BR>
+  </FONT>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

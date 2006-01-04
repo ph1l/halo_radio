@@ -1,0 +1,106 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body onLoad="document.search.search.focus()">
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+  <BR>
+    <FORM name=search tal:attributes="action formaction" METHOD="GET">
+    <TABLE>
+      <TR>
+        <TD class=resultsrow>Query<A HREF=help/SearchQuery.html>?</A>: </TD>
+        <TD class=resultsrow><INPUT TYPE=TEXT NAME=search></TD>
+      </TR>
+      <TR>
+        <TD class=resultsrow>Query Fields<A HREF="help/advsearchQueryFields.html">?</A>: </TD
+        <TD class=resultsrow>
+          <SELECT NAME=query_fields MULTIPLE SIZE=4>
+            <OPTION tal:repeat="fieldlist fieldlist" tal:content="fieldlist/fieldname" tal:attributes="value fieldlist/fieldname">test</OPTION>
+          </SELECT>
+        </TD>
+      </TR>
+      <TR>
+	<TD class=resultsrow>Query Logic<A HREF="help/advsearchQueryLogic.html">?</A>:</TD>
+	<TD class=resultsrow>
+	  <SELECT NAME=querylogic SIZE=1>
+	    <OPTION>OR</OPTION>
+	    <OPTION>AND</OPTION>
+	  </SELECT>
+	</TD>
+      </TR>
+      <TR>
+        <TD class=resultsrow>Result Order<A HREF="help/SearchResultOrder.html">?</A>: </TD
+        <TD class=resultsrow>
+          <SELECT NAME=sort SIZE=1>
+            <OPTION>popularity</OPTION>
+            <OPTION>filename</OPTION>
+          </SELECT>
+        </TD>
+      </TR>
+      <TR>
+        <TD class=resultsrow>Users<A HREF=help/advsearchUsers.html>?</A>: </TD>
+        <TD class=resultsrow>
+          <SELECT NAME="users" MULTIPLE SIZE="5">
+            <OPTION tal:repeat="userlist userlist" tal:content="userlist/username" tal:attributes="value userlist/username">test</OPTION>
+          </SELECT>
+        </TD>
+      </TR>
+      <TR>
+	<TD class=resultsrow>User Logic<A HREF="help/advsearchUserLogic.html">?</A>:</TD>
+	<TD class=resultsrow>
+	  <SELECT NAME=userlogic SIZE=1>
+	    <OPTION>OR</OPTION>
+	    <OPTION>AND</OPTION>
+	  </SELECT>
+	</TD>
+      </TR>
+      <TR>
+        <TD class=resultsrow>Requests / Kills<A HREF="help/advsearchReqKills.html">?</A>:</TD>
+        <TD class=resultsrow>
+          <SELECT NAME=type SIZE=1>
+            <OPTION>both</OPTION>
+            <OPTION>requests</OPTION>
+            <OPTION>kills</OPTION>
+            <OPTION>netrequests</OPTION>
+            <OPTION>netkills</OPTION>
+          </SELECT>
+        </TD>
+      </TR>
+      <TR>
+        <TD class=resultsrow>Past Days <A HREF=help/advsearchPastDays.html>?</A></TD>
+	<TD class=resultsrow><INPUT TYPE=checkbox name=recent> <INPUT TYPE=TEXT NAME=days SIZE=7 tal:attributes="value days"></TD>
+      </TR>
+    </TABLE>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=searchResults>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=imFeelingPopular><A HREF="help/FeelingPopular.html">?</A>
+<BR>
+
+    </FORM>
+  <BR>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

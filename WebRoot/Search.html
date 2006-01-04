@@ -1,0 +1,51 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body onLoad="document.search.search.focus()">
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+  <BR>
+    <FORM name=search tal:attributes="action formaction" METHOD="GET">
+    Query: <INPUT TYPE=TEXT NAME=search>
+	<A HREF=help/SearchQuery.html>?</A>
+	<FONT SIZE=-2><A tal:attributes="href advsearch">Advanced Search</A></FONT>
+    <BR>
+    Result Order: <SELECT NAME=sort SIZE=1>
+    <OPTION>popularity</OPTION>
+    <OPTION>filename</OPTION>
+    </SELECT>
+	<A HREF="help/SearchResultOrder.html">?</A>
+    <BR>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=searchResults>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=imFeelingPopular><A HREF="help/FeelingPopular.html">?</A>
+<BR>
+
+    </FORM>
+  <BR>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

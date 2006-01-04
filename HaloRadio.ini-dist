@@ -1,0 +1,136 @@
+# $Id: HaloRadio.ini-dist,v 1.20 2005/12/29 19:37:21 elektron Exp $
+#
+## HaloRadio.ini -
+# it's a config file. needs to be configured and installed 
+# with the cgi.  as well as for the daemon.
+#
+
+
+
+[general]
+# cgi_url - absolute url to the cgi
+cgi_url=http://localhost/~radio/HaloRadio.cgi
+# root_url - web root url
+root_url=http://localhost/~radio
+# web root path
+webroot=/usr/share/haloradio/public_html
+
+# status_url - url for the icecast ststus server
+status_urls=http://localhost:8000/status.xsl
+
+# do_fortune - [0/1] append a fortune to every footer ?
+do_fortune = 0
+
+
+# listener offset - for tuning number of listeners.
+# (for instance: if you have multiple relays logged in all the time and
+#  you would like to offset the number of listenes by -2 )
+#
+# listener_offset
+listener_offset=0
+
+#guest_access - [0/1] Allow guest access to web interface
+guest_access=1
+
+guest_has_kill=0
+guest_has_request=1
+guest_has_songnfo=0
+guest_has_signup=1
+
+#request_quota - 0=disable, limit of requests in queue per user
+#
+# request_quota=3
+#
+request_quota=0
+
+#
+# prefix for download link on songinfo page
+#
+download_url=
+
+#
+# Don't change this
+#
+site_name=halo_radio
+
+#
+# hostname - domain to use as 'from' in emails to ppl.
+#
+hostname=localhost
+
+# admin contact email address (CHANGE THIS)
+admin_email=phil@kremlor.net
+
+#subdir name in mp3 root to find announcements (comercials, yo.)
+announce_path=halo_radio
+
+# number of minutes to wait between random announcements
+announce_delay=120
+
+#
+# Active User Weight - 1/n of the songs played will be based on active
+# user preferences.
+#
+# active_user_weight=3
+active_user_weight=0
+
+#
+# Re-request Limit  - number of minutes that a song must wait before being
+# requested again, after it's played. (0 disables).
+#       (in minutes)
+#
+#rerequest_limit=60
+
+rerequest_limit=0
+
+#
+# Replay Limit - number of minutes a song must wait before getting
+# selected randomly again.
+#
+#replay_limit=1440
+
+replay_limit=0
+
+
+
+# mp3 source configuration
+[shout]
+
+# host - the hostname of your icecast server
+host=127.0.0.1
+port=8000
+# source auth info for icecast
+user=source
+password=sourceme
+# source mountpoint (will get bitrate appended)
+mount=/radio
+# stream nfo
+name=halo_radio
+genre=all
+public=0
+# bitrate - stream bitrate(s)
+# bitrate=128,160
+#   ( multiple streams configured by separating the rates with a comma)
+bitrate=128,64
+
+# DB Config (for HaloRadio module) [REQUIRED]
+
+[db]
+host=localhost
+user=radio
+name=radio
+pass=password
+
+# MP3 Archive Location
+
+[path]
+root=/var/lib/haloradio/mp3
+
+# halostatcron
+
+[cron]
+rrd_data_dir=/var/lib/haloradio/rrd
+png_dir=/var/lib/haloradio/png
+rrdtool_path=rrdtool
+
+###############################################################################

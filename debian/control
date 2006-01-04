@@ -1,0 +1,15 @@
+Source: haloradio
+Section: unknown
+Priority: optional
+Maintainer: Philip J Freeman <phil@kremlor.net>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.2
+
+Package: haloradio
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
+Description: a python library for a mp3 radio station.
+ halo_radio is a python library for a mp3 radio station. included is
+ a cgi web front-end for controlling the radio stations content. also,
+ a backend streamer for re-encoding mp3's. the system tracks requests
+ and kills to auto generate playlists for random song selection.

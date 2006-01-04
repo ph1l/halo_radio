@@ -1,0 +1,15 @@
+DirectoryIndex HaloRadio.cgi
+Options +ExecCGI
+AddHandler cgi-script .cgi
+<Files *.ini>
+	Order allow,deny
+	Deny from all
+</Files>
+<Files *.py>
+	Order allow,deny
+	Deny from all
+</Files>
+<Files *.txt>
+	Order allow,deny
+	Deny from all
+</Files>

@@ -1,0 +1,74 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+    <h2 tal:content="sngname">SongName</h2>
+    Path: <i tal:content="path">path/to/filename.mp3</i>
+    <ul>ID3 Info
+      <li>Artist: <i tal:content="id3artist">Artist</i>
+      <li>Album: <i tal:content="id3album">Album</i>
+      <li>Track No.: <i tal:content="id3track">0</i>
+      <li>Title: <i tal:content="id3title">Title</i>
+      <li>Genre: <i tal:content="id3genre">Genre</i>
+      <li>Year: <i tal:content="id3year">2004</i>
+      <li>Comment: <i tal:content="id3comment">ID3 Comment</i>
+    </ul>
+    <br>
+    MPEG Info :&nbsp;
+    Ver: <i tal:content="mpegver">1</i>,
+    <i tal:content="mpegbr">192</i> bps, 
+    <i tal:content="mpegsr">44100</i> sps,
+    Len: <i tal:content="mpeglen">04:54</i>,
+    Mode: <i tal:content="mpegmode">joint stereo</i>
+    Emphasis: <i tal:content="mpegemph">none</i>
+    <br>
+    Requests/Plays/Kills:
+    <i tal:content="requests">34</i>/<i tal:content="plays">60</i>/<i tal:content="kills">0</i>
+    <BR>
+   <TABLE>
+   <TR><TD>
+    <TABLE>
+    <TR><TD class="resultsrow" >User</TD><TD class="resultsrow" >Requests</TD></TR>
+    <TR tal:repeat="requestedby requestedby"><TD class="resultsrow" tal:content="requestedby/name">Name</TD><TD class="resultsrow" tal:content="requestedby/num">Num</TD></TR>
+    </TABLE>
+   <TD>
+    <TABLE>
+    <TR><TD class="resultsrow" >User</TD><TD class="resultsrow" >Kills</TD></TR>
+    <TR tal:repeat="killedby killedby"><TD class="resultsrow" tal:content="killedby/name">Name</TD><TD class="resultsrow" tal:content="killedby/num">Num</TD></TR>
+    </TABLE>
+   </TABLE>
+    <br>
+    <ul>Actions
+      <li><a tal:attributes="href requesturl">Request</a>
+      <li><a tal:attributes="href downloadurl">Download</a>
+    </ul>
+
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

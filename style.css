@@ -1,0 +1,54 @@
+BODY { background-color: #303333; color:#808080;
+ font-size: 120%; font-family: Arial, Verdana; }
+
+IMG { border: 0; cursor: default}
+
+A:link {color: #657365; text-decoration: none}
+A:visited {color: #606860; text-decoration: none}
+A:active {color: #000000; text-decoration: none}
+A:hover {cursor: default; color: #667566; text-decoration: line-through;}
+
+TABLE { color: #131313; border: 0 }
+TD { border-color: #000000; background-color: #002040; border: 1}
+
+TABLE.head { border: 0; width="100%" }
+TD.head { color: #0099cc; border-color: #000000; background-color: #101818; border: 1 }
+TD.headlink { color: #0099cc; border-color: #000000; background-color: #091010; border: 1 }
+
+TABLE.foot { color: #686060 ; border: 0; WIDTH: 100% }
+TD.foot { border-color: #000000; background-color: #131111; border: 1 ; WIDTH: 100% }
+TD.footquote { color: #756666 ;border-color: #000000; background-color: #131111; border: 1; width: 100% }
+
+TABLE.shadow { color: #606068; border: 0 }
+TD.shadow { border-color: #000808; background-color: #000808; border: 1 }
+
+TABLE.body { color: #555555 ; border: 0 }
+TD.body { border-color: #000000; background-color: #101818; border: 1 }
+
+TABLE.resultsrow { color: #ffffff ; border: 0 }
+TD.resultsrow { color: #445566 ; border-color: #001010; background-color: #101818; border: 1 }
+TD.resultsrowdark { color: #ffffff ; border-color: #001010; background-color: #050909; border: 1 }
+
+INPUT, SELECT { color: #121212; background-color: #a1a1a1; 
+border-color: #0000FF; border-top:1px solid; border-bottom:1px solid; 
+border-left: 1px solid; border-right:1px solid;
+font-family: Arial, Helvetica;
+font-size:11px; }
+
+INPUT.camo  { color: #666600; background-color: #002020; 
+border-color: #0000FF; border-top:0px solid; border-bottom:0px solid; 
+border-left: 0px solid; border-right:0px solid;
+	font-size:15px;
+}
+INPUT.camo:hover  {
+	color: #999900;
+	text-decoration: line-through;
+}
+
+SELECT.camo {
+	color: #999900;
+	background-color: #002020;
+	border-top:0px solid; border-bottom:0px solid;
+	border-left: 0px solid; border-right:0px solid;
+	font-size:9px;
+}

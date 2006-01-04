@@ -1,0 +1,44 @@
+
+Since the initial release on freshmeat, i've decided to try and document
+all the changes you'll need to the database and the config file to upgrade
+from one release to the next. Most of the cool parts of the halo_radio
+system come with the accumulated statistical data in the db. therefore
+it would suck to loose all your precious data just because you want to run
+the latest release.
+
+Upgrade notes for now can be found in the Changelog file included with the
+source.
+
+Here's the basic procedure:
+
+1) untar your new distro next to the onld one and make a new symlink
+
+    $ cd /home/radio/
+    $ tar -zxvf halo_radio-xxx.tar.gz
+    $ rm halo_radio
+    $ ln -s  halo_radio-xxx halo_radio
+
+2) Copy config from old version.
+
+    $ cp halo_radio-yyy/HaloRadio.ini halo_radio-xxx/
+    
+3) Update DB and config file
+
+    using the notes for the release in ChangeLog update your database and
+    and config file with additions and changes. also, read through the notes
+    on other changes in the release.
+
+4) Re-install the web interface
+
+    $ ./install_web.sh ~/public_html/
+
+5) Re-start your radio source daemon. (assuming your running in daemontools)
+
+    $ killall radiod.py
+
+6) find bugs and report them to me ;-)
+
+
+
+cheers.
+

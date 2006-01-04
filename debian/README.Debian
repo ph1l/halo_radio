@@ -1,0 +1,33 @@
+haloradio for Debian
+--------------------
+
+ Configuration -
+
+ 1) create a database :
+
+	# mysql
+ 	mysql> create database radio;
+	mysql> grant all on radio.* to radio@localhost  \
+	identified by 'password';
+	# mysql -u radio -p radio <  /usr/share/haloradio/halo_radio.mysql
+
+ 2) edit config :
+ 
+ 	# vi /etc/haloradio/HaloRadio.ini
+
+ 3) sync the database:
+
+ 	# su - radio
+	$ ./DBSync.py -cfsp
+
+ 4) test the daemon (as user radio):
+
+ 	$ ./radiod.sh 
+
+ 5) Finally start the daemon via daemontools:
+
+ 	# ln -s /etc/haloradio/svsdir /var/lib/svscan/haloradio
+
+ 
+ 
+ -- Philip J Freeman <phil@kremlor.net>, Wed, 28 Dec 2005 16:12:48 -0600

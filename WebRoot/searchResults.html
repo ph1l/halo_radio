@@ -1,0 +1,81 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title tal:content="title">
+  </title>
+ </head>
+  <body onLoad="document.search.search.focus()">
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <TABLE Class=head>
+  <TR Class=head>
+    <TD Class=headlink tal:repeat="menuitems menu">
+       <a tal:attributes="href menuitems/link" tal:content="menuitems/name">menuitem</a>
+    </TD>
+  </TABLE>
+  <!-- Begin Content -->
+  <SCRIPT LANGUAGE="JavaScript" TYPE="TEXT/JAVASCRIPT"
+  SRC="WebRoot/select_all.js">
+  <!--
+  //-->
+  </SCRIPT>
+  <BR>
+    <FORM name=search tal:attributes="action searchformaction" METHOD="GET">
+    Query: <INPUT TYPE=TEXT NAME=search tal:attributes="value searchstr">
+	<A HREF=help/SearchQuery.html>?</A>
+    <BR>
+    Result Order: <SELECT NAME=sort SIZE=1>
+    <OPTION tal:repeat="option options" tal:content=option/name tal:attributes="selected option/selected" >Option</OPTION>
+    </SELECT>
+	<A HREF=help/SearchResultOrder.html>?</A>
+    <BR>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=searchResults>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=imFeelingPopular>
+	<A HREF=help/FeelingPopular.html>?</A>
+    <BR>
+    </FORM>
+  <BR>
+  <h2><B tal:content="numresults">20</B> Results</h2>
+  <form tal:attributes="action formaction" method=get name=songs>
+  <br>
+  <table>
+  <TR tal:repeat="result resultlist">
+  <td class=resultsrow>
+  <input tal:attributes="value result/id" type=checkbox name=songids></td>
+  <td class=resultsrow><b tal:content="result/requests">1</b>/<b  tal:content="result/kills">1</b></td>
+  <td class=resultsrow><a tal:attributes="href result/songurl" tal:content="result/song">SongName</a></td>
+  <td class=resultsrow tal:content="result/songlen">SongLength</td>
+  </tr>
+
+  </table>
+  <a href="javascript:checkall('songs','songids',true)">Check All</a>&nbsp;|&nbsp;
+  <a href="javascript:checkall('songs','songids',false)">Uncheck All</a><br>
+
+  <br>
+  <input type=submit name="action" value="request">
+  </form>
+
+  <TABLE Class=head>
+    <TR Class=head>
+      <TD Class=head tal:repeat="page pages">
+      <A tal:attributes="href page/pagelink" tal:content="page/pagename">1</A>
+      </TD>
+    </TR>
+  </TABLE>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <TR Class=foot><TD Class=foot><PRE tal:content="qotd">Quote of the Day</PRE>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+

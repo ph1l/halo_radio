@@ -1,0 +1,229 @@
+-- MySQL dump 9.11
+--
+-- Host: localhost    Database: radio
+-- ------------------------------------------------------
+-- Server version	4.0.21-log
+
+--
+-- Table structure for table `config`
+--
+
+CREATE TABLE `config` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` tinytext,
+  `data` text,
+  PRIMARY KEY  (`id`),
+  KEY `name` (`name`(255))
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `config`
+--
+
+INSERT INTO `config` VALUES (1,'current_list','1');
+INSERT INTO `config` VALUES (2,'current_song','5');
+INSERT INTO `config` VALUES (3,'current_percent','42');
+INSERT INTO `config` VALUES (4,'last_announce','0');
+INSERT INTO `config` VALUES (5,'announce_delay','120');
+
+--
+-- Table structure for table `kill_history`
+--
+
+CREATE TABLE `kill_history` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `songid` int(10) unsigned NOT NULL default '0',
+  `killby` int(10) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `songid` (`songid`),
+  KEY `killby` (`killby`),
+  KEY `date` (`date`)
+) TYPE=MyISAM;
+
+
+--
+-- Table structure for table `kill_queue`
+--
+
+CREATE TABLE `kill_queue` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `songid` int(10) unsigned NOT NULL default '0',
+  `requestby` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+
+--
+-- Table structure for table `play_history`
+--
+
+CREATE TABLE `play_history` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `songid` int(10) unsigned NOT NULL default '0',
+  `requestby` int(10) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `songid` (`songid`),
+  KEY `requestby` (`requestby`),
+  KEY `date` (`date`)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `playlistitems`
+--
+
+CREATE TABLE `playlistitems` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `playlistid` int(10) unsigned NOT NULL default '0',
+  `songid` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `playlistid` (`playlistid`),
+  KEY `songid` (`songid`)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `playlists`
+--
+
+CREATE TABLE `playlists` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` tinytext NOT NULL,
+  `description` text,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`(255))
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `request_queue`
+--
+
+CREATE TABLE `request_queue` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `songid` int(10) unsigned NOT NULL default '0',
+  `requestby` int(10) unsigned NOT NULL default '0',
+  `hold` int(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `rights`
+--
+
+CREATE TABLE `rights` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `tag` char(1) default NULL,
+  `name` tinytext,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `tag` (`tag`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `rights`
+--
+
+INSERT INTO `rights` VALUES (5,'G','guest');
+INSERT INTO `rights` VALUES (6,'U','unverified user');
+INSERT INTO `rights` VALUES (7,'v','verified user');
+INSERT INTO `rights` VALUES (8,'m','moderator');
+INSERT INTO `rights` VALUES (9,'a','global admin');
+
+--
+-- Table structure for table `session`
+--
+
+CREATE TABLE `session` (
+  `id` varchar(255) NOT NULL default '',
+  `active_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `create_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `host` varchar(255),
+  `userid` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `active_time` (`active_time`),
+  KEY `create_time` (`create_time`)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `songs`
+--
+
+CREATE TABLE songs ( 
+  id int(10) unsigned NOT NULL auto_increment,
+  path text NOT NULL,
+  artist tinytext,   
+  album tinytext,
+  title tinytext,
+  track tinyint(3) unsigned default NULL,
+  genre tinytext,
+  comment text,
+  year tinytext,
+  mpeg_version float unsigned default '0',
+  mpeg_bitrate float unsigned default '0',
+  mpeg_samplerate float unsigned default '0',
+  mpeg_length mediumint(9) default '0',
+  mpeg_mode tinytext,
+  mpeg_emphasis tinytext,
+  plays smallint(5) unsigned default '0',
+  requests smallint(5) unsigned default '0',
+  kills smallint(5) unsigned NOT NULL default '0',
+  added_date datetime default NULL,
+  scale float default '0',
+  PRIMARY KEY  (id),
+  UNIQUE KEY path (path(255)),
+  KEY plays (plays),
+  KEY requests (requests),
+  KEY kills (kills),
+  KEY added_date (added_date)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `user_song_stats`
+--
+
+CREATE TABLE `user_song_stats` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `songid` int(10) unsigned NOT NULL default '0',
+  `userid` int(10) unsigned NOT NULL default '0',
+  `requests` smallint(5) unsigned NOT NULL default '0',
+  `kills` smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `songiduserid` (`songid`,`userid`),
+  KEY `requests` (`requests`),
+  KEY `kills` (`kills`)
+) TYPE=MyISAM;
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` varchar(12) NOT NULL default '',
+  `password` tinytext,
+  `rights` varchar(16) default NULL,
+  `email` tinytext,
+  `requests` int(10) unsigned default '0',
+  `kills` int(10) unsigned default '0',
+  `create_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `hash` varchar(32) default NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`)
+) TYPE=MyISAM;
+
+CREATE TABLE `wall` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `userid` int(10),
+  `date` DATETIME,
+  `line` text,
+  PRIMARY KEY  (`id`),
+  KEY `userid` (`userid`),
+  KEY `date` (`date`)
+) TYPE=MyISAM;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','');
+##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',6,21,NOW(),'');
+
