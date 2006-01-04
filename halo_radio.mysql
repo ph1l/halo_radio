@@ -1,8 +1,9 @@
 -- MySQL dump 9.11
 --
--- Host: localhost    Database: radio
--- ------------------------------------------------------
--- Server version	4.0.21-log
+
+--
+-- halo_radio DB version 0
+--
 
 --
 -- Table structure for table `config`
@@ -13,7 +14,7 @@ CREATE TABLE `config` (
   `name` tinytext,
   `data` text,
   PRIMARY KEY  (`id`),
-  KEY `name` (`name`(255))
+  UNIQUE KEY `name` (`name`(255))
 ) TYPE=MyISAM;
 
 --
@@ -25,6 +26,8 @@ INSERT INTO `config` VALUES (2,'current_song','5');
 INSERT INTO `config` VALUES (3,'current_percent','42');
 INSERT INTO `config` VALUES (4,'last_announce','0');
 INSERT INTO `config` VALUES (5,'announce_delay','120');
+INSERT INTO `config` VALUES (6,'dbversion','0');
+INSERT INTO `config` VALUES (7,'current_relay','0');
 
 --
 -- Table structure for table `kill_history`

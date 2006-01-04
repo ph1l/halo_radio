@@ -1,4 +1,8 @@
 - 0.2.0pre7
+  - database changes
+  	> INSERT INTO `config` VALUES ('','dbversion','0');
+	> INSERT INTO `config` VALUES ('','current_relay','0');
+
   - source daemon
 	- auto-normalization support disabled until bugs can be worked out.
   - logic changes
