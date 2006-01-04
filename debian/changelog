@@ -1,3 +1,10 @@
+haloradio (0.2.0pre7-2) unstable; urgency=low
+
+  * debianized.
+  * see Changelog (/usr/share/doc/haloradio/changelog) for more info
+
+ --  <phil@kremlor.net>  Wed,  4 Jan 2006 16:14:08 -0600
+
 haloradio (0.2.0pre6-1) unstable; urgency=low
 
   * Initial release.

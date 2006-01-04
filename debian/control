@@ -5,11 +5,30 @@ Maintainer: Philip J Freeman <phil@kremlor.net>
 Build-Depends: debhelper (>= 4.0.0)
 Standards-Version: 3.6.2
 
-Package: haloradio
+Package: haloradio-base
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
-Description: a python library for a mp3 radio station.
- halo_radio is a python library for a mp3 radio station. included is
- a cgi web front-end for controlling the radio stations content. also,
- a backend streamer for re-encoding mp3's. the system tracks requests
- and kills to auto generate playlists for random song selection.
+#Depends: ${shlibs:Depends}, ${misc:Depends}, mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: haloradio base package
+
+Package: haloradio-frontend
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version})
+Recommends: apache2
+
+Package: haloradio-lib
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version}), mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
+Description: haloradio
+
+Package: haloradio-util
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version}), haloradio-lib (= ${Source-Version})
+Description: haloradio backend
+
+Package: haloradio-backend
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version}), haloradio-lib (= ${Source-Version}), haloradio-util (= ${Source-Version})
+Recommends: mysql-server, icecast2
+Description: haloradio backend
+

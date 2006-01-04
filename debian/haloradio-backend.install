@@ -1,0 +1,11 @@
+/var/lib/haloradio/mp3
+/var/lib/haloradio/mp3/halo_radio
+/var/lib/haloradio/mp3/halo_radio/*
+/usr/share/haloradio/cron.daily.sh
+/usr/share/haloradio/cron.often.sh
+/usr/share/haloradio/radio-conf.sh
+/usr/share/haloradio/radiod.py
+/usr/share/haloradio/radiod.sh
+/usr/share/haloradio/DBSync.py
+
+
