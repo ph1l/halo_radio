@@ -9,26 +9,27 @@ Package: haloradio-base
 Architecture: all
 #Depends: ${shlibs:Depends}, ${misc:Depends}, mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: haloradio base package
+Description: haloradio Base Package
 
 Package: haloradio-frontend
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version})
 Recommends: apache2
+Description: haloradio Frontend
 
 Package: haloradio-lib
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version}), mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
-Description: haloradio
+Description: haloradio Library
 
 Package: haloradio-util
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version}), haloradio-lib (= ${Source-Version})
-Description: haloradio backend
+Description: haloradio Utilities
 
 Package: haloradio-backend
 Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, haloradio-base (= ${Source-Version}), haloradio-lib (= ${Source-Version}), haloradio-util (= ${Source-Version})
 Recommends: mysql-server, icecast2
-Description: haloradio backend
+Description: haloradio Backend
 
