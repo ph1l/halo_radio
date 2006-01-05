@@ -1,5 +1,3 @@
-/var/lib/haloradio/mp3
-/var/lib/haloradio/mp3/halo_radio
 /var/lib/haloradio/mp3/halo_radio/*
 /usr/share/haloradio/cron.daily.sh
 /usr/share/haloradio/cron.often.sh

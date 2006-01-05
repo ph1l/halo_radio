@@ -12,6 +12,6 @@ links: .refresh-links .userInfo-links
 	touch .refresh-links
 
 clean:
-	rm statMyInfo.py statMyInfo.html || /bin/true
-	for a in $(REFRESH_PAGES); do rm $$a||true; done
-	rm .userInfo-links .refresh-links || true
+	rm statMyInfo.py statMyInfo.html 2> /dev/null || /bin/true
+	for a in $(REFRESH_PAGES); do rm $$a 2> /dev/null ||true; done
+	rm .userInfo-links .refresh-links 2> /dev/null || true

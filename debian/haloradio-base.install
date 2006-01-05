@@ -1,9 +1,5 @@
-/usr/share/haloradio
 /usr/share/haloradio/HaloRadio.ini-dist
 /usr/share/haloradio/halo_radio.mysql
 /usr/share/haloradio/compile.sh
-/var/log/haloradio
-/var/lib/haloradio
-/etc/haloradio
 /etc/haloradio/HaloRadio.ini
 
