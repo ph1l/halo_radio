@@ -223,6 +223,18 @@ CREATE TABLE `wall` (
   KEY `date` (`date`)
 ) TYPE=MyISAM;
 
+CREATE TABLE relays (
+  id int(10) unsigned NOT NULL auto_increment,
+  url text NOT NULL,
+  title tinytext,
+  comment text,
+  added_date datetime default NULL,
+  plays smallint(5) unsigned default '0',
+  requests smallint(5) unsigned default '0',
+  kills smallint(5) unsigned default '0',
+  PRIMARY KEY  (id)
+) TYPE=MyISAM;
+
 --
 -- Dumping data for table `users`
 --
