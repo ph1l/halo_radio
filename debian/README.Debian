@@ -28,6 +28,10 @@ haloradio for Debian
 
  	# ln -s /etc/haloradio/svsdir /var/lib/svscan/haloradio
 
+ 6) Add an admin user:
  
- 
+ 	> INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',6,21,NOW(),'');
+
+
+
  -- Philip J Freeman <phil@kremlor.net>, Wed, 28 Dec 2005 16:12:48 -0600

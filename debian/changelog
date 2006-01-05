@@ -1,9 +1,10 @@
-haloradio (0.2.0pre7-2) unstable; urgency=low
+haloradio (0.2.0pre7-1) testing; urgency=low
 
+  * packaged and shit...  
   * debianized.
   * see Changelog (/usr/share/doc/haloradio/changelog) for more info
 
- --  <phil@kremlor.net>  Wed,  4 Jan 2006 16:14:08 -0600
+ --  <phil@kremlor.net>  Wed, 04 Jan 2006 20:17:26 -0600
 
 haloradio (0.2.0pre6-1) unstable; urgency=low
 
