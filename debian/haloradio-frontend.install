@@ -1,4 +1,5 @@
 /usr/share/haloradio/halostatcron.py
 /usr/share/haloradio/halostatcron.sh
 /usr/share/haloradio/public_html/*
+/usr/share/haloradio/public_html/.htaccess
 
