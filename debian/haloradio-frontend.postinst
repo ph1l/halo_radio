@@ -20,7 +20,7 @@ set -e
 case "$1" in
     configure)
 
-    sh /usr/share/haloradio/radio-conf.sh
+    chown -R radio:radio /usr/share/haloradio/public_html
 
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)

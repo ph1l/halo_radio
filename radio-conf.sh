@@ -16,8 +16,6 @@ daemon_dir=/usr/share/haloradio
 # you shouldn't need to touch anything below here.. maybe..
 #
 
-echo
-
 if [ -e ${supervize_dir} ];then
 	exit 0
 fi
@@ -46,5 +44,4 @@ printf "#!/bin/sh\nexec setuidgid %s multilog t ./main\n" ${log_user} > log/run
 chmod 755 log/run || exit 255
 
 echo "created supervise directory for halo_radio at ${supervize_dir}."
-echo
 
