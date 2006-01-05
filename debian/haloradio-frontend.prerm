@@ -19,17 +19,11 @@ set -e
 
 case "$1" in
     remove|deconfigure)
-	if [ -e /etc/haloradio/svsdir ]; then
-    		svc -d /etc/haloradio/svsdir
-		if [ -e /var/lib/svscan ]; then
-			if [ -e /var/lib/svscan/haloradio ]; then
-				rm -rf /var/lib/svscan/haloradio 
-			fi
-		fi
-		rm -rf /etc/haloradio/svsdir
-	fi
+	rm -rf /usr/share/haloradio/public_html/halostat--activity-* || true
+	find /usr/share/haloradio/public_html -name "*.pyc" -o -name "*.pyo" | xargs rm -rf || true
         ;;
     upgrade)
+	find /usr/share/haloradio/public_html -name "*.pyc" -o -name "*.pyo" | xargs rm -rf || true
         ;;
     failed-upgrade)
         ;;

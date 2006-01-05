@@ -9,6 +9,4 @@ fi
 
 echo -n "copying files to ${DEST}..."
 cp -a favicon.ico style.css sendmail.py .htaccess HaloRadio HaloRadio.cgi HaloRadio.ini WebRoot help ${DEST}
-echo -ne " done\ncompiling code..."
-sh ./compile.sh ${DEST}
 echo -ne " done\n"

@@ -130,7 +130,7 @@ root=/var/lib/haloradio/mp3
 
 [cron]
 rrd_data_dir=/var/lib/haloradio/rrd
-png_dir=/var/lib/haloradio/png
+png_dir=/usr/share/haloradio/public_html
 rrdtool_path=rrdtool
 
 ###############################################################################

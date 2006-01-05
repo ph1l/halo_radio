@@ -2,4 +2,7 @@
 /usr/share/haloradio/halo_radio.mysql
 /usr/share/haloradio/compile.sh
 /etc/haloradio/HaloRadio.ini
-
+/var/log/haloradio/.keep
+/var/lib/haloradio/.keep
+/var/lib/haloradio/rrd/.keep
+/var/lib/haloradio/mp3/.keep

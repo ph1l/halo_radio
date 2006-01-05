@@ -1,8 +1,13 @@
+PREFIX=/usr
 
-SHARE=/usr/share/haloradio
+SHARE=$(PREFIX)/share/haloradio
 LOG=/var/log/haloradio
 ETC=/etc/haloradio
 VAR=/var/lib/haloradio
+
+#OWNER
+USER="radio"
+GROUP="radio"
 
 SCRIPTS=chpasswd.py cron.daily.sh cron.often.sh file_list.py halostatcron.py halostatcron.sh install_web.sh list_songs.py radio-conf.sh radiod.py radiod.sh rename.py HaloRadio.cgi DBSync.py
 FILES=compile.sh favicon.ico HaloRadio.ini-dist halo_radio.mysql sendmail.py style.css .htaccess
@@ -19,13 +24,12 @@ install:
 	mkdir -p $(DESTDIR)$(ETC)
 	mkdir -p $(DESTDIR)$(VAR)
 	mkdir -p $(DESTDIR)$(VAR)/rrd
-	mkdir -p $(DESTDIR)$(VAR)/png
 	mkdir -p $(DESTDIR)$(VAR)/mp3
 	mkdir -p $(DESTDIR)$(VAR)/mp3/halo_radio
-	for FILE in $(MP3_COMMERCIALS); do install -o root -g root -m 644 mp3/halo_radio/$${FILE} $(DESTDIR)$(VAR)/mp3/halo_radio; done
-	chown -R radio.radio $(DESTDIR)$(LOG)
-	chown -R radio.radio $(DESTDIR)$(ETC)
-	chown -R radio.radio $(DESTDIR)$(VAR)
+	for FILE in $(MP3_COMMERCIALS); do install -g root -o root -m 644 mp3/halo_radio/$${FILE} $(DESTDIR)$(VAR)/mp3/halo_radio; done
+	chown -R $(USER):$(GROUP) $(DESTDIR)$(LOG)
+	chown -R $(USER):$(GROUP) $(DESTDIR)$(ETC)
+	chown -R $(USER):$(GROUP) $(DESTDIR)$(VAR)
 	chmod 750 $(DESTDIR)$(LOG)
 	chmod 750 $(DESTDIR)$(ETC)
 	chmod 750 $(DESTDIR)$(VAR)
@@ -33,8 +37,12 @@ install:
 	for FILE in $(FILES); do install -o root -g root -m 644 $${FILE} $(DESTDIR)$(SHARE); done
 	for DIR in $(DIRS); do mkdir -p $(DESTDIR)$(SHARE)/$${DIR}; for FILE in $${DIR}/*; do install -o root -g root $${FILE} $(DESTDIR)$(SHARE)/$${DIR};done;done
 	ln -s /etc/haloradio/HaloRadio.ini $(DESTDIR)$(SHARE)/HaloRadio.ini
-	install -o radio -g radio -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini
+	install -o $(USER) -g $(GROUP) -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini
 	( cd $(DESTDIR)$(SHARE)/WebRoot; make clean links )
 	( cd $(DESTDIR)$(SHARE); sh install_web.sh public_html )
-	chown -R radio.radio $(DESTDIR)$(SHARE)/public_html
+	chown -R $(USER):$(GROUP) $(DESTDIR)$(SHARE)/public_html
+	touch $(DESTDIR)$(LOG)/.keep
+	touch $(DESTDIR)$(VAR)/.keep
+	touch $(DESTDIR)$(VAR)/rrd/.keep
+	touch $(DESTDIR)$(VAR)/mp3/.keep
 

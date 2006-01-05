@@ -1,3 +1,9 @@
+haloradio (0.2.0pre7-3) testing; urgency=low
+
+  * debian packaging fixes.
+
+ --  <phil@hostway.net>  Thu, 05 Jan 2006 16:30:49 -0600
+
 haloradio (0.2.0pre7-2) testing; urgency=low
 
   * fixed DB schema and updated Changelog for relays table:

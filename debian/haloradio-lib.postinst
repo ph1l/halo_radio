@@ -21,7 +21,7 @@ case "$1" in
     configure)
 
     echo -ne "compiling python to bytecode..."
-    sh /usr/share/haloradio/compile.sh /usr/share/haloradio/public_html
+    sh /usr/share/haloradio/compile.sh /usr/share/haloradio/HaloRadio
     echo -ne " done\n"
 
     chown -R radio:radio /usr/share/haloradio/public_html
