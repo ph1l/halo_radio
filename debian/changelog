@@ -1,4 +1,4 @@
-haloradio (0.2.1-2) testing; urgency=low
+haloradio (0.2.2-1) testing; urgency=low
 
   * when relaying always resample the source stream.
   * updated status_urls in default HaloRadio.ini
@@ -6,7 +6,6 @@ haloradio (0.2.1-2) testing; urgency=low
   * README updated for new layout nd install procedures..
   * HaloRadio/Util.GetListeners: fixed a bug when adding listeners
     from multiple bitrate streams
-
 
  --  <phil@kremlor.net>  Thu,  5 Jan 2006 18:48:31 -0600
 
