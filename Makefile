@@ -37,7 +37,7 @@ install:
 	for FILE in $(FILES); do install -o root -g root -m 644 $${FILE} $(DESTDIR)$(SHARE); done
 	for DIR in $(DIRS); do mkdir -p $(DESTDIR)$(SHARE)/$${DIR}; for FILE in $${DIR}/*; do install -o root -g root $${FILE} $(DESTDIR)$(SHARE)/$${DIR};done;done
 	ln -s /etc/haloradio/HaloRadio.ini $(DESTDIR)$(SHARE)/HaloRadio.ini
-	install -o $(USER) -g $(GROUP) -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini
+	if [ -e $(DESTDIR)$(ETC)/HaloRadio.ini ]; then install -o $(USER) -g $(GROUP) -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini-dist; else install -o $(USER) -g $(GROUP) -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini; fi
 	( cd $(DESTDIR)$(SHARE)/WebRoot; make clean links )
 	( cd $(DESTDIR)$(SHARE); sh install_web.sh public_html )
 	chown -R $(USER):$(GROUP) $(DESTDIR)$(SHARE)/public_html

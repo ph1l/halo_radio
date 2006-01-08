@@ -1,3 +1,15 @@
+haloradio (0.2.1-2) testing; urgency=low
+
+  * when relaying always resample the source stream.
+  * updated status_urls in default HaloRadio.ini
+  * debian/copyright file fixed.
+  * README updated for new layout nd install procedures..
+  * HaloRadio/Util.GetListeners: fixed a bug when adding listeners
+    from multiple bitrate streams
+
+
+ --  <phil@kremlor.net>  Thu,  5 Jan 2006 18:48:31 -0600
+
 haloradio (0.2.1-1) testing; urgency=low
 
   * added haloradio-backend-extra package ( for the halo_radio commercial.)

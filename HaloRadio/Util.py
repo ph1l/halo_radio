@@ -26,12 +26,12 @@ def GetStreamURLList( ):
 def GetListeners( ):
 
 	# /radio_128,,,3,, - Nine Inch Nails - Rusty Nails 3 #01 - Rusty Nails 3,
-	re_listeners = re.compile(r"^(%s_.*)"%(HaloRadio.conf['shout.mount']),re.M)
+	re_listeners = re.compile(r"(%s_[0-9]+,[^,]*,[^,]*,[0-9]+,)"%(HaloRadio.conf['shout.mount']),re.M)
 
 	listeners=int(HaloRadio.conf['general.listener_offset'])
 
 	for url in GetStreamURLList():
-		page = urllib2.urlopen(url).read()
+		page = "".join(urllib2.urlopen(url).readlines())
 		matches = re_listeners.findall(page)
 		i=0
 		while i < len(matches):

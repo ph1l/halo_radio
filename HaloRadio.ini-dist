@@ -16,7 +16,7 @@ root_url=http://localhost/~radio
 webroot=/usr/share/haloradio/public_html
 
 # status_url - url for the icecast ststus server
-status_urls=http://localhost:8000/status.xsl
+status_urls=http://localhost:8000/status2.xsl
 
 # do_fortune - [0/1] append a fortune to every footer ?
 do_fortune = 0
