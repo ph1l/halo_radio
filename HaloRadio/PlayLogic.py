@@ -170,7 +170,8 @@ class PlayLogic:
 			slm = SessionListMaker.SessionListMaker()
 			slm.GetActive()
 			song = None
-			if len(slm.list) > 0 and int(HaloRadio.conf['general.active_user_weight']) > 0 and random.randint(0,int(HaloRadio.conf['general.active_user_weight'])-1) == 0:
+			if len(slm.list) > 0 and int(HaloRadio.conf['general.active_user_weight']) > 0:
+			    if random.randint(0,int(HaloRadio.conf['general.active_user_weight'])-1) == 0:
 				userlist = []
 				usernames = []
 				for sessionid in slm.list:

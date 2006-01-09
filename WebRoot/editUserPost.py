@@ -12,6 +12,8 @@ class plugin(TopWeb.TopWeb):
 			rights = self.form['rights'].value
 		if self.form.has_key("email"):
 			email = self.form['email'].value
+		if self.form.has_key("passwd"):
+			passwd = self.form['passwd'].value
 
 		if len(rights) < 1:
 			self.do_error("you are required to give them something")
@@ -24,6 +26,8 @@ class plugin(TopWeb.TopWeb):
 			self.do_error("user doesn't exist")
 		
 		if (self.do_authorize(self.user.rights, "a")):
+			if self.form.has_key("passwd"):
+				u.SetPassword(passwd)
 			u.UpdateRights(rights)
 			u.UpdateName(username)
 			u.UpdateEmail(email)

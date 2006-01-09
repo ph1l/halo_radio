@@ -1,3 +1,13 @@
+haloradio (0.2.2-2) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+  * added change password to UserList for admins (notme)
+  * fixed search form to work around IE retardedness (notme)
+  * fixed a bug in radiod.py when active_user_weight == 0 (notme)
+
+
+ --  <elektron@shinu>  Sun,  8 Jan 2006 12:27:09 -0600
+
 haloradio (0.2.2-1) testing; urgency=low
 
   * when relaying always resample the source stream.
