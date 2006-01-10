@@ -151,37 +151,103 @@ class plugin(TopWeb.TopWeb):
 			resultlist.append(result)
 		context.addGlobal ("resultlist", resultlist)
 
-                i = 0
 		pages=[]
-                if offset > 0 :
-                        numpages = int ( offset / limit )
-                        if ( offset % limit > 0 ) :
-                                numpages = numpages + 1
-                        for j in range(0,numpages):
-                                i = i + 1
+		pagefootlimit=20                
+		subsetmax=pagefootlimit*limit
+               	numpages = int ( tot / limit +1 )
+
+		if offset==0:
+			curpage=1
+		else :
+			curpage=( offset/limit+1 )
+
+                context.addGlobal ("curpage", curpage)
+		context.addGlobal ("totpage", tot/limit+1)                                                                     
+		if ( (numpages < pagefootlimit) ):
+			i=0
+			for j in range(0,numpages):
+				i = i + 1
+                                page={}
+				if j==curpage-1:
+					page['pagename']=i
+					pages.append(page)
+				else :
+					page={}
+					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (i-1)*limit, limit, pageappend)
+					page['pagename']=i
+					pages.append(page)
+
+
+			if curpage<numpages:
 				page={}
-
-				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (i-1)*limit, limit, pageappend)
-				page['pagename']=i;
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
+				page['pagename']=">>"
 				pages.append(page)
-                i = i + 1
-                #print """&nbsp;|&nbsp;%(PAGENUM)d""" % { "PAGENUM": i }
-		page={}
-		page['pagename']=i;
-		pages.append(page)
 
-                if max < tot:
-                        numpages = int ( ( tot - max ) / limit )
-                        if ( ( tot - max ) % limit > 0 ):
-                                numpages = numpages + 1
-                        for j in range(0,numpages):
-                                i = i + 1
-                                newoffset = (i-1)*limit
+			context.addGlobal ("pages", pages)
+			context.addGlobal ("searchformaction", self.config['general.cgi_url'])
+
+		else:
+			i=0
+			if curpage <= pagefootlimit:
+				for j in range(0,pagefootlimit):
+					i = i + 1
+					if j==curpage-1:
+                                		page={}
+						page['pagename']=i
+						pages.append(page)
+					else :
+						page={}
+						page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (i-1)*limit, limit, pageappend)
+						page['pagename']=i
+						pages.append(page)
+
+
 				page={}
-				page['pagename']=i
-				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (i-1)*limit, limit, pageappend)
-
+				page['pagename']=".."
 				pages.append(page)
+				page={}
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
+				page['pagename']=">>"
+				pages.append(page)
+				context.addGlobal ("pages", pages)
+				context.addGlobal ("searchformaction", self.config['general.cgi_url'])
+			else:
+				halfpagefootlimit=pagefootlimit/2
+				page={}
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, 0, limit, pageappend)
+				page['pagename']=1
+				pages.append(page)
+				page={}
+				page['pagename']=".."
+				pages.append(page)
+				
+				if ( (curpage+halfpagefootlimit) > numpages ):
+					lastpage=numpages
+				else:	
+					lastpage=curpage+halfpagefootlimit
+				
+				i=curpage-halfpagefootlimit
+				for j in range(curpage-halfpagefootlimit,lastpage):
+					i = i + 1
+					page={}
+					if j==curpage-1:
+						page['pagename']=i
+						pages.append(page)
+					else :
 
-		context.addGlobal ("pages", pages)
-		context.addGlobal ("searchformaction", self.config['general.cgi_url'])
+						page={}
+						page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (i-1)*limit, limit, pageappend)
+						page['pagename']=i
+						pages.append(page)
+
+                        	if curpage<numpages:
+					page={}
+					page['pagename']=".."
+					pages.append(page)
+					page={}
+					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
+					page['pagename']=">>"
+					pages.append(page)
+				context.addGlobal ("pages", pages)
+				context.addGlobal ("searchformaction", self.config['general.cgi_url'])
