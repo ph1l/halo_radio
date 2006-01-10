@@ -82,7 +82,7 @@ if cpid:
 		#logger("%d:kill GetKillState retrned %d" % (ppid,i))
 
 		if i == 1:
-			logger("%d:kill Kill Found in database. Sending signal to parent." %(ppid))
+			logger("%d:kill Kill Found in database. Sending signal to child." %(ppid))
 			try:
 				os.write(pipew,"k")
 			except OSError:
@@ -280,7 +280,7 @@ else:
 				if curr != 0 and curs == 0:
 				    cfg.SetConfigItem("current_relay","0")
 				break
-			if data == "d":
+			elif data == "d":
 			        data = None
 				logger("%d:shout got shutdown from parent..."%(cpid))
 				for br in streams.keys():

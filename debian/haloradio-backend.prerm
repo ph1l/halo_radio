@@ -30,6 +30,7 @@ case "$1" in
 	fi
         ;;
     upgrade)
+	echo NOT SHUTTING DOWN DAEMON.
         ;;
     failed-upgrade)
         ;;

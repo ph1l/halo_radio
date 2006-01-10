@@ -28,9 +28,12 @@ class plugin(TopWeb.TopWeb):
 		if (self.do_authorize(self.user.rights, "a")):
 			if self.form.has_key("passwd"):
 				u.SetPassword(passwd)
-			u.UpdateRights(rights)
-			u.UpdateName(username)
-			u.UpdateEmail(email)
+			if self.form.has_key("rights"):
+				u.UpdateRights(rights)
+			if self.form.has_key("username"):
+				u.UpdateName(username)
+			if self.form.has_key("email"):
+				u.UpdateEmail(email)
 		elif (self.do_authorize(self.user.rights, "m") and
 			not self.do_authorize(u.rights,"a") and
 			not self.do_authorize(rights, "a")

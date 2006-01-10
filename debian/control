@@ -18,7 +18,7 @@ Description: haloradio Library
 Package: haloradio-frontend
 Architecture: all
 Depends: haloradio-lib (= ${Source-Version}), mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd
-Recommends: apache2
+Recommends: apache2, fortune-mod, fortunes-min
 Description: haloradio Frontend
 
 Package: haloradio-util
@@ -28,7 +28,7 @@ Description: haloradio Utilities
 
 Package: haloradio-backend
 Architecture: all
-Depends: haloradio-util (= ${Source-Version}), lame, daemontools
+Depends: haloradio-util (= ${Source-Version}), lame, daemontools, wget
 Recommends: mysql-server, icecast2
 Description: haloradio Backend
 

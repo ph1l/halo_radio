@@ -58,6 +58,12 @@ class PlayLogic:
 		import HaloRadio.PlayHistListMaker as PlayHistListMaker
 		for kill in kills:
 			kill.Delete()
+			if kill.songid == 0:
+				kuser = User.User(kill.requestby)
+				if Util.do_authorize(kuser.rights, "a"):
+					bool=1
+					return 1
+
 			try:
 				phlm = PlayHistListMaker.PlayHistListMaker()
 				phlm.GetRecentPlays(1)

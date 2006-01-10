@@ -39,6 +39,7 @@ class plugin(TopWeb.TopWeb):
 			import HaloRadio.Relay as Relay
 			r = Relay.Relay(currelay)
 			context.addGlobal ("currelay",r.GetDisplayName()) 
+			context.addGlobal ("killurl", "%s?action=kill&songid=0" % ( self.config['general.cgi_url']) )
  			refresh_delay = 150
 		else:
 			havesong=1

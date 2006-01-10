@@ -32,8 +32,8 @@ class Kill(TopTable.TopTable):
 		if id == 0:
 			"""insert a new song and return a song object."""
 
-			if songid == 0:
-				raise "cannot add a kill without a songid."
+			#if songid == 0:
+			#	raise "cannot add a kill without a songid."
 			id = self.do_my_insert( """INSERT INTO %s SET songid="%d", requestby=%d;""" %
 				( self.tablename, songid, requestby) )
 		"""load up the info for the provided id"""

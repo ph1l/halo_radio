@@ -1,3 +1,13 @@
+haloradio (0.2.4-1) testing; urgency=low
+
+  * haloradio-backend install/upgrade scripts upgraded.
+  * haloradio-frontend Recommends updated to include fortune.
+  * bugs fixed in editUserPost.py
+  * Relay kill changes made to radiod.py, PlayLogic.py, and kill.py
+
+
+ --  <phil@kremlor.net>  Tue, 10 Jan 2006 13:06:35 -0600
+
 haloradio (0.2.3-1) testing; urgency=low
 
   * added change password to UserList for admins (notme)

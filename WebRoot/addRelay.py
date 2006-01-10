@@ -10,8 +10,12 @@ class plugin(TopWeb.TopWeb):
 			url = self.form['url'].value
 		if self.form.has_key("title"):
 			title = self.form['title'].value
+		else:
+			title = "Untitled Stream Relay"
 		if self.form.has_key("comment"):
 			comment = self.form['comment'].value
+		else:
+			comment = ""
 
 		r = Relay.Relay(0,url,title,comment)
 

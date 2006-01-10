@@ -22,6 +22,16 @@ case "$1" in
 
     sh /usr/share/haloradio/radio-conf.sh
 
+    echo
+    echo \*\* the daemon was not restarted \(or started\) \*\*
+    echo \*\* you NEED to restart the service soon:
+    echo
+    echo  \# killall radiod.py
+    echo
+    echo \( If you\'re running version \> 0.2.3-1, you can do:
+    echo  \# svc -h /service/haloradio
+    echo 						\)
+
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
 

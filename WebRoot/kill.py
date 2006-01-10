@@ -22,7 +22,10 @@ class plugin(TopWeb.TopWeb):
 		cfg=Config.Config()
 		cur_song_id = int(songid)
 		u = User.User(self.session.userid)
-		if not self.do_authorize(u.rights,"GU") or self.config['general.guest_has_kill'] == "1":
+		if songid == 0:
+			if self.do_authorize(u.rights,"a"):
+				k = Kill.Kill(0, cur_song_id, self.session.userid )
+		elif not self.do_authorize(u.rights,"GU") or self.config['general.guest_has_kill'] == "1":
 			phlm = PlayHistListMaker.PlayHistListMaker()
 			phlm.GetRecentPlays(1)
 			ph = phlm.GetPlayHist(0)

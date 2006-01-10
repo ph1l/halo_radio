@@ -1,0 +1,53 @@
+<html>
+ <head>
+  <link rel=stylesheet type=text/css href=style.css>
+  <title>h&aring;lo_radio:help:FeelingLucky</title>
+ </head>
+  <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
+  <tr><td class=shadow>
+  <!-- Header -->
+  <TABLE Class=head WIDTH=100%>
+  <TR Class=head><TD Class=head>h&aring;lo_radio
+  </TABLE>
+  <!-- Begin Content -->
+  <BR>
+  <H1>Relays</H1>
+  <h3>intro</h3>
+  <P>
+  Relays are source streams that you may want to re-broadcast over your stream.
+  This is accomplished using wget and lame to fetch and re-encode ( to common
+  bitrate and samplerate) the data. This functionality is only presented to
+  admin users.
+  </p>
+  <h3>starting</h3>
+  <p>
+  The way this works is by overriding the Playlogic in radiod.py. When you're
+  ready to switch over to another stream, add the stream's URL and a symbolic
+  title with the Relays admin page. The title will be displayed as 'Now Playing'
+  on the CurrentInfo page. Set the 'Active Relay' to your selected relay. The
+  next time radiod.py goes to find a song, it will go into relay mode and begin
+  re-broadcasting the relay stream.
+  </p>
+  <h3>stopping</h3>
+  <p>
+  To stop the stream, either stop the source from broadcasting or kill it from
+  the CurrentInfo page.
+  </p>
+
+  <H2>See Also:</H2>
+  <P>
+	<A HREF="Playlists.html">Playlists</A>
+  </P>
+  <BR>
+  <!-- End Content -->
+  <BR>
+  <TABLE Class=foot>
+  <font size=1>this is
+  <a href=http://kremlor.net/projects/halo_radio>halo_radio</a> brought to you
+  by <a href=http://kremlor.net/>kremlor industries</a>.</font>
+  </TD>
+  </TABLE>
+  </table>
+  </body>
+</html>
+
