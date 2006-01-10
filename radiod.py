@@ -20,11 +20,13 @@
 #
 #
 
-import time, os, fcntl, select, tempfile, stat,sys
+import time, os, fcntl, select, tempfile, stat, sys, signal
 
 
 def logger( strg ):
 	print strg
+
+
 
 fifopath=tempfile.mktemp()
 logger("tempfile for fifo: %s"% (fifopath))
@@ -36,8 +38,10 @@ except OSError:
 	pass
 
 os.mkfifo(fifopath)
-logger("fifo made. going to fork :-/ ...")
+logger("fifo made.")
 
+
+logger("forking...")
 ppid = os.getpid()
 cpid = os.fork()
 logger("other side of the fork. pid=%d"%(cpid))
@@ -52,6 +56,26 @@ if cpid:
 	find_state = re.compile("^state:\s+(\w)",re.IGNORECASE)
 	pl = PlayLogic.PlayLogic()
 	pipew = os.open(fifopath,os.O_WRONLY)
+        logger ("setting up signal handlers...")
+        def shutdown_handler(signum, frame):
+		logger( "Signal handler called with signal: %s"%(signum) )
+		logger( "shutting down...")
+		try:
+			os.write(pipew,"d")
+			logger("sent shutdown to shout child")
+		except:
+			logger("unable to send shutdown to shout child")
+		logger("waiting for child to die")
+		time.sleep(5)
+		try:
+			os.unlink(fifopath)
+			logger("unlinked fifo: %s"% (fifopath))
+		except:
+			logger("unable to unlink fifo: %s"% (fifopath))
+		sys.exit(0)
+
+	for sig in (signal.SIGHUP, signal.SIGQUIT, signal.SIGKILL, signal.SIGTERM):
+		signal.signal(sig, shutdown_handler)
 	while 1:
 		time.sleep(3)
 		i = pl.GetKillState()
@@ -250,12 +274,18 @@ else:
 				data = os.read(fd,1)
 			if data == "k":
 				data = None
-				logger("%d:shout got kill from child. Killing."%(cpid))
+				logger("%d:shout got kill from parent. Killing."%(cpid))
 				for br in streams.keys():
 				    streams[br]['child_stdout'].close()
 				if curr != 0 and curs == 0:
 				    cfg.SetConfigItem("current_relay","0")
 				break
+			if data == "d":
+			        data = None
+				logger("%d:shout got shutdown from parent..."%(cpid))
+				for br in streams.keys():
+				    streams[br]['child_stdout'].close()
+				sys.exit(0)
 			#if song.scale == 0:
 			#    import re
 			#    stat_out = stat_stdout.readline()

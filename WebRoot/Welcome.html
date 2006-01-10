@@ -27,39 +27,6 @@
     </TR>
     </TABLE>
   <BR>
-        <PRE>
-- Current
-  - source daemon
-        - auto-normalization support disabled until bugs can be worked out.
-  - logic changes
-        - GetListeners changed to pull data from status2.xsl (included
-           with recent versions of icecast.
-
-- 0.2.0pre6
-  - database changes
-        > alter table request_queue add column hold int(1) unsigned NOT NULL
-        -> Default 0;
-  - config file changes ( see HaloRadio.ini-dist for details )
-        - rerequest_limit=0
-        - replay_limit=0
-  - web interface changes
-        - added support to search multiple users requests. Advanced Search.
-        - added holding / releasing of requests.
-        - added support to view the held requests in the queue.
-
-- 0.2.0pre5
-  - database changes
-        > alter table songs add column scale FLOAT default 0;
-  - web interface changes
-        - fixed a bug in the newUser signup that was sending messages from
-        halo_radio@server.DOMAIN , now emails should come from
-        halo_radio@hostname.
-        - search function searches some id3 tags as well as the path and
-        filename. (artist, album, title)
-  - source daemon changes
-        - added auto-normalization support.
-
-	</PRE>
   <BR>
   <BR>
   <BR>
