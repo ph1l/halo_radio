@@ -1,3 +1,10 @@
+haloradio (0.2.5-1) testing; urgency=low
+
+  * cleaned up the advanced search results. (ezra)
+  * cleaned up Relays admin page. added help link.
+
+ --  <phil@kremlor.net>  Wed, 11 Jan 2006 17:44:03 -0600
+
 haloradio (0.2.4-1) testing; urgency=low
 
   * haloradio-backend install/upgrade scripts upgraded.

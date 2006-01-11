@@ -19,13 +19,15 @@
   </TABLE>
   <!-- Begin Content -->
   	<BR>
+	<H1>Relays<A HREF=help/Relays.html>?</A></H1>
+	<H2>Active Relay:</H2>
   	<FORM name=relayselect tal:attributes="action formaction" METHOD="GET">
 	<SELECT NAME=id SIZE=1>
 	  <OPTION tal:repeat="r relays" tal:content=r/title tal:attributes="selected r/selected; value r/id" >Option</OPTION>
 	</SELECT>
 	<INPUT TYPE=SUBMIT NAME=action VALUE=changeRelay>
 	</FORM>
-	<H1>Relays:</H1>
+	<H2>Availible Relays:</H2>
 	<ul>
 	 <li tal:repeat="r relays">
 	   <B tal:content="r/id">666</B> -
