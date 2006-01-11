@@ -170,16 +170,30 @@ class Song(TopTable.TopTable):
 		except:
 			return 0
 
-	def GetRequestsFromUsers( self, users ):
-		query="""SELECT count(songid) as number from play_history where songid=%d AND requestby in (%s) GROUP BY songid;""" % ( self.id, users )
+	def GetNumRecentKills( self, days=7):
+		query="""SELECT count(songid) as number from kill_history where songid=%d AND killby != 0 AND date>FROM_UNIXTIME(UNIX_TIMESTAMP(NOW())-%d) GROUP BY songid;""" % (self.id,days*24*60*60)
 		result = self.do_my_query( query )
 		try:
 			return result[0][0]
 		except:
 			return 0
 
-	def GetKillsFromUsers( self, users ):
-		query="""SELECT count(songid) as number from kill_history where songid=%d AND killby in (%s) GROUP BY songid;""" % ( self.id, users )
+	def GetRequestsFromUsers( self, users, recent=0 ):
+		if recent > 0:
+			query="""SELECT count(songid) as number from play_history where songid=%d AND requestby in (%s) AND play_history.date > FROM_UNIXTIME(UNIX_TIMESTAMP(NOW())-%d) GROUP BY songid;""" % ( self.id, users, (recent*24*60*60) )
+		else:
+			query="""SELECT count(songid) as number from play_history where songid=%d AND requestby in (%s) GROUP BY songid;""" % ( self.id, users )
+		result = self.do_my_query( query )
+		try:
+			return result[0][0]
+		except:
+			return 0
+
+	def GetKillsFromUsers( self, users, recent=0 ):
+		if recent > 0:
+			query="""SELECT count(songid) as number from kill_history where songid=%d AND killby in (%s) AND kill_history.date > FROM_UNIXTIME(UNIX_TIMESTAMP(NOW())-%d) GROUP BY songid;""" % ( self.id, users, (recent*24*60*60) )
+		else:
+			query="""SELECT count(songid) as number from kill_history where songid=%d AND killby in (%s) GROUP BY songid;""" % ( self.id, users )
 		result = self.do_my_query( query )
 		try:
 			return result[0][0]

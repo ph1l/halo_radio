@@ -9,6 +9,7 @@ class plugin(TopWeb.TopWeb):
                 return "amvUG"
 	def handler(self, context):
 		pageappend = ""
+		recent = 0
 		if self.form.has_key("search"):
 			searchstring = self.form['search'].value
 		else:
@@ -47,8 +48,6 @@ class plugin(TopWeb.TopWeb):
                                	pageappend += "&recent=on&days=%d" % recent
 			except ValueError:
 				self.do_error("""Invalid input into Past Days: "%s" """ % self.form['days'].value)
-		else:
-			recent = 0
 
 		query_field = []
 		if self.form.has_key("query_fields"):
@@ -102,16 +101,16 @@ class plugin(TopWeb.TopWeb):
 				userids.append(str(id))
 			users = ",".join(userids)
 			if sort == "popularity":
-				slm.SubSearchUsers( searchstring, users, order="popular", type=type_input, recent_days=recent, user_logic=userlogic_input, query_fields=query_field, query_logic=querylogic_input )
+				slm.SubSearchUsers( searchstring, users=users, order="popular", type=type_input, recent_days=recent, user_logic=userlogic_input, query_fields=query_field, query_logic=querylogic_input )
 			else:
-				slm.SubSearchUsers( searchstring, users, type=type_input, recent_days=recent, user_logic=userlogic_input, query_fields=query_field, query_logic=querylogic_input )
+				slm.SubSearchUsers( searchstring, users=users, type=type_input, recent_days=recent, user_logic=userlogic_input, query_fields=query_field, query_logic=querylogic_input )
 		else:
 			if sort == "popularity":
-				slm.SubSearch( searchstring, order="popular", type=type_input, recent_days=recent, query_fields=query_field, query_logic=querylogic_input )
+				slm.SubSearchUsers( searchstring, order="popular", type=type_input, recent_days=recent, query_fields=query_field, query_logic=querylogic_input )
 			#elif sort == "myPopularity":
 			#	slm.SubSearchPath( searchstring, order="mypopularity")
 			else:
-				slm.SubSearch( searchstring, type=type_input, recent_days=recent, query_fields=query_field, query_logic=querylogic_input )
+				slm.SubSearchUsers( searchstring, type=type_input, recent_days=recent, query_fields=query_field, query_logic=querylogic_input )
 		numres = len(slm.list)
 		options = []
 		for option in ('filename','popularity'):
@@ -124,7 +123,7 @@ class plugin(TopWeb.TopWeb):
 		context.addGlobal ("numresults", numres)
 		context.addGlobal ("searchstr", searchstring)
 
-		slm.Skip(offset)
+		#slm.Skip(offset)
 
 		if offset+limit > numres:
 			numdisp = numres - offset
@@ -135,16 +134,22 @@ class plugin(TopWeb.TopWeb):
 		max = offset+numdisp
 		tot = numres
 		resultlist=[]
-		for i in range(0, numdisp):
+		for i in range(offset, offset + numdisp):
 			s = slm.GetSong(i)
 			result={}
 			result['id'] = s.id
 			result['song'] = s.GetDisplayName()
 			result['songlen'] = s.GetDisplayLength()
-			try:
+			if self.form.has_key("users") and self.form.has_key("recent"):
+				result['requests'] = s.GetRequestsFromUsers( users, recent=recent )
+				result['kills'] = s.GetKillsFromUsers( users, recent=recent )
+			elif self.form.has_key("users"):
 				result['requests'] = s.GetRequestsFromUsers( users )
 				result['kills'] = s.GetKillsFromUsers( users )
-			except:
+			elif self.form.has_key("recent"):
+				result['requests'] = s.GetNumRecentRequests( days=recent )
+				result['kills'] = s.GetNumRecentKills( days=recent )
+			else:
 				result['requests'] = s.requests
 				result['kills'] = s.kills
 			result['songurl'] = "%s?action=songInfo&id=%d"%( self.config['general.cgi_url'], s.id)
