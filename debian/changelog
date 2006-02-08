@@ -1,3 +1,13 @@
+haloradio (0.2.5-2) UNRELEASED; urgency=low
+
+  * rebuilt in stable environment
+  * fixed haloradio-lib postinst:
+    `/usr/share/haloradio/public_html': No such file or directory
+  * updated message in haloradio-backend postinst
+  * added a build dependency on python, duh.
+
+ --  <phil@kremlor.net>  Thu, 02 Feb 2006 21:37:00 +0100
+
 haloradio (0.2.5-1) testing; urgency=low
 
   * cleaned up the advanced search results. (ezra)

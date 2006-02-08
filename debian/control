@@ -2,7 +2,7 @@ Source: haloradio
 Section: unknown
 Priority: optional
 Maintainer: Philip J Freeman <phil@kremlor.net>
-Build-Depends: debhelper (>= 4.0.0)
+Build-Depends: debhelper (>= 4.0.0), python
 Standards-Version: 3.6.2
 
 Package: haloradio-base

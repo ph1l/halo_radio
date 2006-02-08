@@ -24,9 +24,6 @@ case "$1" in
     sh /usr/share/haloradio/compile.sh /usr/share/haloradio/HaloRadio
     echo -ne " done\n"
 
-    chown -R radio:radio /usr/share/haloradio/public_html
-
-
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
 

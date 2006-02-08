@@ -22,15 +22,16 @@ case "$1" in
 
     sh /usr/share/haloradio/radio-conf.sh
 
+	SVCSCAN_PATH="/var/lib/svscan"
     echo
     echo \*\* the daemon was not restarted \(or started\) \*\*
-    echo \*\* you NEED to restart the service soon:
     echo
-    echo  \# killall radiod.py
+    echo \*\* If this is an Upgrade:
+    echo  \# svc -h ${SVCSCAN_PATH}/haloradio
+    echo \*\* If this is an Install: 
+    echo   See: /usr/share/doc/haloradio-backend/README.Debian
+    echo   Manual configuration is required to get up and running.
     echo
-    echo \( If you\'re running version \> 0.2.3-1, you can do:
-    echo  \# svc -h /service/haloradio
-    echo 						\)
 
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)
