@@ -1,4 +1,4 @@
-haloradio (0.2.5-2) UNRELEASED; urgency=low
+haloradio (0.2.5-2) testing; urgency=low
 
   * rebuilt in stable environment
   * fixed haloradio-lib postinst:
