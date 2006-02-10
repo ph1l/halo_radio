@@ -122,6 +122,7 @@ class plugin(TopWeb.TopWeb):
 		context.addGlobal ("options", options)
 		context.addGlobal ("numresults", numres)
 		context.addGlobal ("searchstr", searchstring)
+		context.addGlobal ("advsearch", self.config['general.cgi_url'] + "?action=advancedSearch")
 
 		#slm.Skip(offset)
 
@@ -170,6 +171,11 @@ class plugin(TopWeb.TopWeb):
 		context.addGlobal ("totpage", tot/limit+1)                                                                     
 		if ( numpages < pagefootlimit ):
 			i=0
+			if curpage > 1:
+				page={}
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage-2)*limit, limit, pageappend)
+				page['pagename']="<<"
+				pages.append(page)
 			for j in range(0,numpages):
 				i = i + 1
                                 page={}
@@ -195,6 +201,11 @@ class plugin(TopWeb.TopWeb):
 		else:
 			i=0
 			if curpage <= (pagefootlimit / 2):
+				if curpage != 1:
+					page={}
+					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage-2)*limit, limit, pageappend)
+					page['pagename']="<<"
+					pages.append(page)
 				for j in range(0,pagefootlimit):
 					i = i + 1
 					if j==curpage-1:
@@ -212,6 +223,10 @@ class plugin(TopWeb.TopWeb):
 				page['pagename']=".."
 				pages.append(page)
 				page={}
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (tot/limit+1)*limit, limit, pageappend)
+				page['pagename']=(tot/limit+1)
+				pages.append(page)
+				page={}
 				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
 				page['pagename']=">>"
 				pages.append(page)
@@ -219,6 +234,10 @@ class plugin(TopWeb.TopWeb):
 				context.addGlobal ("searchformaction", self.config['general.cgi_url'])
 			else:
 				halfpagefootlimit=pagefootlimit/2
+				page={}
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage-2)*limit, limit, pageappend)
+				page['pagename']="<<"
+				pages.append(page)
 				page={}
 				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, 0, limit, pageappend)
 				page['pagename']=1
@@ -249,6 +268,10 @@ class plugin(TopWeb.TopWeb):
                         	if curpage<numpages:
 					page={}
 					page['pagename']=".."
+					pages.append(page)
+					page={}
+					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (tot/limit+1)*limit, limit, pageappend)
+					page['pagename']=(tot/limit+1)
 					pages.append(page)
 					page={}
 					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
