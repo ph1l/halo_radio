@@ -86,6 +86,7 @@ repository ( see http://kremlor.net/~phil for more info ).
 
 Manual Installation
 ------ ------------
+To install as a user without root access see: Manual Installation (non-root)
 
 1) Create a local user:
 
@@ -204,6 +205,62 @@ If the installation of Halo_Radio failed, check whether all the required
 software is correctly installed. If it still failed, please send bug
 report to the halo_radio mailing list mentioned near the beginning of
 this document.
+
+
+Manual Installation (non-root)
+------ ------------ ----------
+
+1) UN-tar your source distribution:
+
+    # tar -zxvf haloradio-xxx.tar.gz
+
+2) Install the package:
+
+    # cd haloradio-xxx
+    # make DESTDIR=~/haloradio install-user
+
+3)  Setup your radio database:
+
+    Create a radio database:
+    mysql> create database radio;
+
+    Create a database user:
+    mysql> grant all on radio.* to radio@localhost  \
+    identified by 'password';
+
+    Populate your radio database:
+    # mysql -u radio -p radio <  \
+    ~/haloradio/usr/share/haloradio/halo_radio.mysql
+
+4) Edit your Configuration file (HaloRadio.ini)
+
+    $ vi ~/haloradio/etc/haloradio/HaloRadio.ini
+
+    ( if you're upgrading the new config will be installed as
+     ~/haloradio/etc/haloradio/HaloRadio.ini-dist)
+
+5) Sync the file system with the :
+
+    Run DBSync.py to make halo_radio aware of your mp3s:
+    $ cd ~/haloradio/usr/share/haloradio
+    $ ./DBSync.py -cfsp
+
+	( Later set up a cron job to update the system regularly : see
+	 haloradio-xxx/debian/haloradio-backend.cron.d)
+
+
+6) Create a crontab entry to sync your database (see
+    haloradio-xxx/debian/haloradio-backend.cron.d)
+
+
+7) Test the daemon:
+
+    $ cd ~/haloradio/usr/share/haloradio
+    $ ./radiod.py
+
+8) Verify your apache config for web interface:
+
+Refer to step 9 of the Manual Installation.
 
 
 So, You're up and Running, What Now ?

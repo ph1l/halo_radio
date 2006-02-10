@@ -168,7 +168,7 @@ class plugin(TopWeb.TopWeb):
 
                 context.addGlobal ("curpage", curpage)
 		context.addGlobal ("totpage", tot/limit+1)                                                                     
-		if ( (numpages < pagefootlimit) ):
+		if ( numpages < pagefootlimit ):
 			i=0
 			for j in range(0,numpages):
 				i = i + 1
@@ -194,7 +194,7 @@ class plugin(TopWeb.TopWeb):
 
 		else:
 			i=0
-			if curpage <= pagefootlimit:
+			if curpage <= (pagefootlimit / 2):
 				for j in range(0,pagefootlimit):
 					i = i + 1
 					if j==curpage-1:

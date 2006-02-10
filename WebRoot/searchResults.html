@@ -27,17 +27,15 @@
     <FORM name=search tal:attributes="action searchformaction" METHOD="GET">
     Query: <INPUT TYPE=TEXT NAME=search tal:attributes="value searchstr">
 	<A HREF=help/SearchQuery.html>?</A>
+	<FONT SIZE=-2><A tal:attributes="href advsearch">Advanced Search</A></FONT>
     <BR>
     Result Order: <SELECT NAME=sort SIZE=1>
     <OPTION tal:repeat="option options" tal:content=option/name tal:attributes="selected option/selected" >Option</OPTION>
     </SELECT>
 	<A HREF=help/SearchResultOrder.html>?</A>
     <BR>
-    Search Type: 
-    <INPUT TYPE=radio NAME=action VALUE=searchResults CHECKED>Regular Search</INPUT>
-    <INPUT TYPE=radio NAME=action VALUE=imFeelingPopular>I'm Feeling Popular</INPUT><A HREF="help/FeelingPopular.html">?</A>
-    <BR>
-    <INPUT TYPE=submit value=Search>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=searchResults>
+    <INPUT TYPE=SUBMIT NAME=action VALUE=imFeelingPopular><A HREF="help/FeelingPopular.html">?</A>
     <BR>
     </FORM>
   <BR>
