@@ -85,3 +85,14 @@ class RequestNotFound(Exception):
 		self.id = value
 	def __str__(self):
 		return repr(self.value)
+
+class InvalidInput(Exception):
+	"""
+	This an exception class !
+	"""
+
+	def __init__(self,  value):
+		self.id = value
+	def __str__(self):
+		return "Invalid Input: %s" % (self.value)
+

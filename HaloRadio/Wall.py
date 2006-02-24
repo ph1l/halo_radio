@@ -33,6 +33,11 @@ class Wall(TopTable.TopTable):
 			if userid == None or line == None:
 				raise "cannot add a Wall without a userid or line fool."
 			try:
+				line = str(unicode(line))
+			except UnicodeDecodeError:
+				import HaloRadio.Exception as Exception
+				raise Exception.InvalidInput, "non-unicode characters in wallPost"
+			try:
 				id = self.do_my_insert( """INSERT INTO %s SET userid=%d, date=NOW(), line="%s";""" %
 				( self.tablename, userid, self.escape(line) ) )
 			except _mysql_exceptions.IntegrityError, value:
