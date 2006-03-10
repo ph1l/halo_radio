@@ -160,7 +160,7 @@ class plugin(TopWeb.TopWeb):
 		pages=[]
 		pagefootlimit=20                
 		subsetmax=pagefootlimit*limit
-               	numpages = int ( tot / limit +1 )
+               	numpages = int ( (tot -1) / limit +1 )
 
 		if offset==0:
 			curpage=1
@@ -168,7 +168,7 @@ class plugin(TopWeb.TopWeb):
 			curpage=( offset/limit+1 )
 
                 context.addGlobal ("curpage", curpage)
-		context.addGlobal ("totpage", tot/limit+1)                                                                     
+		context.addGlobal ("totpage", numpages)                                                                     
 		if ( numpages < pagefootlimit ):
 			i=0
 			if curpage > 1:
@@ -265,7 +265,7 @@ class plugin(TopWeb.TopWeb):
 						page['pagename']=i
 						pages.append(page)
 
-                        	if curpage<numpages:
+                        	if curpage<(numpages-(pagefootlimit/2)):
 					page={}
 					page['pagename']=".."
 					pages.append(page)
@@ -273,6 +273,7 @@ class plugin(TopWeb.TopWeb):
 					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (tot/limit+1)*limit, limit, pageappend)
 					page['pagename']=(tot/limit+1)
 					pages.append(page)
+                        	if curpage<numpages:
 					page={}
 					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
 					page['pagename']=">>"
