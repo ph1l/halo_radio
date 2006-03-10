@@ -1,3 +1,13 @@
+haloradio (0.2.5-3) testing; urgency=low
+
+  * throw an exception upon receiving non-unicode input in the wall
+  * fixed pages logic on searchResults page.
+  * finished cleanup of "I'm Feeling Lucky/"
+  * fixed a long standing issue where if the number of results
+    fell on a page boundary it would report one extra page.
+
+ --  <ezra@halo.nu>  Fri, 10 Mar 2006 14:27:33 -0600
+
 haloradio (0.2.5-2) testing; urgency=low
 
   * rebuilt in stable environment
