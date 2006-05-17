@@ -44,7 +44,7 @@ install-user: install-pre
 	for FILE in $(SCRIPTS); do install -m 755 $${FILE} $(DESTDIR)$(SHARE); done
 	for FILE in $(FILES); do install -m 644 $${FILE} $(DESTDIR)$(SHARE); done
 	for DIR in $(DIRS); do mkdir -p $(DESTDIR)$(SHARE)/$${DIR}; for FILE in $${DIR}/*; do install $${FILE} $(DESTDIR)$(SHARE)/$${DIR};done;done
-	ln -sf $(ETC)/HaloRadio.ini $(DESTDIR)$(SHARE)/HaloRadio.ini
+	ln -sf $(DESTDIR)$(ETC)/HaloRadio.ini $(DESTDIR)$(SHARE)/HaloRadio.ini
 	if [ -e $(DESTDIR)$(ETC)/HaloRadio.ini ]; then install -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini-dist; else install -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini; fi
 	make install-web
 	make install-post
