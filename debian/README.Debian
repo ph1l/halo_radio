@@ -20,15 +20,17 @@ haloradio for Debian
  	# su - radio
 	$ ./DBSync.py -cfsp
 
- 4) test the daemon (as user radio):
+ 4) configure and start icecast.
+
+ 5) test the daemon (as user radio):
 
  	$ ./radiod.sh 
 
- 5) Finally start the daemon via daemontools:
+ 6) Finally start the daemon via daemontools:
 
  	# ln -s /etc/haloradio/svsdir /var/lib/svscan/haloradio
 
- 6) Add an admin user:
+ 7) Add an admin user:
  
  	> INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',6,21,NOW(),'');
 

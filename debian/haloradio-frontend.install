@@ -2,4 +2,4 @@
 /usr/share/haloradio/halostatcron.sh
 /usr/share/haloradio/public_html/*
 /usr/share/haloradio/public_html/.htaccess
-
+/etc/apache2/conf.d/haloradio

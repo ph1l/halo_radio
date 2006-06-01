@@ -26,6 +26,9 @@ case "$1" in
 
     chown -R radio:radio /usr/share/haloradio/public_html
 
+    a2enmod userdir || true
+    a2enmod suexec || true
+
 
     ;;
     abort-upgrade|abort-remove|abort-deconfigure)

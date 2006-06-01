@@ -3,6 +3,7 @@ PREFIX=/usr
 SHARE=$(PREFIX)/share/haloradio
 LOG=/var/log/haloradio
 ETC=/etc/haloradio
+AP_ETC=/etc/apache2/conf.d
 VAR=/var/lib/haloradio
 
 #OWNER
@@ -22,6 +23,7 @@ install-pre:
 	mkdir -p $(DESTDIR)$(SHARE)/public_html
 	mkdir -p $(DESTDIR)$(LOG)
 	mkdir -p $(DESTDIR)$(ETC)
+	mkdir -p $(DESTDIR)$(AP_ETC)
 	mkdir -p $(DESTDIR)$(VAR)
 	mkdir -p $(DESTDIR)$(VAR)/rrd
 	mkdir -p $(DESTDIR)$(VAR)/mp3
@@ -34,6 +36,8 @@ install: install-pre
 	for FILE in $(SCRIPTS); do install -o root -g root -m 755 $${FILE} $(DESTDIR)$(SHARE); done
 	for FILE in $(FILES); do install -o root -g root -m 644 $${FILE} $(DESTDIR)$(SHARE); done
 	for DIR in $(DIRS); do mkdir -p $(DESTDIR)$(SHARE)/$${DIR}; for FILE in $${DIR}/*; do install -o root -g root $${FILE} $(DESTDIR)$(SHARE)/$${DIR};done;done
+	install -o root -g root -m 644 apache2-conf.d-haloradio $(DESTDIR)$(AP_ETC)/haloradio
+
 	ln -sf /etc/haloradio/HaloRadio.ini $(DESTDIR)$(SHARE)/HaloRadio.ini
 	if [ -e $(DESTDIR)$(ETC)/HaloRadio.ini ]; then install -o $(USER) -g $(GROUP) -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini-dist; else install -o $(USER) -g $(GROUP) -m 750 HaloRadio.ini-dist $(DESTDIR)$(ETC)/HaloRadio.ini; fi
 	make install-web

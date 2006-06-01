@@ -1,0 +1,4 @@
+<Directory /usr/share/haloradio/public_html>
+	AllowOverride FileInfo AuthConfig Limit Options Indexes
+	Options MultiViews Indexes FollowSymLinks IncludesNoExec
+</Directory>
