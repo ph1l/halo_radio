@@ -48,16 +48,39 @@ def make_printable_string( String ):
 			newString += String[i]
 	return newString
 	
+def update_dbversion():
+	cfg = Config.Config()
+	current_version=1
+
+	dbversion=int(cfg.GetConfigItem("dbversion"))
+
+	if dbversion<1:
+		c = HaloRadio.db.cursor()
+		c._do_query( """
+
+CREATE TABLE `styles` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `style` tinytext NOT NULL,
+  PRIMARY KEY (`id`)
+) TYPE=MyISAM;
+
+INSERT INTO `styles` VALUES (1,'style.css');
+INSERT INTO `styles` VALUES (2,'no_style.css');
+INSERT INTO `styles` VALUES (3,'style_green.css');
+INSERT INTO `styles` VALUES (4,'style_pink.css');
+
+			""")
+
+		cfg.SetConfigItem("dbversion","1")
+	return None
+
 def check_dbversion():
 	cfg = Config.Config()
-	current_version=0
+	current_version=1
 
 	try:
 		dbversion=cfg.GetConfigItem("dbversion")
 	except:
-		#print "WARNING: dbversion tag added to database."
-		#dbversion=0
-		#print cfg.NewConfigItem("dbversion","%s"%dbversion)
 		print "WARNING: dbversion tag not found."
 		print "       : Check that your DB structure is up to date."
 		return 0
@@ -65,19 +88,10 @@ def check_dbversion():
 	dbversion=int(dbversion)
 
 	if dbversion < current_version:
-		print "WARNING: dbversion tag indicates your database is out of date."
-		print "       : Recommend running with -u option."
+		print "WARNING: dbversion tag indicates your database is out of date. Updating..."
+		update_dbversion()
 
 	return 1
-
-def update_dbversion():
-	cfg = Config.Config()
-	current_version=1
-
-	#try:
-	dbversion=int(cfg.GetConfigItem("dbversion"))
-
-	#cfg.SetConfigItem("dbversion","1")
 
 def update_db(slow, verbose=0):  
 

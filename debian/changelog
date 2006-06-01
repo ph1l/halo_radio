@@ -4,6 +4,10 @@ haloradio (0.2.6-2) stable; urgency=low
   * added apache2 config
   * modified dependencies for shout-python
   * Theme support! see changelog for DB Schema changes (ezra)
+  * fixed a dependency for haloradio-frontend package
+  * fixed permissions for /var/lib/haloradio/rrd in haloradio-frontend
+  * updated dbversion in halo_radio.mysql to reflect theme changes
+  * updated DBsync.py to automaticly update database for upgrades.
 
  --  <phil@kremlor.net>  Thu,  1 Jun 2006 11:59:31 -0500
 

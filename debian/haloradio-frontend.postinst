@@ -25,6 +25,7 @@ case "$1" in
     echo -ne " done\n"
 
     chown -R radio:radio /usr/share/haloradio/public_html
+    chown -R radio:radio /var/lib/haloradio/rrd
 
     a2enmod userdir || true
     a2enmod suexec || true

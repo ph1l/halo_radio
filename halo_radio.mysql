@@ -26,7 +26,7 @@ INSERT INTO `config` VALUES (2,'current_song','5');
 INSERT INTO `config` VALUES (3,'current_percent','42');
 INSERT INTO `config` VALUES (4,'last_announce','0');
 INSERT INTO `config` VALUES (5,'announce_delay','120');
-INSERT INTO `config` VALUES (6,'dbversion','0');
+INSERT INTO `config` VALUES (6,'dbversion','1');
 INSERT INTO `config` VALUES (7,'current_relay','0');
 
 --
@@ -248,6 +248,10 @@ CREATE TABLE `styles` (
 
 INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','');
 ##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',6,21,NOW(),'');
+
+--
+-- Dumping data for table `styles`
+--
 
 INSERT INTO `styles` VALUES (1,'style.css');
 INSERT INTO `styles` VALUES (2,'no_style.css');
