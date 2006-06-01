@@ -57,18 +57,27 @@ def update_dbversion():
 	if dbversion<1:
 		c = HaloRadio.db.cursor()
 		c._do_query( """
-
+ALTER TABLE `users` ADD COLUMN `style` int(10) DEFAULT 1;
+			""")
+		c._do_query( """
 CREATE TABLE `styles` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `style` tinytext NOT NULL,
   PRIMARY KEY (`id`)
 ) TYPE=MyISAM;
+			""")
+		c._do_query( """
 
 INSERT INTO `styles` VALUES (1,'style.css');
+			""")
+		c._do_query( """
 INSERT INTO `styles` VALUES (2,'no_style.css');
+			""")
+		c._do_query( """
 INSERT INTO `styles` VALUES (3,'style_green.css');
+			""")
+		c._do_query( """
 INSERT INTO `styles` VALUES (4,'style_pink.css');
-
 			""")
 
 		cfg.SetConfigItem("dbversion","1")
