@@ -49,7 +49,7 @@ class UserSongStatsListMaker(TopListMaker.TopListMaker):
 
 	def GetTopRank ( self, userid, num ):
 		self.list = [ ]
-		query = """SELECT songid, requests, kills FROM %s WHERE userid='%d' ORDER BY requests - kills DESC LIMIT %d""" % ( self.tablename, userid, num )
+		query = """SELECT songid, requests, kills FROM %s WHERE userid='%d' AND requests - kills > 0 ORDER BY requests - kills DESC LIMIT %d""" % ( self.tablename, userid, num )
 		result = self.do_my_query( query )
 		for row in result:
 			(id, requests, kills) = row
