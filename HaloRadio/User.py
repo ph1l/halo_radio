@@ -50,11 +50,14 @@ class User(TopTable.TopTable):
 				raise "Cannot Authenticate User."
 			
 		"""load up the info for the provided id"""
-		rows = self.do_my_query( """SELECT name,email,rights,requests,kills,create_time FROM %s WHERE id=%d;""" % ( self.tablename, id ) )
+		rows = self.do_my_query( """SELECT name,email,rights,requests,kills,create_time,style FROM %s WHERE id=%d;""" % ( self.tablename, id ) )
 		try:
-			(self.name, self.email, self.rights, self.requests, self.kills, self.create_time ) = rows[0]
+			(self.name, self.email, self.rights, self.requests, self.kills, self.create_time, style ) = rows[0]
+			import HaloRadio.Style as Style
+			s = Style.Style(style)
+			self.style = s.GetName()
 		except IndexError:
-			raise "unable to load data for request(%d)" % id
+			raise "unable to load data for user(%d)" % id
 
 		self.id = id
 
@@ -71,15 +74,28 @@ class User(TopTable.TopTable):
 		self.requests+=1
 
 	def SetPassword(self, newpassword ):
-		self.do_my_do( """UPDATE %s SET password=password("%s") WHERE id=%d;""" %
-			( self.tablename, newpassword, self.id ) )
+		if newpassword is not None:
+			self.do_my_do( """UPDATE %s SET password=password("%s") WHERE id=%d;""" %
+				( self.tablename, newpassword, self.id ) )
 
 	def UpdateEmail(self, email="default@halo_radio" ):
-		self.do_my_do( """UPDATE %s SET email="%s" WHERE id=%d;""" %
-			( self.tablename, email, self.id ) )
-		self.email = email
+		if email is not None:
+			self.do_my_do( """UPDATE %s SET email="%s" WHERE id=%d;""" %
+				( self.tablename, email, self.id ) )
+			self.email = email
+
+	def GetStyle(self):
+		return self.style
+
+	def UpdateStyle(self, style ):
+		if style is not None:
+			self.do_my_do( """UPDATE %s SET style=%d WHERE id=%d;""" %
+				( self.tablename, style, self.id ) )
+			self.style = style
 
 	def UpdateName(self, username):
+		if username is None:
+			return
 		import HaloRadio.UserListMaker as UserListMaker
 		ulm = UserListMaker.UserListMaker()
 		ulm.GetByName(username)
@@ -95,8 +111,8 @@ class User(TopTable.TopTable):
 		self.kills+=1
 		return
 	def UpdateRights(self, rights):
-		self.do_my_do( """UPDATE %s SET rights="%s" WHERE id=%d;""" % (self.tablename, rights, self.id) )
-		return
+		if rights is not None:
+			self.do_my_do( """UPDATE %s SET rights="%s" WHERE id=%d;""" % (self.tablename, rights, self.id) )
 
 	def GetNewHash(self):
 		import string, random
@@ -107,11 +123,13 @@ class User(TopTable.TopTable):
 			( self.tablename, newhash, self.id ) )
 		self.hash=newhash
 		return newhash
+
 	def GetHash(self):
 		rows = self.do_my_query("""SELECT hash FROM %s WHERE id=%d;""" %
 			( self.tablename, self.id ) )
 		(hash, ) =rows[0]
 		return hash
+
 	def ClearHash(self):
 		self.GetNewHash()
 

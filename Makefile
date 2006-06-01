@@ -11,8 +11,8 @@ USER="radio"
 GROUP="radio"
 
 SCRIPTS=chpasswd.py cron.daily.sh cron.often.sh file_list.py halostatcron.py halostatcron.sh install_web.sh list_songs.py radio-conf.sh radiod.py radiod.sh rename.py HaloRadio.cgi DBSync.py
-FILES=compile.sh favicon.ico HaloRadio.ini-dist halo_radio.mysql sendmail.py style.css .htaccess
-DIRS=HaloRadio help WebRoot
+FILES=compile.sh favicon.ico HaloRadio.ini-dist halo_radio.mysql sendmail.py .htaccess
+DIRS=HaloRadio help WebRoot styles
 
 MP3_COMMERCIALS=halo_radio-commercial-waits-punk-patch.mp3
 

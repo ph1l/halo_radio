@@ -1,0 +1,48 @@
+BODY { background-color: #FF00FF; color:#FF88FF;
+ font-size: 120%; font-family: Arial, Verdana; }
+
+IMG { border: 0; cursor: default}
+
+A:link {color: #FF88FF; text-decoration: none}
+A:visited {color: #FF99FF; text-decoration: none}
+
+TABLE { color: #FF88FF; border: 0 }
+TD { border-color: #FF00FF; background-color: #FF00FF; border: 1}
+
+TABLE.head { border: 0; width="100%" }
+TD.head { color: #0099CC; border-color: #FF00FF; background-color: #FF00FF; border: 1 }
+TD.headlink { color: #FF88FF; border-color: #FF00FF; background-color: #FF00FF; border: 1 }
+
+TABLE.foot { color: #FF88FF ; border: 0; WIDTH: 100% }
+TD.foot { border-color: #FF00FF; background-color: #FF00FF; border: 1 ; WIDTH: 100% }
+TD.footquote { color: #FF88FF ;border-color: #FF00FF; background-color: #FF00FF; border: 1; width: 100% }
+
+TABLE.shadow { color: #FF88FF; border: 0 }
+TD.shadow { border-color: #FF00FF; background-color: #FF00FF; border: 1 }
+
+TABLE.body { color: #FF88FF ; border: 0 }
+TD.body { border-color: #FF00FF; background-color: #FF00FF; border: 1 }
+
+TABLE.resultsrow { color: #FF88FF ; border: 0 }
+TD.resultsrow { color: #FF88FF ; border-color: #FF00FF; background-color: #FF00FF; border: 1 }
+TD.resultsrowdark { color: #FF88FF ; border-color: #FF00FF; background-color: #FF00FF; border: 1; text-decoration: line-through;}
+
+INPUT, SELECT { color: #FF88FF; background-color: #FF00FF; 
+border-color: #FF00FF; border-top:1px solid; border-bottom:1px solid; 
+border-left: 1px solid; border-right:1px solid;
+font-family: Arial, Helvetica;
+font-size:11px; }
+
+INPUT.camo  { color: #FF88FF; background-color: #FF00FF; 
+border-color: #FF00FF; border-top:0px solid; border-bottom:0px solid; 
+border-left: 0px solid; border-right:0px solid;
+	font-size:15px;
+}
+
+SELECT.camo {
+	color: #FF88FF;
+	background-color: #FF00FF;
+	border-top:0px solid; border-bottom:0px solid;
+	border-left: 0px solid; border-right:0px solid;
+	font-size:9px;
+}

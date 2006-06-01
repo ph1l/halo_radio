@@ -1,6 +1,6 @@
 <html>
  <head>
-  <link rel=stylesheet type=text/css href=style.css>
+  <link rel=stylesheet type=text/css tal:attributes="href style">
   <title tal:content="title">
   </title>
  </head>
@@ -20,17 +20,25 @@
   <!-- Begin Content -->
 	<H2 tal:content="username">UserName</H2>
 	<form name=edit tal:attributes="action formaction" METHOD="GET">
-	name:
-	<INPUT TYPE=TEXT size=16 NAME=username tal:attributes="value username">
+	Name:
+	<INPUT TYPE=TEXT size=16 NAME=username tal:condition="is_admin" tal:attributes="value username">
+	<INPUT TYPE=TEXT size=16 NAME=username tal:condition="readonly" READONLY tal:attributes="value username">
 	<BR>
 	User Rights: 
-	<INPUT TYPE=TEXT size=4 NAME=rights tal:attributes="value rights">
+	<INPUT TYPE=TEXT size=4 NAME=rights tal:condition="is_admin" tal:attributes="value rights">
+	<INPUT TYPE=TEXT size=4 NAME=rights tal:condition="readonly" READONLY tal:attributes="value rights">
 	<BR>
-	email:
-	<INPUT TYPE=TEXT size=32 NAME=email tal:attributes="value email">
+	Email:
+	<INPUT TYPE=TEXT size=32 NAME=email tal:condition="is_admin" tal:attributes="value email">
+	<INPUT TYPE=TEXT size=32 NAME=email tal:condition="readonly" READONLY tal:attributes="value email">
 	<BR>
 	Pass:
-	<INPUT TYPE=TEXT size=32 NAME=passwd tal:attributes="value passwd">
+	<INPUT TYPE=PASSWORD size=32 NAME=passwd tal:attributes="value passwd">
+	<BR>
+	Style:
+	<SELECT NAME=style SIZE=3>
+		<OPTION tal:repeat="styles styles" tal:content="styles/style" tal:attributes="value styles/id">test</OPTION>
+	</SELECT>
 	<BR>
 	
 	<INPUT TYPE=HIDDEN NAME=action VALUE=editUserPost>

@@ -142,11 +142,14 @@ if not int(HaloRadio.conf["general.guest_access"]) and session.userid == 1 and a
 if not ( os.access("%s/WebRoot/%s.html" % (HaloRadio.conf["general.webroot"], action), os.F_OK) or os.access("%s/WebRoot/%s.py" % (HaloRadio.conf["general.webroot"], action), os.F_OK) ):
 	(context, template) = do_template('error', session )
 	context.addGlobal ("error", "Invalid Action Specified")
+	context.addGlobal ("style", u.GetStyle())
 	template.expand (context, sys.stdout)
 	sys.exit()
 
 # do header here ( automaticly generated menu :- )
 (context, template) = do_template(action, session)
+
+context.addGlobal ("style", u.GetStyle())
 if os.access("%s/WebRoot/%s.py" % (HaloRadio.conf["general.webroot"], action), os.F_OK):
 	plugin = my_import("WebRoot.%s"%action)
 	object = plugin.plugin(form, session)

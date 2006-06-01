@@ -1,7 +1,6 @@
 - FUNCTIONALITY (needed)
 - make users disableable and add a disable/enable link to userlist
-- automaticly discoverr volue max of songs ad track in DB for normalization.
+- automaticly discover volue max of songs ad track in DB for normalization.
 
 - FUNCTIONALITY (request)
 - radio halo support rss?
-- theme support ( simple style-sheet selection for users)

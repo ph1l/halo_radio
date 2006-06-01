@@ -3,6 +3,7 @@ haloradio (0.2.6-2) stable; urgency=low
   * updated first install docs
   * added apache2 config
   * modified dependencies for shout-python
+  * Theme support! see changelog for DB Schema changes (ezra)
 
  --  <phil@kremlor.net>  Thu,  1 Jun 2006 11:59:31 -0500
 

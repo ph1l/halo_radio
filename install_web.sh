@@ -8,5 +8,5 @@ else
 fi
 
 echo -n "copying files to ${DEST}..."
-cp -a favicon.ico style.css sendmail.py .htaccess HaloRadio HaloRadio.cgi HaloRadio.ini WebRoot help ${DEST}
+cp -a favicon.ico styles/*.css sendmail.py .htaccess HaloRadio HaloRadio.cgi HaloRadio.ini WebRoot help ${DEST}
 echo -ne " done\n"

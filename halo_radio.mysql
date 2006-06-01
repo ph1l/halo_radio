@@ -209,6 +209,7 @@ CREATE TABLE `users` (
   `kills` int(10) unsigned default '0',
   `create_time` datetime NOT NULL default '0000-00-00 00:00:00',
   `hash` varchar(32) default NULL,
+  `style` int(10) unsigned NOT NULL default 1,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
 ) TYPE=MyISAM;
@@ -235,6 +236,12 @@ CREATE TABLE relays (
   PRIMARY KEY  (id)
 ) TYPE=MyISAM;
 
+CREATE TABLE `styles` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `style` tinytext NOT NULL,
+  PRIMARY KEY (`id`)
+) TYPE=MyISAM;
+
 --
 -- Dumping data for table `users`
 --
@@ -242,3 +249,7 @@ CREATE TABLE relays (
 INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','');
 ##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',6,21,NOW(),'');
 
+INSERT INTO `styles` VALUES (1,'style.css');
+INSERT INTO `styles` VALUES (2,'no_style.css');
+INSERT INTO `styles` VALUES (3,'style_green.css');
+INSERT INTO `styles` VALUES (4,'style_pink.css');

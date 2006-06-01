@@ -20,7 +20,7 @@ class plugin(TopWeb.TopWeb):
 			entity['userid'] = user.id
 			entity['userlink'] = "%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], user.id )
 			entity['username'] = user.GetDisplayName()
-			entity['editlink'] = "%s?action=editUser&id=%s" % ( self.config['general.cgi_url'], user.id )
+			entity['editlink'] = "%s?action=Preferences&id=%s" % ( self.config['general.cgi_url'], user.id )
 			entity['deletelink'] = "%s?action=deleteUserPost&id=%s" % ( self.config['general.cgi_url'], user.id )
 
 			if is_admin:

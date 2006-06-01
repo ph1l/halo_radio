@@ -1,7 +1,9 @@
 import HaloRadio.TopWeb as TopWeb
+import HaloRadio.StyleListMaker as StyleListMaker
+import HaloRadio.Style as Style
 class plugin(TopWeb.TopWeb):
         def GetReqs(self):
-                return "a"
+                return "amv"
 	def handler(self, context):
 		import HaloRadio.UserSongStatsListMaker as UserSongStatsListMaker
 		import HaloRadio.UserSongStats as UserSongStats
@@ -16,10 +18,26 @@ class plugin(TopWeb.TopWeb):
 			userid = self.user.id
 
 		user = User.User(userid)
+		if (self.do_authorize(self.user.rights, "a")):
+			is_admin=1
+			readonly=0
+		else:
+			is_admin=0
+			readonly=1
+		context.addGlobal ("is_admin", is_admin)
+		context.addGlobal ("readonly", readonly)
 		context.addGlobal ("userid", userid )
 		context.addGlobal ("username", user.name )
 		context.addGlobal ("email", user.email )
 		context.addGlobal ("rights", user.rights )
 		context.addGlobal ("createdate", user.create_time )
-
-
+		slm = StyleListMaker.StyleListMaker()
+		slm.GetAll()
+		styles = []
+		for styleid in slm.list:
+			style = Style.Style(styleid)
+			entity = {}
+			entity['style'] = style.GetName()
+			entity['id'] = style.GetId()
+			styles.append(entity)
+		context.addGlobal ("styles", styles )

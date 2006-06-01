@@ -26,6 +26,7 @@ class Session(TopTable.TopTable):
          raise "unable to load data for request(%s)" % newid
       self.id = newid
       return     
+
    def GetUser( self ):
       import HaloRadio.User as User
       user = User.User(self.userid)
@@ -34,7 +35,6 @@ class Session(TopTable.TopTable):
    def SetUser( self, user ):
       self.do_my_do( """UPDATE %s SET userid=%d,active_time=NOW() WHERE id="%s";""" %       
          ( self.tablename, user.id, self.id) )
-            
       self.userid=user.id
 
    def Authenticate( self, user, password ):
