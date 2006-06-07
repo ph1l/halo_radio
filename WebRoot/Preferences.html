@@ -21,19 +21,29 @@
 	<H2 tal:content="username">UserName</H2>
 	<form name=edit tal:attributes="action formaction" METHOD="GET">
 	Name:
-	<INPUT TYPE=TEXT size=16 NAME=username tal:condition="is_admin" tal:attributes="value username">
-	<INPUT TYPE=TEXT size=16 NAME=username tal:condition="readonly" READONLY tal:attributes="value username">
+	<INPUT TYPE=TEXT size=16 NAME=username tal:condition="canmod_user" tal:attributes="value username">
+	<INPUT TYPE=TEXT size=16 NAME=username tal:condition="ro_user" READONLY tal:attributes="value username">
 	<BR>
 	User Rights: 
-	<INPUT TYPE=TEXT size=4 NAME=rights tal:condition="is_admin" tal:attributes="value rights">
-	<INPUT TYPE=TEXT size=4 NAME=rights tal:condition="readonly" READONLY tal:attributes="value rights">
+	<INPUT TYPE=TEXT size=4 NAME=rights tal:condition="canmod_rights" tal:attributes="value rights">
+	<INPUT TYPE=TEXT size=4 NAME=rights tal:condition="ro_rights" READONLY tal:attributes="value rights">
 	<BR>
 	Email:
-	<INPUT TYPE=TEXT size=32 NAME=email tal:condition="is_admin" tal:attributes="value email">
-	<INPUT TYPE=TEXT size=32 NAME=email tal:condition="readonly" READONLY tal:attributes="value email">
+	<INPUT TYPE=TEXT size=32 NAME=email tal:condition="canmod_email" tal:attributes="value email">
+	<INPUT TYPE=TEXT size=32 NAME=email tal:condition="ro_email" READONLY tal:attributes="value email">
+	<DIV tal:condition="canmod_passwd">
+	<DIV tal:condition="is_user">
 	<BR>
-	Pass:
-	<INPUT TYPE=PASSWORD size=32 NAME=passwd tal:attributes="value passwd">
+	Old Pass:
+	<INPUT TYPE=PASSWORD size=32 NAME=oldpasswd tal:attributes="value passwd">
+	</DIV>
+	<BR>
+	New Pass:
+	<INPUT TYPE=PASSWORD size=32 NAME=newpasswd tal:attributes="value passwd">
+	<BR>
+	New Pass Again:
+	<INPUT TYPE=PASSWORD size=32 NAME=newpasswd2 tal:attributes="value passwd">
+	</DIV>
 	<BR>
 	Style:
 	<SELECT NAME=style SIZE=3>

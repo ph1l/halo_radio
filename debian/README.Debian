@@ -32,7 +32,7 @@ haloradio for Debian
 
  7) Add an admin user:
  
- 	> INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',6,21,NOW(),'');
+ 	> INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1);
 
 
 

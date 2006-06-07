@@ -7,7 +7,9 @@ class plugin(TopWeb.TopWeb):
 		username = None
 		rights = None
 		email = None
-		passwd = None
+		oldpasswd = None
+		newpasswd = None
+		newpasswd2 = None
 		style = None
 		if self.form.has_key("userid"):
 			userid = int(self.form['userid'].value)
@@ -17,8 +19,12 @@ class plugin(TopWeb.TopWeb):
 			rights = self.form['rights'].value
 		if self.form.has_key("email"):
 			email = self.form['email'].value
-		if self.form.has_key("passwd"):
-			passwd = self.form['passwd'].value
+		if self.form.has_key("oldpasswd"):
+			oldpasswd = self.form['oldpasswd'].value
+		if self.form.has_key("newpasswd"):
+			newpasswd = self.form['newpasswd'].value
+		if self.form.has_key("newpasswd2"):
+			newpasswd2 = self.form['newpasswd2'].value
 		if self.form.has_key("style"):
 			style = self.form['style'].value
 			style = int(style)
@@ -33,7 +39,9 @@ class plugin(TopWeb.TopWeb):
 		if (self.do_authorize(self.user.rights, "a")):
 			if len(rights) < 1:
 				self.do_error("you are required to give them something")
-			u.SetPassword(passwd)
+			if newpasswd != newpasswd2:
+				self.do_error("new passwords do not match.")
+			u.SetPassword(newpasswd)
 			u.UpdateRights(rights)
 			u.UpdateName(username)
 			u.UpdateEmail(email)
@@ -44,13 +52,19 @@ class plugin(TopWeb.TopWeb):
 		):
 			if len(rights) < 1:
 				self.do_error("you are required to give them something")
+			if newpasswd != newpasswd2:
+				self.do_error("new passwords do not match.")
+			u.SetPassword(newpasswd)
 			u.UpdateRights(rights)
 			u.UpdateName(username)
 			u.UpdateEmail(email)
 			u.UpdateStyle(style)
 		if (self.user.id == userid):
 			u.UpdateStyle(style)
-			u.SetPassword(passwd)
+			# Verrify old passwd here (TODO)
+			if newpasswd != newpasswd2:
+				self.do_error("new passwords do not match.")
+			u.SetPassword(newpasswd)
 
 
 		request_url = "%s?action=Preferences&id=%d" % ( self.config['general.cgi_url'], userid )

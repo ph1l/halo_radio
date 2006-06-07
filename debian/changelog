@@ -1,3 +1,10 @@
+haloradio (0.2.6-3) stable; urgency=medium
+
+  * Fixed permissions and rights on the Preferences page.
+  * fixed an error in the mysql dump.
+
+ --  <phil@hostway.net>  Tue, 06 Jun 2006 20:11:38 -0500
+
 haloradio (0.2.6-2) stable; urgency=low
 
   * updated first install docs
