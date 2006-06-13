@@ -1,3 +1,9 @@
+haloradio (0.2.7-1) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ --  <phil@hostway.net>  Tue, 13 Jun 2006 09:58:37 -0500
+
 haloradio (0.2.6-3) stable; urgency=medium
 
   * Fixed permissions and rights on the Preferences page.

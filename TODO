@@ -1,6 +1,18 @@
 - FUNCTIONALITY (needed)
 - make users disableable and add a disable/enable link to userlist
-- automaticly discover volue max of songs ad track in DB for normalization.
+- automaticly discover value max of songs and track in DB for normalization.
+  - (done, but disabled)
+- Source install problems on ubuntu: (submitteed via AIM by notmeman)
+  -  ERR:missing a few files in distro like "login.html" and "request.html"
+  -  ERR:script to install daemon tools did not work for me
+  -  ERR:may be an error with standard DB after installation.
+  -  ERR:could not login with any users created from SQL
+  -  DOC:Readme; split into "source install" and "package install"
+  -  DOC:for source install; "install_web.sh", setting up the cronjobs, etc?
+  -  ERR:tried the "make install" but it errored out quickly.
+
+
+
 
 - FUNCTIONALITY (request)
 - radio halo support rss?
