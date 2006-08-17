@@ -36,6 +36,7 @@
   <td tal:attributes="class request/classname"><a tal:attributes="class request/classname" tal:attributes="href request/songurl" tal:content="request/song">SongName</a></td>
   <td tal:attributes="class request/classname" tal:content="request/songlen">SongLength</td>
   </tr>
+  <TR tal:condition="numrequests"><TD tal:attributes="class classname"></TD><TD tal:attributes="class classname"></TD><TD tal:attributes="class classname"></TD><TD tal:attributes="class classname"></TD><TD tal:attributes="class classname" ALIGN=RIGHT>Total:</TD><TD tal:attributes="class classname" tal:content="total_song_legnth"></TD></TR>
 
   </table>
   <p tal:condition="numrequests"><a href="javascript:checkall('queue','requestids',true)">Check All</a>&nbsp;|&nbsp;

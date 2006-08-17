@@ -53,6 +53,7 @@ class plugin(TopWeb.TopWeb):
 			
 		firstreq = rlm.list[0]
 		heldrequests = 0
+		total_length = 0
 		for i in range( 0, len(rlm.list)):
 			curreq = rlm.GetRequest( i )
 			prevreq = rlm.GetRequest( i-1 )
@@ -80,7 +81,11 @@ class plugin(TopWeb.TopWeb):
 			request['song'] = song.GetDisplayName()
 			request['songurl'] = "%s?action=songInfo&id=%d"%( self.config['general.cgi_url'], song.id)
 			request['songlen'] = song.GetDisplayLength()
+			total_length += song.mpeg_length
 			requestlist.append(request)
+		context.addGlobal ("classname", "resultsrow")
+		context.addGlobal ("total_song_legnth", "%02d:%02d" % ( total_length / 60, total_length % 60 ))
+
 		context.addGlobal ("requestlist", requestlist)
 		if (myrequests - heldrequests) > 0:
 			context.addGlobal ("holdrequestscondition", 1)
