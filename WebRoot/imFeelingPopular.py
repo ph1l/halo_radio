@@ -11,7 +11,7 @@ class plugin(TopWeb.TopWeb):
 			search = "GAWDthisISghettoBUTkindaCONSISTANT"
 		import HaloRadio.SongListMaker as SongListMaker
 		slm = SongListMaker.SongListMaker()
-		slm.SubSearchPath( search, order="popular" )
+		slm.SubSearch( search, order="popular" )
 
 		if len(slm.list) > 0:
 			r = Request.Request( 0, slm.list[0], self.session.userid )
