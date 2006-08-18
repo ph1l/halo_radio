@@ -1,6 +1,8 @@
 haloradio (0.2.7-1) UNRELEASED; urgency=low
 
-  * NOT RELEASED YET
+  * added a total length to the end of the request queue listing
+  * changed search method for imFeelingPopular
+  * admin can enable/disable wall post access for individual users
 
  --  <phil@hostway.net>  Tue, 13 Jun 2006 09:58:37 -0500
 
