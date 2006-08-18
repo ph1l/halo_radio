@@ -5,6 +5,9 @@
 # this script installs daemontools.
 #
 
+echo This is Depricated, find a package for your distro.
+exit 255
+
 VER=0.76
 
 mkdir -p /package
