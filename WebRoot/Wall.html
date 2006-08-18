@@ -19,7 +19,7 @@
   </TABLE>
   <!-- Begin Content -->
 	<BR>
-	<FORM name=wall tal:attributes="action formaction" METHOD="GET">
+	<FORM name=wall tal:attributes="action formaction" METHOD="GET" tal:condition=canpost>
 	&nbsp;<INPUT TYPE=TEXT SIZE=80 NAME=line>
 	<input type=submit name="action" value="wallPost">
 	<A HREF=help/Wall.html>?</A>

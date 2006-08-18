@@ -21,11 +21,15 @@ class plugin(TopWeb.TopWeb):
 			entity['userlink'] = "%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], user.id )
 			entity['username'] = user.GetDisplayName()
 			entity['editlink'] = "%s?action=Preferences&id=%s" % ( self.config['general.cgi_url'], user.id )
-			entity['deletelink'] = "%s?action=deleteUserPost&id=%s" % ( self.config['general.cgi_url'], user.id )
+			entity['wallenablelink'] = "%s?action=enableUserPost&id=%s" % ( self.config['general.cgi_url'], user.id )
 
 			if is_admin:
 				entity['email'] = user.email
 				entity['mailto'] = "mailto:%s"%(user.email)
+				if user.GetPostAccess():
+					entity['wallenabled'] = "enabled"
+				else:
+					entity['wallenabled'] = "disabled"
 			else:
 				entity['email'] = "<hidden>"
 				entity['mailto'] = ""

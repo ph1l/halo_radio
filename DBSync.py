@@ -81,11 +81,17 @@ INSERT INTO `styles` VALUES (4,'style_pink.css');
 			""")
 
 		cfg.SetConfigItem("dbversion","1")
+	if dbversion<2:
+		c = HaloRadio.db.cursor()
+		c._do_query( """
+ALTER TABLE `users` ADD COLUMN `post` tinyint(1) DEFAULT 1;
+			""")
+		cfg.SetConfigItem("dbversion","2")
 	return None
 
 def check_dbversion():
 	cfg = Config.Config()
-	current_version=1
+	current_version=2
 
 	try:
 		dbversion=cfg.GetConfigItem("dbversion")

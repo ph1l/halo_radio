@@ -1,4 +1,5 @@
 import HaloRadio.TopWeb as TopWeb
+import HaloRadio.User as User
 class plugin(TopWeb.TopWeb):
         def GetReqs(self):
                 return "amv"
@@ -6,6 +7,10 @@ class plugin(TopWeb.TopWeb):
 		import HaloRadio.WallListMaker as WallListMaker
 		import HaloRadio.Wall as Wall
 		import HaloRadio.Exception as HaloException
+
+		u = User.User(self.session.userid)
+		#if u.GetPostAccess():
+		context.addGlobal ("canpost", u.GetPostAccess())
 
 		wlm = WallListMaker.WallListMaker()
 		wlm.GetRecent(75)

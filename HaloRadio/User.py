@@ -166,3 +166,15 @@ class User(TopTable.TopTable):
 		else:
 			return None
 		return song
+	def GetPostAccess(self):
+		rows = self.do_my_query("""SELECT post FROM %s WHERE id=%d;""" %			( self.tablename, self.id ) )
+		(access, ) =rows[0]
+		return access
+	def ChangePostAccess(self):
+		if self.GetPostAccess():
+			self.do_my_do( """UPDATE %s SET post=%d WHERE id=%d;""" %
+				( self.tablename, 0, self.id ) )
+		else:
+			self.do_my_do( """UPDATE %s SET post=%d WHERE id=%d;""" %
+				( self.tablename, 1, self.id ) )
+			

@@ -9,17 +9,17 @@ class plugin(TopWeb.TopWeb):
 
 		import HaloRadio.User as User
 
-		#try:
-		u = User.User(userid)
-		#except:
-		#	self.do_error("user doesn't exist")
+		try:
+			u = User.User(userid)
+		except:
+			self.do_error("user doesn't exist")
 		
 		if (self.do_authorize(self.user.rights, "a")):
-			u.Enable()
+			u.ChangePostAccess()
 		elif (self.do_authorize(self.user.rights, "m") and
 			not self.do_authorize(u.rights,"a") 
 		):
-			u.Enable()
+			u.ChangePostAccess()
 
 		request_url = "%s?action=UserList" % ( self.config['general.cgi_url'] )
 		context.addGlobal ("refresh", "0;URL=%s" % ( request_url ) )
