@@ -223,8 +223,8 @@ class plugin(TopWeb.TopWeb):
 				page['pagename']=".."
 				pages.append(page)
 				page={}
-				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (tot/limit+1)*limit, limit, pageappend)
-				page['pagename']=(tot/limit+1)
+				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, ((tot/limit+1)-2)*limit, limit, pageappend)
+				page['pagename']=((tot/limit+1)-1)
 				pages.append(page)
 				page={}
 				page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (curpage)*limit, limit, pageappend)
@@ -270,8 +270,8 @@ class plugin(TopWeb.TopWeb):
 					page['pagename']=".."
 					pages.append(page)
 					page={}
-					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, (tot/limit+1)*limit, limit, pageappend)
-					page['pagename']=(tot/limit+1)
+					page['pagelink']="%s?action=searchResults&search=%s&offset=%s&limit=%s%s"%( self.config['general.cgi_url'], searchstring, ((tot/limit+1)-2)*limit, limit, pageappend)
+					page['pagename']=((tot/limit+1)-1)
 					pages.append(page)
                         	if curpage<numpages:
 					page={}
