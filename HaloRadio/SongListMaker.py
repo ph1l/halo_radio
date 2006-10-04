@@ -135,10 +135,10 @@ class SongListMaker(TopListMaker.TopListMaker):
 					LEFT JOIN songs ON songs.id = play_history.songid
 					WHERE play_history.requestby != 0 AND %s
 					play_history.date > FROM_UNIXTIME(UNIX_TIMESTAMP(NOW())-%d) AND %s
-					GROUP BY songid, requestby) UNION (SELECT songid, 0, COUNT(songid) as kills
+					GROUP BY songid) UNION (SELECT songid, 0, COUNT(songid) as kills
 					FROM kill_history LEFT JOIN songs ON songs.id = kill_history.songid
 					WHERE %s kill_history.date > FROM_UNIXTIME(UNIX_TIMESTAMP(NOW())-%d) AND %s
-					GROUP BY songid, killby) %s """ % (users_check, (recent_days*24*60*60),
+					GROUP BY songid) %s """ % (users_check, (recent_days*24*60*60),
 					where_str, users_check2, (recent_days*24*60*60), where_str, order_str)
 				result = self.do_my_query(select)
 				songs = {}
