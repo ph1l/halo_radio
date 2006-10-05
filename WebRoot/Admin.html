@@ -19,12 +19,23 @@
   </TABLE>
   <!-- Begin Content -->
   	<BR>
-	<H1>Default Random Playlist<A HREF="help/Playlists.html">?</A></H1>
+	<H2>Default Random Playlist<A HREF="help/Playlists.html">?</A></H2>
   	<FORM name=playlistselect tal:attributes="action formaction" METHOD="GET">
 	<SELECT NAME=playlist SIZE=1>
 	  <OPTION tal:repeat="pl playlists" tal:content=pl/name tal:attributes="selected pl/selected;value pl/id" >Option</OPTION>
 	</SELECT>
 	<INPUT TYPE=SUBMIT NAME=action VALUE=changePlaylist>
+	</FORM>
+  	<BR>
+	<!-- Master Form -->
+  	<FORM name=Admin tal:attributes="action formaction" METHOD="GET">
+	<TABLE>
+	<TR tal:repeat="conf config_list">
+	  <TD tal:content="conf/name"></TD>
+	  <TD><INPUT TYPE=TEXT tal:content="conf/data" tal:attributes="value conf/data;name conf/name"></TD>
+	</TR>
+	</TABLE>
+	<INPUT TYPE=SUBMIT NAME=action VALUE=submitAdmin>
 	</FORM>
 	<BR>
 

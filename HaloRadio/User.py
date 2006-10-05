@@ -167,7 +167,7 @@ class User(TopTable.TopTable):
 			return None
 		return song
 	def GetPostAccess(self):
-		rows = self.do_my_query("""SELECT post FROM %s WHERE id=%d;""" %			( self.tablename, self.id ) )
+		rows = self.do_my_query("""SELECT post FROM %s WHERE id=%d;""" % ( self.tablename, self.id ) )
 		(access, ) =rows[0]
 		return access
 	def ChangePostAccess(self):
@@ -176,5 +176,17 @@ class User(TopTable.TopTable):
 				( self.tablename, 0, self.id ) )
 		else:
 			self.do_my_do( """UPDATE %s SET post=%d WHERE id=%d;""" %
+				( self.tablename, 1, self.id ) )
+			
+	def GetAccess(self):
+		rows = self.do_my_query("""SELECT enable FROM %s WHERE id=%d;""" % ( self.tablename, self.id ) )
+		(access, ) =rows[0]
+		return access
+	def ChangeAccess(self):
+		if self.GetAccess():
+			self.do_my_do( """UPDATE %s SET enable=%d WHERE id=%d;""" %
+				( self.tablename, 0, self.id ) )
+		else:
+			self.do_my_do( """UPDATE %s SET enable=%d WHERE id=%d;""" %
 				( self.tablename, 1, self.id ) )
 			

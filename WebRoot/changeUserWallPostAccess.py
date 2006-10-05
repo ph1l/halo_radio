@@ -16,8 +16,10 @@ class plugin(TopWeb.TopWeb):
 		
 		if (self.do_authorize(self.user.rights, "a")):
 			u.ChangePostAccess()
-		elif (self.do_authorize(self.user.rights, "m") and
-			not self.do_authorize(u.rights,"a") 
+		elif (self.configdb.GetConfigItem('moderator_wall_enable_access') == "1" and
+			self.do_authorize(self.user.rights, "m") and
+			not self.do_authorize(u.rights,"a") and
+			not self.do_authorize(u.rights,"m")
 		):
 			u.ChangePostAccess()
 

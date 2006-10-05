@@ -146,6 +146,15 @@ if not ( os.access("%s/WebRoot/%s.html" % (HaloRadio.conf["general.webroot"], ac
 	template.expand (context, sys.stdout)
 	sys.exit()
 
+if not u.GetAccess():
+	rights = u.GetDisplayRights()
+	if 'guest' not in rights.split(", "):
+		(context, template) = do_template('error', session )
+		context.addGlobal ("error", "User Disabled")
+		context.addGlobal ("style", u.GetStyle())
+		template.expand (context, sys.stdout)
+		sys.exit()
+
 # do header here ( automaticly generated menu :- )
 (context, template) = do_template(action, session)
 

@@ -27,7 +27,8 @@
 		<TD tal:condition="is_admin" class=resultsrow>edit</td>
 		<TD class=resultsrow>reqs/kills</td>
 		<TD tal:condition="is_admin" class=resultsrow>email</td>
-		<TD tal:condition="is_admin" class=resultsrow>wallPost</td>
+		<TD tal:condition="wall_enable" class=resultsrow>wallPost</td>
+		<TD tal:condition="enable" class=resultsrow>enabled</td>
 	<TR tal:repeat="userlist userlist">
 		<td class=resultsrow tal:content="userlist/userid">1</td>
 		<td class=resultsrow><A tal:attributes="href userlist/userlink" tal:content="userlist/username">StatItem</A></td>
@@ -36,7 +37,8 @@
 		</td>
 		<TD class=resultsrow> (<b tal:content="userlist/requests">3</b>/<b tal:content="userlist/kills">1</b> ) </TD>
 		<TD tal:condition="is_admin" class=resultsrow> <A tal:attributes="href userlist/mailto" tal:content="userlist/email">email</A></td>
-		<TD tal:condition="is_admin" class=resultsrow> <A tal:attributes="href userlist/wallenablelink" tal:content="userlist/wallenabled">wallenabled</A></td>
+		<TD tal:condition="wall_enable" tal:attributes="class userlist/wallclass"> <A tal:attributes="href userlist/wallenablelink" tal:content="userlist/wallenabled">wallenabled</A></td>
+		<TD tal:condition="enable" tal:attributes="class userlist/class"> <A tal:attributes="href userlist/enablelink" tal:content="userlist/enabled">enabled</A></td>
 	</TR>
 	</TABLE>
   <!-- End Content -->

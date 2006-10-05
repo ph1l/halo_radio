@@ -1,5 +1,5 @@
-
-REFRESH_PAGES = verify.html deleteUserPost.html deleteRequests.html editUserPost.html randomizeRequests.html request.html swapRequests.html login.html Logout.html changePasswordPost.html changePlaylist.html enableUserPost.html disableUserPost.html kill.html wallPost.html zipRequests.html holdRequests.html releaseRequests.html addRelay.html deleteRelay.html changeRelay.html
+REFRESH_PAGES = Logout.html addRelay.html changePasswordPost.html changePlaylist.html changeRelay.html changeUserAccess.html changeUserWallPostAccess.html deleteRelay.html deleteRequests.html editUserPost.html holdRequests.html imFeelingPopular.html kill.html login.html randomizeRequests.html releaseRequests.html request.html submitAdmin.html swapRequests.html verify.html wallPost.html zipRequests.html
+ 
 
 links: .refresh-links .userInfo-links
 .userInfo-links: userInfo.py userInfo.html

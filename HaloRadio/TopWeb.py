@@ -3,6 +3,7 @@ import HaloRadio
 class TopWeb:
 	def __init__(self, form, session):
 		self.config = HaloRadio.conf
+		self.configdb = HaloRadio.configdb
 		self.form = form
 		self.session = session
 		self.reqs = self.GetReqs()

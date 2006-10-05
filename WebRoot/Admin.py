@@ -6,10 +6,7 @@ class plugin(TopWeb.TopWeb):
 		import HaloRadio.PlaylistListMaker as PlaylistListMaker
 		import HaloRadio.Playlist as Playlist
 
-		import HaloRadio.Config as Config
-
-		cfg = Config.Config()
-		curplid = int(cfg.GetConfigItem("current_list"))
+		curplid = int(self.configdb.GetConfigItem("current_list"))
 		pllm = PlaylistListMaker.PlaylistListMaker()
 		pllm.GetAll()
 		playlists = []
@@ -22,5 +19,12 @@ class plugin(TopWeb.TopWeb):
 				entity['selected'] = 1
 			playlists.append(entity)
 		context.addGlobal ("playlists", playlists)
-
                 context.addGlobal ("formaction", self.config['general.cgi_url'])
+
+		config_list = []
+		for config_option in ['moderator_enable_access','moderator_wall_enable_access']:
+			config_item = {}
+			config_item['name'] = config_option
+			config_item['data'] = self.configdb.GetConfigItem(config_option)
+			config_list.append(config_item)
+		context.addGlobal ("config_list", config_list)

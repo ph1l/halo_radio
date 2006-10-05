@@ -50,7 +50,6 @@ def make_printable_string( String ):
 	
 def update_dbversion():
 	cfg = Config.Config()
-	current_version=1
 
 	dbversion=int(cfg.GetConfigItem("dbversion"))
 
@@ -87,11 +86,21 @@ INSERT INTO `styles` VALUES (4,'style_pink.css');
 ALTER TABLE `users` ADD COLUMN `post` tinyint(1) DEFAULT 1;
 			""")
 		cfg.SetConfigItem("dbversion","2")
+	if dbversion<3:
+		c = HaloRadio.db.cursor()
+		c._do_query( """
+ALTER TABLE `users` ADD COLUMN `enable` tinyint(1) DEFAULT 1;
+			""")
+		cfg.SetConfigItem("dbversion","3")
+	if dbversion<4:
+		cfg.NewConfigItem("moderator_enable_access","1");
+		cfg.NewConfigItem("moderator_wall_enable_access","1");
+		cfg.SetConfigItem("dbversion","4")
 	return None
 
 def check_dbversion():
 	cfg = Config.Config()
-	current_version=2
+	current_version=4
 
 	try:
 		dbversion=cfg.GetConfigItem("dbversion")

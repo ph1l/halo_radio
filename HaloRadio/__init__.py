@@ -17,6 +17,7 @@
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 import ConfigParser
+import Config
 import string
 import MySQLdb
 import _mysql_exceptions
@@ -39,6 +40,7 @@ def LoadConfig( file, config={}):
 	return config
 
 conf=LoadConfig("HaloRadio.ini", _ConfigDefault)
+configdb = Config.Config()
 
 try:
 	db=MySQLdb.connect( host=conf['db.host'],

@@ -5,11 +5,10 @@ class plugin(TopWeb.TopWeb):
                 return "a"
 	def handler(self, context):
 
-		if self.form.has_key("playlist"):
-			playlist = str(int(self.form['playlist'].value))
+		for key in ['moderator_enable_access','moderator_wall_enable_access']:
+			if self.form.has_key(key):
+				self.configdb.SetConfigItem(key, self.form[key].value)
 
-		self.configdb.SetConfigItem("current_list",playlist)
-		
 		request_url = "%s?action=Admin" % ( self.config['general.cgi_url'] )
 
 		context.addGlobal ("refresh", "0;URL=%s" % ( request_url ) )

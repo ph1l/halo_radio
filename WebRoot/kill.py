@@ -11,7 +11,6 @@ class plugin(TopWeb.TopWeb):
 		import HaloRadio.Util as Util
 		import HaloRadio.Kill as Kill
 		import HaloRadio.User as User
-		import HaloRadio.Config as Config
 		import HaloRadio.PlayHistListMaker as PlayHistListMaker
 
 		songid=0
@@ -19,7 +18,6 @@ class plugin(TopWeb.TopWeb):
 		if self.form.has_key("songid"):
                         songid = int(self.form['songid'].value)
 
-		cfg=Config.Config()
 		cur_song_id = int(songid)
 		u = User.User(self.session.userid)
 		if songid == 0:

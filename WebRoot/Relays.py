@@ -4,16 +4,14 @@ class plugin(TopWeb.TopWeb):
                 return "a"
 	def handler(self, context):
 
-		import HaloRadio.Config as Config
 		import HaloRadio.RelayListMaker as RelayListMaker
 		import HaloRadio.Relay as Relay
 
-		cfg = Config.Config()
 		try:
-			currid = int(cfg.GetConfigItem("current_relay"))
+			currid = int(self.configdb.GetConfigItem("current_relay"))
 		except:
 			currid = 0
-			cfg.NewConfigItem("current_relay","0")
+			self.configdb.NewConfigItem("current_relay","0")
 
 		rlm = RelayListMaker.RelayListMaker()
 		rlm.GetAll()

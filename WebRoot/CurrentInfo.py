@@ -2,7 +2,6 @@ import HaloRadio.TopWeb as TopWeb
 import HaloRadio.PlayHistListMaker as PlayHistListMaker
 import HaloRadio.RequestListMaker as RequestListMaker
 import HaloRadio.SessionListMaker as SessionListMaker
-import HaloRadio.Config as Config
 import HaloRadio.Exception as Exception
 import HaloRadio.User as User
 class plugin(TopWeb.TopWeb):
@@ -29,9 +28,8 @@ class plugin(TopWeb.TopWeb):
 			print "No Info to Display, run the daemon.\n"
 			import sys
 			sys.exit(0)
-		cfg = Config.Config()
-		currelay = int(cfg.GetConfigItem("current_relay"))
-		cursong = int(cfg.GetConfigItem("current_song"))
+		currelay = int(self.configdb.GetConfigItem("current_relay"))
+		cursong = int(self.configdb.GetConfigItem("current_song"))
 		haverelay=0
 		havesong=0
 		if currelay != 0 and cursong == 0:
@@ -56,8 +54,7 @@ class plugin(TopWeb.TopWeb):
 			context.addGlobal ("killurl", "%s?action=kill&songid=%d" % ( self.config['general.cgi_url'],cur_song.id) )
 			context.addGlobal ("curreqby", curreqby)
 			context.addGlobal ("curlength", cur_song.GetDisplayLength())
-			cfg = Config.Config()
-			curprcnt = int(cfg.GetConfigItem("current_percent"))
+			curprcnt = int(self.configdb.GetConfigItem("current_percent"))
 		
 			seen = cur_song.mpeg_length * curprcnt / 100
  			refresh_delay = int(int( cur_song.mpeg_length) - seen )
