@@ -40,7 +40,6 @@ def LoadConfig( file, config={}):
 	return config
 
 conf=LoadConfig("HaloRadio.ini", _ConfigDefault)
-configdb = Config.Config()
 
 try:
 	db=MySQLdb.connect( host=conf['db.host'],
@@ -52,3 +51,5 @@ except _mysql_exceptions.OperationalError, (errno, errmsg):
 	print "Content-type: text/html\n\nMySQL DB ERROR: %d, %s" % (errno, errmsg)
 	import sys
 	sys.exit(0)
+
+configdb = Config.Config()
