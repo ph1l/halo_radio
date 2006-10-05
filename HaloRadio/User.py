@@ -190,3 +190,7 @@ class User(TopTable.TopTable):
 			self.do_my_do( """UPDATE %s SET enable=%d WHERE id=%d;""" %
 				( self.tablename, 1, self.id ) )
 			
+	def LastSeen(self):
+		rows = self.do_my_query( """SELECT active_time FROM session WHERE userid = %d ORDER BY active_time DESC LIMIT 1;""" % self.id)
+		(date, ) = rows[0]
+		return date
