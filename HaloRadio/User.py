@@ -192,5 +192,8 @@ class User(TopTable.TopTable):
 			
 	def LastSeen(self):
 		rows = self.do_my_query( """SELECT active_time FROM session WHERE userid = %d ORDER BY active_time DESC LIMIT 1;""" % self.id)
-		(date, ) = rows[0]
+		try:
+			(date, ) = rows[0]
+		except:
+			return
 		return date
