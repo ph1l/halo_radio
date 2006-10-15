@@ -26,8 +26,10 @@ INSERT INTO `config` VALUES (2,'current_song','5');
 INSERT INTO `config` VALUES (3,'current_percent','42');
 INSERT INTO `config` VALUES (4,'last_announce','0');
 INSERT INTO `config` VALUES (5,'announce_delay','120');
-INSERT INTO `config` VALUES (6,'dbversion','1');
+INSERT INTO `config` VALUES (6,'dbversion','4');
 INSERT INTO `config` VALUES (7,'current_relay','0');
+INSERT INTO `config` VALUES (8,'moderator_enable_access','1');
+INSERT INTO `config` VALUES (9,'moderator_wall_enable_access','1');
 
 --
 -- Table structure for table `kill_history`
@@ -210,6 +212,8 @@ CREATE TABLE `users` (
   `create_time` datetime NOT NULL default '0000-00-00 00:00:00',
   `hash` varchar(32) default NULL,
   `style` int(10) unsigned NOT NULL default 1,
+  `post` tinyint(1) unsigned NOT NULL default 1,
+  `enable` tinyint(1) unsigned NOT NULL default 1,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
 ) TYPE=MyISAM;
@@ -246,8 +250,8 @@ CREATE TABLE `styles` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','',1);
-##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1);
+INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','',1,1,1);
+##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1,1,1);
 
 --
 -- Dumping data for table `styles`
