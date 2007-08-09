@@ -36,7 +36,10 @@ class plugin(TopWeb.TopWeb):
 		context.addGlobal ("rights", user.GetDisplayRights() )
 		
 		context.addGlobal ("createdate", user.create_time )
-		context.addGlobal ("seendate", user.LastSeen() )
+		seen = user.LastSeen()
+		if not seen:
+			seen = user.create_time;
+		context.addGlobal ("seendate", seen)
 
 		# Return my top 100
 		slm = UserSongStatsListMaker.UserSongStatsListMaker()
