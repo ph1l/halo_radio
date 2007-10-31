@@ -1,33 +1,33 @@
 BODY { background-color: #303333; color:#808080;
  font-size: 120%; font-family: Arial, Verdana; }
 
-IMG { border: 0; cursor: default}
+IMG { border-width: 0; cursor: default}
 
 A:link {color: #657365; text-decoration: none}
 A:visited {color: #606860; text-decoration: none}
 A:active {color: #000000; text-decoration: none}
 A:hover {cursor: default; color: #667566; text-decoration: line-through;}
 
-TABLE { color: #131313; border: 0 }
-TD { border-color: #000000; background-color: #002040; border: 1}
+TABLE { color: #131313; border-width: 0 }
+TD { border-color: #000000; background-color: #002040; border-width: 1}
 
-TABLE.head { border: 0; width="100%" }
-TD.head { color: #0099cc; border-color: #000000; background-color: #101818; border: 1 }
-TD.headlink { color: #0099cc; border-color: #000000; background-color: #091010; border: 1 }
+TABLE.head { border-width: 0 }
+TD.head { color: #0099cc; border-color: #000000; background-color: #101818; border-width: 1 }
+TD.headlink { color: #0099cc; border-color: #000000; background-color: #091010; border-width: 1 }
 
-TABLE.foot { color: #686060 ; border: 0; WIDTH: 100% }
-TD.foot { border-color: #000000; background-color: #131111; border: 1 ; WIDTH: 100% }
-TD.footquote { color: #756666 ;border-color: #000000; background-color: #131111; border: 1; width: 100% }
+TABLE.foot { color: #686060 ; border-width: 0; WIDTH: 100% }
+TD.foot { border-color: #000000; background-color: #131111; border-width: 1 ; WIDTH: 100% }
+TD.footquote { color: #756666 ;border-color: #000000; background-color: #131111; border-width: 1; width: 100% }
 
-TABLE.shadow { color: #606068; border: 0 }
-TD.shadow { border-color: #000808; background-color: #000808; border: 1 }
+TABLE.shadow { color: #606068; border-width: 0 }
+TD.shadow { border-color: #000808; background-color: #000808; border-width: 1 }
 
-TABLE.body { color: #555555 ; border: 0 }
-TD.body { border-color: #000000; background-color: #101818; border: 1 }
+TABLE.body { color: #555555 ; border-width: 0 }
+TD.body { border-color: #000000; background-color: #101818; border-width: 1 }
 
-TABLE.resultsrow { color: #ffffff ; border: 0 }
-TD.resultsrow { color: #445566 ; border-color: #001010; background-color: #101818; border: 1 }
-TD.resultsrowdark { color: #ffffff ; border-color: #001010; background-color: #050909; border: 1 }
+TABLE.resultsrow { color: #ffffff ; border-width: 0 }
+TD.resultsrow { color: #445566 ; border-color: #001010; background-color: #101818; border-width: 1 }
+TD.resultsrowdark { color: #ffffff ; border-color: #001010; background-color: #050909; border-width: 1 }
 
 INPUT, SELECT { color: #121212; background-color: #a1a1a1; 
 border-color: #0000FF; border-top:1px solid; border-bottom:1px solid; 

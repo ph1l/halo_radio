@@ -58,6 +58,8 @@ class plugin(TopWeb.TopWeb):
 		
 			seen = cur_song.mpeg_length * curprcnt / 100
  			refresh_delay = int(int( cur_song.mpeg_length) - seen )
+			if refresh_delay < 0:
+				refresh_delay = 150
 			context.addGlobal ("curprcnt", curprcnt )
 		if i < 25:
 			context.addGlobal ("refresh_delay", "%d;URL=%s?action=CurrentInfo&i=%d"% ( refresh_delay, self.config['general.cgi_url'], i ) )
