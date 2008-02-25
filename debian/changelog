@@ -1,3 +1,9 @@
+haloradio (0.2.8-1) stable; urgency=low
+
+  * Added RPC Service
+
+ --  <phil@kremlor.net>  Mon, 25 Feb 2008 10:59:38 -0600
+
 haloradio (0.2.7-1) stable; urgency=low
 
   * added a total length to the end of the request queue listing

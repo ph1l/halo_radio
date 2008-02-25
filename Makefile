@@ -10,7 +10,7 @@ VAR=/var/lib/haloradio
 USER="radio"
 GROUP="radio"
 
-SCRIPTS=chpasswd.py cron.daily.sh cron.often.sh file_list.py halostatcron.py halostatcron.sh install_web.sh list_songs.py radio-conf.sh radiod.py radiod.sh rename.py HaloRadio.cgi DBSync.py
+SCRIPTS=chpasswd.py cron.daily.sh cron.often.sh file_list.py halostatcron.py halostatcron.sh install_web.sh list_songs.py radio-conf.sh radiod.py radiod.sh rename.py HaloRadio.cgi DBSync.py HaloRadioRPC.py HaloRadioRPC.sh rpc-conf.sh
 FILES=compile.sh favicon.ico HaloRadio.ini-dist halo_radio.mysql sendmail.py .htaccess
 DIRS=HaloRadio help WebRoot styles
 

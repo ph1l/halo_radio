@@ -4,5 +4,8 @@
 /usr/share/haloradio/radiod.py
 /usr/share/haloradio/radiod.sh
 /usr/share/haloradio/DBSync.py
+/usr/share/haloradio/HaloRadioRPC.py
+/usr/share/haloradio/HaloRadioRPC.sh
+/usr/share/haloradio/rpc-conf.sh
 
 
