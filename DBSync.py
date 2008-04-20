@@ -152,7 +152,11 @@ def update_db(slow, verbose=0):
 		# Check to see if this file is in the 
 		#log_message( verbose, "file_in: %s" % ( path ) )
 		songlist = SongListMaker.SongListMaker()
-		songlist.SearchPath( path )
+		try:
+			songlist.SearchPath( path )
+		except:
+			log_message( verbose, "error searching db for: %s" % ( path ) )
+			continue
 		if ( len(songlist.list) > 1 ):
 			for sid in songlist.list:
 				song = Song.Song( sid )

@@ -74,7 +74,7 @@ if cpid:
 			logger("unable to unlink fifo: %s"% (fifopath))
 		sys.exit(0)
 
-	for sig in (signal.SIGHUP, signal.SIGQUIT, signal.SIGKILL, signal.SIGTERM):
+	for sig in (signal.SIGHUP, signal.SIGQUIT, signal.SIGTERM):
 		signal.signal(sig, shutdown_handler)
 	while 1:
 		time.sleep(3)

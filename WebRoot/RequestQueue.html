@@ -29,7 +29,7 @@
   <table>
   <TR tal:repeat="request requestlist">
   <td tal:attributes="class request/classname">
-  <input tal:attributes="value request/curid" type=checkbox NAME=requestids[]></td>
+  <input tal:attributes="value request/curid" type=checkbox NAME=requestids></td>
   <td tal:attributes="class request/classname" tal:content="request/by">UserName</td>
   <td tal:attributes="class request/classname"><a tal:attributes="class request/classname" tal:attributes="href request/downurl"><font face=times size=4>Down</font></A></td>
   <td tal:attributes="class request/classname"><a tal:attributes="class request/classname" tal:attributes="href request/upurl"><font face=times size=4>Up</font></A></td>

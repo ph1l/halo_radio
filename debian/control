@@ -12,12 +12,12 @@ Description: haloradio Base Package
 
 Package: haloradio-lib
 Architecture: all
-Depends: haloradio-base (= ${Source-Version}), mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal
+Depends: haloradio-base (= ${Source-Version}), python, python-mysqldb
 Description: haloradio Library
 
 Package: haloradio-frontend
 Architecture: all
-Depends: haloradio-lib (= ${Source-Version}), mysql-client, icecast-client, libshout3, python, python-mysqldb, python-simpletal, apache2, python-rrd, apache2, rrdtool
+Depends: haloradio-lib (= ${Source-Version}), python, python-simpletal, apache2, python-rrd, apache2, rrdtool
 Recommends: fortune-mod, fortunes-min
 Description: haloradio Frontend
 
