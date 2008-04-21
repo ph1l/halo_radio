@@ -1,3 +1,9 @@
+haloradio (0.2.9-1) stable; urgency=low
+
+  * Tweaks for etch (packaging,code,sql)
+
+ --  <phil@kremlor.net>  Mon, 21 Apr 2008 03:10:54 -0500
+
 haloradio (0.2.8-1) stable; urgency=low
 
   * Added RPC Service
