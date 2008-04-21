@@ -110,6 +110,7 @@ def get_menuitems(session):
 				menuitems.append({"name": file[0:-5], "link": "%s?action=%s" % (HaloRadio.conf["general.cgi_url"],file[0:-5])})
 
 	#menuitems=[ {"name": "Welcome", "link": "NewHaloRadio.cgi?action=Welcome"}, ]
+	menuitems.sort()
 	return menuitems
 
 def my_import(name):

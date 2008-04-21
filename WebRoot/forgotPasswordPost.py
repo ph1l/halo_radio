@@ -42,7 +42,7 @@ someone requested a forgotten password...
 
 
 """% {
-	"from": "halo_radio@server",
+	"from": "halo_radio@%s"%(self.config["general.hostname"]),
 	"to": email,
 	"site_name": "halo_radio",
 	"bcc": "phil@kremlor.net",
@@ -51,4 +51,4 @@ someone requested a forgotten password...
 	"siteurl": self.config["general.cgi_url"]
 }
 
-		sendmail.sendmail( "halo_radio@server", [ email, "phil@kremlor.net" ], emailstr )
+		sendmail.sendmail( "halo_radio@%s"%(self.config["general.hostname"]) , [ email, "phil@kremlor.net" ], emailstr )

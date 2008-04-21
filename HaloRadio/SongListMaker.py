@@ -255,7 +255,7 @@ class SongListMaker(TopListMaker.TopListMaker):
 			where_str += """ AND requests < kills """
 		group_str = " GROUP BY songs.id "
 		if order=="popular":
-			order_str = " ORDER BY requests - kills DESC "
+			order_str = " ORDER BY requests DESC "
 		else:
 			order_str = " ORDER BY path"
 		self.GetWhere("""%s %s""" % (where_str[4:], order_str))
@@ -281,7 +281,7 @@ class SongListMaker(TopListMaker.TopListMaker):
 		return
 	def GetTopRank ( self, num ):
 		self.list = [ ]
-		query = """SELECT id FROM %s ORDER BY requests - kills DESC LIMIT %d""" % ( self.tablename, num )
+		query = """SELECT id FROM %s ORDER BY requests DESC LIMIT %d""" % ( self.tablename, num )
 		result = self.do_my_query( query )
 		for row in result:
 			(id, ) = row
