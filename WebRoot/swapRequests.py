@@ -15,7 +15,7 @@ class plugin(TopWeb.TopWeb):
 			r = Request.Request( reqid )
 			sr = Request.Request( swapid )
 		except HaloException.RequestNotFound:
-			self.do_error("trying to swap request that doesn't exist. go back andd reload the page.")
+			self.do_error("trying to swap request that doesn't exist. go back and reload the page.")
 		user = self.session.GetUser()
 		if self.do_authorize("a",user.rights):
 			r.Swap( swapid )
