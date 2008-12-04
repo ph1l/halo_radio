@@ -84,6 +84,11 @@ class RequestListMaker(TopListMaker.TopListMaker):
 
         def GetByUser ( self, userid ):
                 self.list = [ ]
+                query = """requestby = %d AND hold = 0 """ % ( userid )
+                result = self.GetWhere( query, "id" )
+
+        def GetByUserInclHeld ( self, userid ):
+                self.list = [ ]
                 query = """requestby = %d """ % ( userid )
                 result = self.GetWhere( query, "id" )
 

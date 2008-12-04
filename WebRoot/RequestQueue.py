@@ -38,11 +38,11 @@ class plugin(TopWeb.TopWeb):
 			viewall = "&viewall=1"
 			context.addGlobal ("viewall",1)
 			context.addGlobal ("viewalllinkcondition", 0)
-			rlm.GetAllHeld()
+			rlm.GetByUserInclHeld(self.user.id)
 		else:
 			myrequests = myheldrequests
 			context.addGlobal ("viewalllink", self.config['general.cgi_url'] + "?action=RequestQueue&viewall=1")
-			rlm.GetAll()
+			rlm.GetByUser(self.user.id)
 
 		context.addGlobal ("numrequests", len(rlm.list))
 		if len(rlm.list) == 0:
@@ -91,7 +91,5 @@ class plugin(TopWeb.TopWeb):
 			context.addGlobal ("holdrequestscondition", 1)
 		if myrequests or is_admin:
 			context.addGlobal ("deletecondition", 1)
-		if is_admin:
-			context.addGlobal ("zipcondition", 1)
 		if is_admin and viewall == "" and myheldrequests < 1:
 			context.addGlobal ("releaserequestscondition", 0)

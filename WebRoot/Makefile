@@ -1,4 +1,4 @@
-REFRESH_PAGES = Logout.html addRelay.html changePasswordPost.html changePlaylist.html changeRelay.html changeUserAccess.html changeUserWallPostAccess.html deleteRelay.html deleteRequests.html editUserPost.html holdRequests.html imFeelingPopular.html kill.html login.html randomizeRequests.html releaseRequests.html request.html submitAdmin.html swapRequests.html verify.html wallPost.html zipRequests.html
+REFRESH_PAGES = Logout.html addRelay.html changePasswordPost.html changePlaylist.html changeRelay.html changeUserAccess.html changeUserWallPostAccess.html deleteRelay.html deleteRequests.html editUserPost.html holdRequests.html imFeelingPopular.html kill.html login.html randomizeRequests.html releaseRequests.html request.html submitAdmin.html swapRequests.html verify.html wallPost.html
  
 
 links: .refresh-links .userInfo-links

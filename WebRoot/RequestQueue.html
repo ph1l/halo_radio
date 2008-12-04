@@ -24,7 +24,7 @@
   //-->
   </SCRIPT>
 
-  <h2><B tal:content="numrequests">20</B> Requests</h2>
+  <h2>Your <B tal:content="numrequests">20</B> Requests</h2>
   <form tal:attributes="action formaction" method=get name=queue>
   <table>
   <TR tal:repeat="request requestlist">
@@ -45,8 +45,6 @@
   <input type=submit name="action" tal:condition="deletecondition" value="deleteRequests">
   <input type=submit name="action" tal:condition="deletecondition" value="randomizeRequests">
   <A tal:condition="deletecondition" HREF="help/randomizeRequests.html">?</A>
-  <input tal:condition="zipcondition" type=submit name="action" value="zipRequests">
-  <A tal:condition="zipcondition" HREF="help/zipRequests.html">?</A>
   <input tal:condition="holdrequestscondition" type=submit name="action" value="holdRequests">
   <A tal:condition="holdrequestscondition" HREF="help/holdRequests.html">?</A>
   <p tal:condition="releaserequestscondition">You currently have <B tal:content="heldrequests">20</B> requests on hold.  <input type=submit name="action" value="releaseRequests"></p>
@@ -54,6 +52,8 @@
   <br tal:condition="viewalllinkcondition"><font tal:condition="viewalllinkcondition" size=-2>
   <a tal:condition="viewalllinkcondition" tal:attributes="href viewalllink">View All Requests (including held)</a></font>
   </form>
+
+
 
   <!-- End Content -->
   <BR>
