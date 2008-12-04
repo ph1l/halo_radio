@@ -53,8 +53,11 @@ class RequestListMaker(TopListMaker.TopListMaker):
 			if len(phlm.list) != 1:
 				self.GetByUser(session.userid)
 				if len(self.list) >0:
-					oldest_recent_timestamp=0
 					req = Request.Request(self.list[0])
+					if req.hold == 0:
+						oldest_recent_timestamp=0
+					else:
+						req = None
 				continue
 				
 			ph = phlm.GetPlayHist(0)
@@ -64,9 +67,11 @@ class RequestListMaker(TopListMaker.TopListMaker):
 				self.GetByUser(session.userid)
 				#print "GetNextRequest list %d"%(len(self.list))
 				if len(self.list) >0:
-					oldest_recent_timestamp = test_timestamp
 					req = Request.Request(self.list[0])
-		#print "GetNextRequest returning %s"%(req)
+					if req.hold == 0:
+						oldest_recent_timestamp = test_timestamp
+					else:
+						req = None
 		return req
 
 	def GetRequest ( self, index ):
@@ -80,7 +85,7 @@ class RequestListMaker(TopListMaker.TopListMaker):
         def GetByUser ( self, userid ):
                 self.list = [ ]
                 query = """requestby = %d """ % ( userid )
-                result = self.GetWhere( query )
+                result = self.GetWhere( query, "id" )
 
 	def Get( self, num=1 ):
 		self.list = [ ]
