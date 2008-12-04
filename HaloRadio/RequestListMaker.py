@@ -29,6 +29,46 @@ class RequestListMaker(TopListMaker.TopListMaker):
 		self.list = [ ]
 		return
 
+	def GetNextRequest ( self ):
+		if self.list == []:
+			import HaloRadio.Exception as Exception
+			raise Exception.SongNotFound
+		import datetime, time
+		import HaloRadio.Request as Request
+		import HaloRadio.SessionListMaker as SessionListMaker
+		import HaloRadio.Session as Session
+		import HaloRadio.PlayHistListMaker as PlayHistListMaker
+		#print "GetNextRequest begin"
+		oldest_recent_timestamp=time.time()
+		req=None
+		# Build a list of currently active users.
+		slm=SessionListMaker.SessionListMaker()
+		slm.GetActive()
+		for sessionid in slm.list:
+			session = Session.Session(sessionid)
+			#print "GetNextRequest user %d"%(session.userid)
+			# get timestamp for last request per user.
+			phlm = PlayHistListMaker.PlayHistListMaker()
+			phlm.GetLastPlayForUser(session.userid)
+			if len(phlm.list) != 1:
+				self.GetByUser(session.userid)
+				if len(self.list) >0:
+					oldest_recent_timestamp=0
+					req = Request.Request(self.list[0])
+				continue
+				
+			ph = phlm.GetPlayHist(0)
+			test_timestamp=time.mktime(ph.date.timetuple())
+			#print "GetNextRequest User %d %s/%s "%(session.userid, oldest_recent_timestamp, test_timestamp)
+			if test_timestamp < oldest_recent_timestamp:
+				self.GetByUser(session.userid)
+				#print "GetNextRequest list %d"%(len(self.list))
+				if len(self.list) >0:
+					oldest_recent_timestamp = test_timestamp
+					req = Request.Request(self.list[0])
+		#print "GetNextRequest returning %s"%(req)
+		return req
+
 	def GetRequest ( self, index ):
 		if self.list == []:
 			import HaloRadio.Exception as Exception

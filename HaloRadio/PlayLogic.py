@@ -142,32 +142,33 @@ class PlayLogic:
 		rlm.Get()
 		if rlm.list != []:
 			# if so take the next one
-			request = rlm.GetRequest(0)
-			try:
-				song = request.GetSong()
-			except Exception.SongNotFound, snf:
-				print "caught a SongNotFound exception in PlayLogic... /me casts 'heal'"
+			request = rlm.GetNextRequest()
+			if request != None:
+				try:
+					song = request.GetSong()
+				except Exception.SongNotFound, snf:
+					print "caught a SongNotFound exception in PlayLogic... /me casts 'heal'"
+					request.Delete()
+					
+					song = self.GetNextSong()
+				# Update the requests counter in the databse
+				if request.requestby > 0:
+					song.UpdateRequests()
+					import HaloRadio.User as User
+					u = User.User(request.requestby)
+					u.UpdateRequests()
+					import HaloRadio.UserSongStats as UserSongStats
+					uss = UserSongStats.UserSongStats(0, u.id, song.id )
+					uss.UpdateRequests()
+
+				# delete it from the requests.
 				request.Delete()
-				
-				song = self.GetNextSong()
-			# Update the requests counter in the databse
-			if request.requestby > 0:
-				song.UpdateRequests()
-				import HaloRadio.User as User
-				u = User.User(request.requestby)
-				u.UpdateRequests()
-				import HaloRadio.UserSongStats as UserSongStats
-				uss = UserSongStats.UserSongStats(0, u.id, song.id )
-				uss.UpdateRequests()
 
-			# delete it from the requests.
-			request.Delete()
-
-			song.Play(request.requestby)
+				song.Play(request.requestby)
 		
 		# else, one third of the time pick a song from active
 		# users (if any)
-		else:
+		if request==None:
 			import HaloRadio.SessionListMaker as SessionListMaker
 			import HaloRadio.User as User
 			import HaloRadio.Session as Session

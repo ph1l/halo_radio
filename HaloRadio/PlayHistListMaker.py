@@ -29,6 +29,15 @@ class PlayHistListMaker(TopTable.TopTable):
 		self.list = [ ]
 		return
 
+	def GetLastPlayForUser ( self, userid ):
+		self.list = [ ]
+		query = """ SELECT id FROM %s WHERE requestby=%d ORDER BY date DESC LIMIT 1 """ % ( self.tablename,userid )
+		result = self.do_my_query( query )
+		for row in result:
+			(id, ) = row
+			self.list.append(id)
+		return
+
 	def GetRecentPlays ( self, num=3 ):
 		self.list = [ ]
 		query = """ SELECT id FROM %s ORDER BY date DESC LIMIT %d """ % ( self.tablename,num )

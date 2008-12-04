@@ -29,10 +29,12 @@ haloradio for Debian
  6) Finally start the daemon via daemontools:
 
  	# ln -s /etc/haloradio/svsdir /var/lib/svscan/haloradio
+	    or
+	# ln -s /etc/haloradio/svsdir /etc/service/haloradio
 
  7) Add an admin user:
  
- 	> INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1);
+ 	> INSERT INTO `users` SET name='ADMIN', password=password('ADMINPASSWORD'),rights='a';
 
 
 

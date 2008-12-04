@@ -32,7 +32,7 @@ class SongNotFound(Exception):
 	This an exception class !
 	"""
 
-	def __init__(self,  value):
+	def __init__(self,  value=0):
 		self.id = value
 	def __str__(self):
 		return repr(self.value)

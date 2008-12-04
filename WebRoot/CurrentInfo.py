@@ -102,15 +102,18 @@ class plugin(TopWeb.TopWeb):
 		rlm.Get()
 		if len(rlm.list) != 0:
 			havenextsng = 1
-			r = rlm.GetRequest(0)
-			s = r.GetSong()
-			u = User.User(r.requestby)
-			context.addGlobal ("nextsng", s.GetDisplayName())
-			context.addGlobal ("nextsngurl", 
-				"%s?action=songInfo&id=%d"%(
-				self.config['general.cgi_url'], s.id ))
-			context.addGlobal ("nextsngreqby", u.GetDisplayName())
-			context.addGlobal ("nextlength", s.GetDisplayLength())
+			r = rlm.GetNextRequest()
+			if r != None:
+				s = r.GetSong()
+				u = User.User(r.requestby)
+				context.addGlobal ("nextsng", s.GetDisplayName())
+				context.addGlobal ("nextsngurl", 
+					"%s?action=songInfo&id=%d"%(
+					self.config['general.cgi_url'], s.id ))
+				context.addGlobal ("nextsngreqby", u.GetDisplayName())
+				context.addGlobal ("nextlength", s.GetDisplayLength())
+			else:
+				havenextsng = 0
 		context.addGlobal ("havenextsng", havenextsng)
 
 		# Active Users
