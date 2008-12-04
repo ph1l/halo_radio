@@ -53,6 +53,14 @@
   <a tal:condition="viewalllinkcondition" tal:attributes="href viewalllink">View All Requests (including held)</a></font>
   </form>
 
+  <h2>Other Users Requests</h2>
+  <table>
+  <TR tal:repeat="request otherrequestlist">
+  <td tal:attributes="class request/classname" tal:content="request/by">UserName</td>
+  <td tal:attributes="class request/classname"><a tal:attributes="href request/songurl" tal:content="request/song">SongName</a></td>
+  <td tal:attributes="class request/classname" tal:content="request/songlen">SongLength</td>
+  </TR>
+  </table>
 
 
   <!-- End Content -->
