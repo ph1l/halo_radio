@@ -210,12 +210,17 @@ def update_db(slow, verbose=0):
 			comment = make_printable_string(nfo.comment)
 		if nfo.date != None:
 			year = nfo.date
-		mpeg_version = float(nfo.version)
-		mpeg_bitrate = float(nfo.bitrate)
-		mpeg_samplerate = float(nfo.samplerate)
-		mpeg_length = int(nfo.length)
-		mpeg_emphasis = ''
-		mpeg_mode = nfo.mode
+		try:
+			mpeg_version = float(nfo.version)
+			mpeg_bitrate = float(nfo.bitrate)
+			mpeg_samplerate = float(nfo.samplerate)
+			mpeg_length = int(nfo.length)
+			mpeg_emphasis = ''
+			mpeg_mode = nfo.mode
+		except:
+			params = "version=%s, bitrate=%s, samplerate=%s, length=%s, mode=%s"%(nfo.version,nfo.bitrate,nfo.samplerate,nfo.length,nfo.mode)
+			print "#Invalid MPEG parameters in File: %s : %s" % ( file, params )
+			continue
 		#if mpeg_samplerate != 44100:
 		#	print "#Invalid mpeg_samplerate %s in File: %s" % ( mpeg_samplerate, file )
 		#	print """ls -la "%s" """%( file )
