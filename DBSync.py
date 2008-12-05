@@ -27,7 +27,8 @@ import HaloRadio.Song as Song
 import HaloRadio.SongListMaker as SongListMaker
 import HaloRadio.Playlist as Playlist
 import HaloRadio.Config as Config
-import HaloRadio.MP3Info as MP3Info
+#import HaloRadio.MP3Info as MP3Info
+import mmpython
 
 
 arc_root=HaloRadio.conf['path.root']
@@ -177,13 +178,14 @@ def update_db(slow, verbose=0):
 				print "#%d:%s" % ( sid, song.path )
 			raise "you got a problem here."
 		try:
-			nfo = MP3Info.MP3Info(open(file, 'rb'))
+			#nfo = MP3Info.MP3Info(open(file, 'rb'))
+			nfo = mmpython.parse(file)
 		except:
 			print "#Error Parsing file: "
 			print """ls -la "%s" """%( file )
 			continue
 
-		if nfo.mpeg.valid != 1:
+		if nfo.valid != 1:
 			print "#Invalid MPEG in File: %s" % ( file )
 			print """ls -la "%s" """%( file )
 			continue
@@ -200,20 +202,20 @@ def update_db(slow, verbose=0):
 			album = make_printable_string(nfo.album)
 		if nfo.title != None:
 			title = make_printable_string(nfo.title)
-		if nfo.track != None:
-			track = nfo.track
+		if nfo.trackno != None:
+			track = int(nfo.trackno)
 		if nfo.genre != None:
 			genre = nfo.genre
 		if nfo.comment != None:
 			comment = make_printable_string(nfo.comment)
-		if nfo.year != None:
-			year = nfo.year
-		mpeg_version = nfo.mpeg.version
-		mpeg_bitrate = nfo.mpeg.bitrate
-		mpeg_samplerate = nfo.mpeg.samplerate
-		mpeg_length = int ((nfo.mpeg.length_minutes*60 ) + nfo.mpeg.length_seconds)
-		mpeg_emphasis = nfo.mpeg.emphasis
-		mpeg_mode = nfo.mpeg.mode
+		if nfo.date != None:
+			year = nfo.date
+		mpeg_version = float(nfo.version)
+		mpeg_bitrate = float(nfo.bitrate)
+		mpeg_samplerate = float(nfo.samplerate)
+		mpeg_length = int(nfo.length)
+		mpeg_emphasis = ''
+		mpeg_mode = nfo.mode
 		#if mpeg_samplerate != 44100:
 		#	print "#Invalid mpeg_samplerate %s in File: %s" % ( mpeg_samplerate, file )
 		#	print """ls -la "%s" """%( file )

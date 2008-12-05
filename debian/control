@@ -12,7 +12,7 @@ Description: haloradio Base Package
 
 Package: haloradio-lib
 Architecture: all
-Depends: haloradio-base (= ${Source-Version}), python, python-mysqldb
+Depends: haloradio-base (= ${Source-Version}), python, python-mysqldb, python-mmpython
 Description: haloradio Library
 
 Package: haloradio-frontend
