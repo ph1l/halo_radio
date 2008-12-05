@@ -62,7 +62,7 @@ class Request(TopTable.TopTable):
 			#
 
 			rlm = RequestListMaker.RequestListMaker()
-			rlm.GetAll()
+			rlm.GetByUserInclHeld(self.requestby)
 			if int(HaloRadio.conf['general.rerequest_limit']) > 0:
 				for i in range(0,len(rlm.list)):
 					r = rlm.GetRequest(i)
