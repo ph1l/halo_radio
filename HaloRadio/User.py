@@ -190,10 +190,29 @@ class User(TopTable.TopTable):
 			self.do_my_do( """UPDATE %s SET enable=%d WHERE id=%d;""" %
 				( self.tablename, 1, self.id ) )
 			
-	def LastSeen(self):
+	def OldLastSeen(self):
 		rows = self.do_my_query( """SELECT active_time FROM session WHERE userid = %d ORDER BY active_time DESC LIMIT 1;""" % self.id)
 		try:
 			(date, ) = rows[0]
 		except:
 			return
 		return date
+
+	def LastSeen(self):
+		rows = self.do_my_query( """SELECT active_time FROM %s WHERE id = %d;""" %(self.tablename,self.id))
+		try:
+			(date, ) = rows[0]
+		except:
+			return None
+		return date
+
+
+
+	def UpdateActivity( self, dt=None ):
+		if dt==None:
+			self.do_my_do( """UPDATE %s SET active_time=NOW() WHERE id=%d;""" %
+				( self.tablename, self.id ))
+		else:
+			self.do_my_do( """UPDATE %s SET active_time="%s" WHERE id=%d;""" %
+				( self.tablename, dt, self.id ))
+

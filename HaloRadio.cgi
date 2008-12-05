@@ -52,6 +52,8 @@ def get_session():
 		try:
 			s=Session.Session(C['SessionID'].value)
 			s.UpdateActivity()
+			u = s.GetUser()
+			u.UpdateActivity()
 		except:
 			s=Session.Session(None)
 			C['SessionID']=s.id

@@ -96,11 +96,25 @@ ALTER TABLE `users` ADD COLUMN `enable` tinyint(1) DEFAULT 1;
 		cfg.NewConfigItem("moderator_enable_access","1");
 		cfg.NewConfigItem("moderator_wall_enable_access","1");
 		cfg.SetConfigItem("dbversion","4")
+	if dbversion<5:
+		c = HaloRadio.db.cursor()
+		c._do_query( """
+ALTER TABLE users ADD COLUMN active_time datetime;
+			""")
+		import HaloRadio.UserListMaker as ULM
+		import HaloRadio.User as U
+		ulm=ULM.UserListMaker()
+		ulm.GetAll()
+		for userid in ulm.list:
+			u = U.User(userid)
+			date = u.OldLastSeen()
+			u.UpdateActivity(date)
+		cfg.SetConfigItem("dbversion","5")
 	return None
 
 def check_dbversion():
 	cfg = Config.Config()
-	current_version=4
+	current_version=5
 
 	try:
 		dbversion=cfg.GetConfigItem("dbversion")
