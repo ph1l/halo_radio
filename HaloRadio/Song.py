@@ -34,7 +34,7 @@ class Song(TopTable.TopTable):
 
 			if path == "":
 				raise "cannot add a song without a path."
-			id = self.do_my_insert( """INSERT INTO songs SET path="%s", artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mpeg_version=%d,mpeg_bitrate=%d, mpeg_samplerate=%d, mpeg_length=%d, mpeg_emphasis="%s", mpeg_mode="%s";""" %
+			id = self.do_my_insert( """INSERT INTO songs SET path="%s", artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mpeg_version=%r,mpeg_bitrate=%r, mpeg_samplerate=%r, mpeg_length=%d, mpeg_emphasis="%s", mpeg_mode="%s";""" %
 				( self.escape(path), self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year), mpeg_version, mpeg_bitrate, mpeg_samplerate, mpeg_length, self.escape(mpeg_emphasis), self.escape(mpeg_mode) ) )
 			self.id = id
 			self.UpdateAddedDate()
@@ -53,7 +53,7 @@ class Song(TopTable.TopTable):
 
 		return
 	def Update( self, artist="", album="", title="", track=0, genre="", comment="", year="", mpeg_version=0, mpeg_bitrate=0, mpeg_samplerate=0,  mpeg_length=0, mpeg_emphasis="", mpeg_mode="" ):
-		querystr = """UPDATE songs SET artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mpeg_version=%d,mpeg_bitrate=%d, mpeg_samplerate=%d, mpeg_length=%d, mpeg_emphasis="%s", mpeg_mode="%s" WHERE id="%d";""" % ( self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year),mpeg_version,mpeg_bitrate,mpeg_samplerate,mpeg_length,self.escape(mpeg_emphasis), self.escape(mpeg_mode), self.id )
+		querystr = """UPDATE songs SET artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mpeg_version=%r,mpeg_bitrate=%r, mpeg_samplerate=%r, mpeg_length=%d, mpeg_emphasis="%s", mpeg_mode="%s" WHERE id="%d";""" % ( self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year),mpeg_version,mpeg_bitrate,mpeg_samplerate,mpeg_length,self.escape(mpeg_emphasis), self.escape(mpeg_mode), self.id )
 		#print querystr
 		self.do_my_do(querystr) 
 		return
@@ -63,9 +63,12 @@ class Song(TopTable.TopTable):
 		"""
 		- Song.GetDisplayTime - 
 		"""
-		return "%02d:%02d" % (
-			self.mpeg_length / 60,
-			self.mpeg_length % 60 )
+		if self.mpeg_length == 0:
+			return "??:??"
+		else:
+			return "%02d:%02d" % (
+				self.mpeg_length / 60,
+				self.mpeg_length % 60 )
 		
 	def GetDisplayName( self ):
 		"""
