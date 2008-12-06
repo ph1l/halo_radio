@@ -203,7 +203,10 @@ def update_db(slow, verbose=0):
 		if nfo.title != None:
 			title = make_printable_string(nfo.title)
 		if nfo.trackno != None:
-			track = int(nfo.trackno)
+			try:
+				track = int(nfo.trackno)
+			except:
+				track = 0
 		if nfo.genre != None:
 			genre = nfo.genre
 		if nfo.comment != None:
