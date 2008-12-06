@@ -219,7 +219,10 @@ else:
 			    #if rate != 44100:
 			    #	cmd = "lame --resample 44.1 --mp3input -t --silent --scale %s -f -b %d \"%s/%s\" - " % ( scale, int(br),arc_root, song.path)
 			    #else:
-			    cmd = "lame --resample 44.1 --mp3input -t --silent --scale %s -f -b %d -m j \"%s/%s\" - " % ( scale, int(br),arc_root, song.path)
+			    if song.mpeg_mode == "mono":
+				cmd = "lame  --decode --silent  \"%s/%s\" - | sox -t wav - -c 2 -t wav - | lame --resample 44.1 -t --silent --scale %s -f -b %d -m j - - " % ( arc_root, song.path, scale, int(br))
+			    else:
+				cmd = "lame --resample 44.1 --mp3input -t --silent --scale %s -f -b %d -m j \"%s/%s\" - " % ( scale, int(br),arc_root, song.path)
 			    logger("%d:%s"%(cpid,cmd))
 			    streams[br]['child_stdout'] = os.popen( cmd,'r',)
 			    streams[br]['nbuf'] =  streams[br]['child_stdout'].read(int(br)*32)
