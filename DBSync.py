@@ -189,54 +189,63 @@ def update_db(slow, verbose=0):
 			print "#Invalid MPEG in File: %s" % ( file )
 			print """ls -la "%s" """%( file )
 			continue
-		artist = ""
-		year = ""
-		comment = ""
-		genre = ""
-		track = 0
-		title = ""
-		album = ""
-		if nfo.artist != None:
+		if nfo.has_key('version'):
+			mpeg_version = float(nfo.version)
+		else:
+			print "#Invalid MPEG: Version"
+			continue
+		if nfo.has_key('bitrate'):
+			mpeg_bitrate = float(nfo.bitrate)
+		else:
+			print "#Invalid MPEG: Bitrate"
+			continue
+		if nfo.has_key('samplerate'):
+			mpeg_samplerate = float(nfo.samplerate)
+		else:
+			print "#Invalid MPEG: samplerate"
+			continue
+		if nfo.has_key('length'):
+			mpeg_length = float(nfo.length)
+		else:
+			print "#Invalid MPEG: length"
+			continue
+		if nfo.has_key('mode'):
+			mpeg_mode = nfo.mode
+		else:
+			print "#Invalid MPEG: mode"
+			continue
+		if nfo.has_key('artist'):
 			artist = unicode(nfo.artist).encode('latin-1', 'replace')
-		if nfo.album != None:
+		else:
+			artist = ""
+		if nfo.has_key('album'):
 			album = unicode(nfo.album).encode('latin-1', 'replace')
-		if nfo.title != None:
+		else:
+			album = ""
+		if nfo.has_key('title'):
 			title = unicode(nfo.title).encode('latin-1', 'replace')
-		if nfo.trackno != None:
+		else:
+			title = ""
+		if nfo.has_key('trackno'):
 			try:
 				track = int(nfo.trackno)
 			except:
 				track = 0
-		if nfo.genre != None:
-			genre = nfo.genre
-		if nfo.comment != None:
-			comment = unicode(nfo.comment).encode('latin-1', 'replace')
-		if nfo.date != None:
-			year = nfo.date
-		mpeg_emphasis = ''
-		mpeg_mode = ''
-		try:
-			mpeg_version = float(nfo.version)
-			mpeg_bitrate = float(nfo.bitrate)
-			mpeg_samplerate = float(nfo.samplerate)
-			mpeg_length = int(nfo.length)
-		except:
-			params = "version=%s, bitrate=%s, samplerate=%s, length=%s"%(nfo.version,nfo.bitrate,nfo.samplerate,nfo.length)
-			print "#Invalid MPEG parameters in File: %s : %s" % ( file, params )
-			continue
-		#if mpeg_samplerate != 44100:
-		#	print "#Invalid mpeg_samplerate %s in File: %s" % ( mpeg_samplerate, file )
-		#	print """ls -la "%s" """%( file )
-		#	continue
-		if comment:
-			if find(comment,"iTunes") != -1:
-				comment = "iTunes comment not added to database"
-			if len(comment) > 1024:
-				comment = "over 1024 bytes truncating."
-		try:
-			track = int(track)
-		except:
+		else:
 			track = 0
+		if nfo.has_key('genre'):
+			genre = unicode(nfo.genre).encode('latin-1', 'replace')
+		else:
+			genre = 0
+		comment = ""
+		if nfo.has_key('date'):
+			year = unicode(nfo.date).encode('latin-1', 'replace')
+		mpeg_emphasis = ''
+		#if comment:
+		#	if find(comment,"iTunes") != -1:
+		#		comment = "iTunes comment not added to database"
+		#	if len(comment) > 1024:
+		#		comment = "over 1024 bytes truncating."
 
 		if ( len(songlist.list) > 0 ):
 			song = Song.Song( songlist.list[0] )
