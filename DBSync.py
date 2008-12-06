@@ -20,7 +20,7 @@
 
 from string import find
 
-import os,sys,time,getopt
+import os,sys,time,getopt, re
 
 import HaloRadio
 import HaloRadio.Song as Song
@@ -347,6 +347,31 @@ def make_announce_playlist():
 	for songid in slm.list:
 		playlist.AddSong( songid )
 
+def do_scan_scale():
+	r = re.compile('(\d+\.\d+)')
+	all_songs = SongListMaker.SongListMaker( )
+	all_songs.GetAll()
+	for songid in all_songs.list:
+		song=Song.Song(songid)
+		if song.scale == 0:
+			print "* %s : "%(song.path),
+			cmd = "nice sox \"%s/%s\" -t null /dev/null stat -v 2>&1"%(arc_root,song.path)
+			stat_stdout = os.popen( cmd,'r',)
+			stat_out = stat_stdout.readline()
+			while stat_out != '':
+				m = r.match(stat_out)
+				if m:
+					song.UpdateScale(m.group(1))
+					print m.group(1)
+				stat_out = stat_stdout.readline()
+			stat_stdout.close()
+
+				
+				
+				
+
+
+	
 def usage():
 	print
 	print "%s: halo radio database sync'r" % ( os.path.basename(sys.argv[0] ) )
@@ -356,6 +381,7 @@ def usage():
 	print "	-f, --scanfs	scan archive"
 	print "	-s, --slow	slow search of fs"
 	print " -p, --playlists	build playlists"
+	print " -n, --normalize	scan mp3's to normalize"
 	print
 
 
@@ -364,11 +390,12 @@ slow=0
 verbose=0
 scanfs=0
 playlists=0
+normalize=0
 
 check_dbversion()
 
 try:
-	opts, args = getopt.getopt( sys.argv[1:], "hcvsfp", [ "help", "clean", "verbose", "slow", "scanfs", "playlists" ])
+	opts, args = getopt.getopt( sys.argv[1:], "hcvsfpn", [ "help", "clean", "verbose", "slow", "scanfs", "playlists", "normalize" ])
 except getopt.GetoptError:
 	usage()
 	sys.exit(2)
@@ -387,11 +414,13 @@ for o, a in opts:
 		scanfs = 1
 	if o in ("-p", "--playlists"):
 		playlists = 1
+	if o in ("-n", "--normalize"):
+		normalize = 1
 	#if o in ("-", "--"):
 	#	 = 1
 
 
-if not clean and not scanfs and not playlists:
+if not clean and not scanfs and not playlists and not normalize:
 	usage()
 
 if clean:
@@ -409,3 +438,6 @@ if playlists:
 	make_smart_auto_playlist()
 	make_announce_playlist()
 
+if normalize:
+	log_message( 1, "normalizing...")
+	do_scan_scale()

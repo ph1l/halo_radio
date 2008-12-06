@@ -216,9 +216,6 @@ else:
 			    	scale=1
 			    else:
 			    	scale=song.scale
-			    #if rate != 44100:
-			    #	cmd = "lame --resample 44.1 --mp3input -t --silent --scale %s -f -b %d \"%s/%s\" - " % ( scale, int(br),arc_root, song.path)
-			    #else:
 			    if song.mpeg_mode == "mono":
 				cmd = "lame  --decode --silent  \"%s/%s\" - | sox -t wav - -c 2 -t wav - | lame --resample 44.1 -t --silent --scale %s -f -b %d -m j - - " % ( arc_root, song.path, scale, int(br))
 			    else:
@@ -229,7 +226,7 @@ else:
 			    #if song.scale == 0:
 			    #    # stat the file to find volume offset
 			    #    # DISABLED because it breaks paul's songs.
-       		            #    # cmd = "nice sox \"%s/%s\" -t nul /dev/null stat -v 2>&1"%(arc_root,song.path)
+       		            #    cmd = "nice sox \"%s/%s\" -t null /dev/null stat -v 2>&1"%(arc_root,song.path)
 			    #    logger("%d:%s"%(cpid,cmd))
 			    #    stat_stdout = os.popen( cmd,'r',)
 
