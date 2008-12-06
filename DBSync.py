@@ -189,63 +189,75 @@ def update_db(slow, verbose=0):
 			print "#Invalid MPEG in File: %s" % ( file )
 			print """ls -la "%s" """%( file )
 			continue
-		if nfo.has_key('version'):
-			mpeg_version = float(nfo.version)
+		if nfo.has_key('version') and nfo.version != None:
+			try:
+				mpeg_version = float(nfo.version)
+			except:
+				mpeg_version = float(0)
 		else:
-			print "#Invalid MPEG: Version"
-			continue
-		if nfo.has_key('bitrate'):
-			mpeg_bitrate = float(nfo.bitrate)
+			mpeg_version = float(0)
+		if nfo.has_key('bitrate') and nfo.bitrate != None:
+			try:
+				mpeg_bitrate = float(nfo.bitrate)
+			except:
+				mpeg_bitrate = float(0)
 		else:
-			print "#Invalid MPEG: Bitrate"
-			continue
-		if nfo.has_key('samplerate'):
-			mpeg_samplerate = float(nfo.samplerate)
+			mpeg_bitrate = float(0)
+		if nfo.has_key('samplerate') and nfo.samplerate != None:
+			try:
+				mpeg_samplerate = float(nfo.samplerate)
+			except:
+				mpeg_samplerate = float(0)
 		else:
-			print "#Invalid MPEG: samplerate"
-			continue
-		if nfo.has_key('length'):
-			mpeg_length = float(nfo.length)
+			mpeg_samplerate = float(0)
+		if nfo.has_key('length') and nfo.length != None:
+			try:
+				mpeg_length = float(nfo.length)
+			except:
+				mpeg_length = float(0)
 		else:
-			print "#Invalid MPEG: length"
-			continue
-		if nfo.has_key('mode'):
+			mpeg_length = float(0)
+		if nfo.has_key('mode') and nfo.mode != None:
 			mpeg_mode = nfo.mode
 		else:
-			print "#Invalid MPEG: mode"
-			continue
-		if nfo.has_key('artist'):
-			artist = unicode(nfo.artist).encode('latin-1', 'replace')
+			mpeg_mode = ""
+		if nfo.has_key('artist') and nfo.artist != None:
+			artist = unicode(nfo.artist).encode('ascii', 'replace')
 		else:
 			artist = ""
-		if nfo.has_key('album'):
-			album = unicode(nfo.album).encode('latin-1', 'replace')
+		if nfo.has_key('album') and nfo.album != None:
+			album = unicode(nfo.album).encode('ascii', 'replace')
 		else:
 			album = ""
-		if nfo.has_key('title'):
-			title = unicode(nfo.title).encode('latin-1', 'replace')
+		if nfo.has_key('title') and nfo.title != None:
+			title = unicode(nfo.title).encode('ascii', 'replace')
 		else:
 			title = ""
-		if nfo.has_key('trackno'):
+		if nfo.has_key('trackno') and nfo.trackno != None:
 			try:
 				track = int(nfo.trackno)
 			except:
 				track = 0
 		else:
 			track = 0
-		if nfo.has_key('genre'):
-			genre = unicode(nfo.genre).encode('latin-1', 'replace')
+		if nfo.has_key('genre') and nfo.genre != None:
+			genre = unicode(nfo.genre).encode('ascii', 'replace')
 		else:
-			genre = 0
-		comment = ""
-		if nfo.has_key('date'):
-			year = unicode(nfo.date).encode('latin-1', 'replace')
+			genre = ''
+		if nfo.has_key('comment') and nfo.comment != None:
+			comment = unicode(nfo.comment).encode('ascii', 'replace')
+		else:
+			comment = ""
+		if nfo.has_key('date') and nfo.date != None:
+			year = unicode(nfo.date).encode('ascii', 'replace')
+		else:
+			year = ''
 		mpeg_emphasis = ''
-		#if comment:
-		#	if find(comment,"iTunes") != -1:
-		#		comment = "iTunes comment not added to database"
-		#	if len(comment) > 1024:
-		#		comment = "over 1024 bytes truncating."
+		if comment:
+			if find(comment,"iTunes") != -1:
+				comment = "iTunes comment not added to database"
+			if len(comment) > 1024:
+				comment = "over 1024 bytes truncating."
 
 		if ( len(songlist.list) > 0 ):
 			song = Song.Song( songlist.list[0] )
