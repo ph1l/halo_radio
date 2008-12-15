@@ -28,7 +28,7 @@ import HaloRadio.SongListMaker as SongListMaker
 import HaloRadio.Playlist as Playlist
 import HaloRadio.Config as Config
 #import HaloRadio.MP3Info as MP3Info
-import mmpython
+#import mmpython
 
 
 arc_root=HaloRadio.conf['path.root']
@@ -134,6 +134,8 @@ def check_dbversion():
 
 def update_db(slow, verbose=0):  
 
+	from mutagen import File
+
 	cfg = Config.Config()
 
 
@@ -141,7 +143,7 @@ def update_db(slow, verbose=0):
 	#print "timenow %s" % timenow
 
 	if slow:
-		filestr = "find %s -follow -type f -name \"*.mp3\"" % ( arc_root )
+		filestr = "find %s -follow -type f -name \"*.mp3\" " % ( arc_root )
 	else:
 		try:
 			lastupdatesecs=float(cfg.GetConfigItem("lastupdate"))
@@ -177,88 +179,90 @@ def update_db(slow, verbose=0):
 				song = Song.Song( sid )
 				print "#%d:%s" % ( sid, song.path )
 			raise "you got a problem here."
+		print file
+		try: nfo = File(file)
+		except AttributeError: print "%s:- Unknown file type"%(file)
+		except KeyboardInterrupt: raise
+		except Exception, err: print "%s:%s"%(file,str(err))
 		try:
-			#nfo = MP3Info.MP3Info(open(file, 'rb'))
-			nfo = mmpython.parse(file)
+			mpeg_version = float(nfo.info.version)
 		except:
-			print "#Error Parsing file: "
-			print """ls -la "%s" """%( file )
+			print "#Invalid MPEG: Version"
 			continue
-
-		if nfo.valid != 1:
-			print "#Invalid MPEG in File: %s" % ( file )
-			print """ls -la "%s" """%( file )
+		try:
+			mpeg_layer = float(nfo.info.layer)
+		except:
+			print "#Invalid MPEG: Layer"
 			continue
-		if nfo.has_key('version') and nfo.version != None:
-			try:
-				mpeg_version = float(nfo.version)
-			except:
-				mpeg_version = float(0)
-		else:
-			mpeg_version = float(0)
-		if nfo.has_key('bitrate') and nfo.bitrate != None:
-			try:
-				mpeg_bitrate = float(nfo.bitrate)
-			except:
-				mpeg_bitrate = float(0)
-		else:
-			mpeg_bitrate = float(0)
-		if nfo.has_key('samplerate') and nfo.samplerate != None:
-			try:
-				mpeg_samplerate = float(nfo.samplerate)
-			except:
-				mpeg_samplerate = float(0)
-		else:
-			mpeg_samplerate = float(0)
-		if nfo.has_key('length') and nfo.length != None:
-			try:
-				mpeg_length = float(nfo.length)
-			except:
-				mpeg_length = float(0)
-		else:
-			mpeg_length = float(0)
-		if nfo.has_key('mode') and nfo.mode != None:
-			mpeg_mode = nfo.mode
-		else:
-			mpeg_mode = ""
-		if nfo.has_key('artist') and nfo.artist != None:
-			artist = unicode(nfo.artist).encode('ascii', 'replace')
-		else:
+		try:
+			mpeg_bitrate = float(nfo.info.bitrate)
+		except:
+			print "#Invalid MPEG: Bitrate"
+			continue
+		try:
+			mpeg_samplerate = float(nfo.info.sample_rate)
+		except:
+			print "#Invalid MPEG: samplerate"
+			continue
+		try:
+			mpeg_length = float(nfo.info.length)
+		except:
+			print "#Invalid MPEG: length"
+			continue
+		try:
+			mpeg_mode = "%s"%(nfo.info.mode)
+		except:
+			print "#Invalid MPEG: mode"
+			continue
+		print "%s %s %s %s %s %s"%(mpeg_version, mpeg_layer, mpeg_mode, mpeg_samplerate, mpeg_bitrate, mpeg_length)
+		if nfo.tags != None:
+		    if nfo.tags.has_key('TPE1'):
+			artist = nfo.tags['TPE1'].text[0].encode('ascii', 'replace')
+		    else:
 			artist = ""
-		if nfo.has_key('album') and nfo.album != None:
-			album = unicode(nfo.album).encode('ascii', 'replace')
-		else:
+		    if nfo.tags.has_key('TALB'):
+			album = nfo.tags['TALB'].text[0].encode('ascii', 'replace')
+		    else:
 			album = ""
-		if nfo.has_key('title') and nfo.title != None:
-			title = unicode(nfo.title).encode('ascii', 'replace')
-		else:
+		    if nfo.tags.has_key('TIT1'):
+			title = nfo.tags['TIT1'].text[0].encode('ascii', 'replace')
+		    elif nfo.tags.has_key('TIT2'):
+			title = nfo.tags['TIT2'].text[0].encode('ascii', 'replace')
+		    else:
 			title = ""
-		if nfo.has_key('trackno') and nfo.trackno != None:
-			try:
-				track = int(nfo.trackno)
-			except:
-				track = 0
-		else:
+		    if nfo.tags.has_key('TRCK'):
+			#try:
+			track = nfo.tags['TRCK'].text[0].encode('ascii', 'replace')
+			print track
+			if not track.find("/") == -1:
+				pos = track.find("/")
+				track = int(track[0:pos])
+			else:
+				track = int(track)
+			#except:
+			#	track = 0
+		    else:
 			track = 0
-		if nfo.has_key('genre') and nfo.genre != None:
-			genre = unicode(nfo.genre).encode('ascii', 'replace')
+		    if nfo.tags.has_key('TCON'):
+			genre = nfo.tags['TCON'].text[0].encode('ascii', 'replace')
+		    else:
+			genre = ""
+		    if nfo.tags.has_key('TDRC'):
+			year = nfo.tags['TDRC'].text[0].encode('ascii', 'replace')
+		    else:
+			year = ""
+		    comment = ""
 		else:
-			genre = ''
-		if nfo.has_key('comment') and nfo.comment != None:
-			comment = unicode(nfo.comment).encode('ascii', 'replace')
-		else:
-			comment = ""
-		if nfo.has_key('date') and nfo.date != None:
-			year = unicode(nfo.date).encode('ascii', 'replace')
-		else:
-			year = ''
+		    artist=""
+		    album=""
+		    title=""
+		    track=0
+		    genre=""
+		    year = ""
+		    comment = ""
+			
 		mpeg_emphasis = ''
-		if comment:
-			if find(comment,"iTunes") != -1:
-				comment = "iTunes comment not added to database"
-			if len(comment) > 1024:
-				comment = "over 1024 bytes truncating."
-
+		print "%s %s %s %s %s %s"%(artist,album, title, track, genre, year)
 		if ( len(songlist.list) > 0 ):
 			song = Song.Song( songlist.list[0] )
 			if (song.artist == artist) and (song.album== album) and (song.title== title) and (int(song.track) == int(track)) and (song.genre == genre) and (song.comment == comment) and (song.year == year) and ( song.mpeg_version == mpeg_version ) and ( int(song.mpeg_bitrate) == int(mpeg_bitrate) ) and ( int(song.mpeg_samplerate) == int(song.mpeg_samplerate) )and (int(song.mpeg_length) == int(mpeg_length) ) and (song.mpeg_emphasis == mpeg_emphasis) and (song.mpeg_mode == mpeg_mode):
