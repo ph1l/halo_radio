@@ -23,6 +23,17 @@
 	<UL>
 	<LI tal:repeat="graph graphs"><IMG tal:attributes="SRC graph/url"></LI>
 	</UL>
+	<p>Recent User Activity:</p>
+	<TABLE>
+	<TR class=head>
+		<TD>&nbsp;</TD>
+		<TD>Last Seen</TD>
+	</TR>
+	<TR class=resultsrow tal:repeat="user users">
+	 <td class=resultsrow><A tal:attributes="href user/userlink" tal:content="user/username">User Name</A></td>
+	 <td class=resultsrow tal:content="user/seen_on">Date</td>
+	</TR>
+	</TABLE>
   <!-- End Content -->
   <BR>
   <TABLE Class=foot>

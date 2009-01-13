@@ -17,3 +17,20 @@ class plugin(TopWeb.TopWeb):
 			graphlist.append(entity)
 		context.addGlobal ("graphs", graphlist)
 
+		# Recently Active Users
+		import HaloRadio.SessionListMaker as SessionListMaker
+		import HaloRadio.Session as Session
+		slm = SessionListMaker.SessionListMaker()
+		users=[]
+		slm.GetActive(10080)
+		for session_id in slm.list:
+			s= Session.Session(session_id)
+			u = s.GetUser()
+			entity={}
+			entity['username']=u.name
+			entity['userlink']="%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], u.id )
+			entity['seen_on']=s.GetActivity()
+			users.append(entity)
+		context.addGlobal ("users", users)
+
+
