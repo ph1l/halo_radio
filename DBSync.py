@@ -179,7 +179,7 @@ def update_db(slow, verbose=0):
 				song = Song.Song( sid )
 				print "#%d:%s" % ( sid, song.path )
 			raise "you got a problem here."
-		print file
+		#print file
 		try: nfo = File(file)
 		except AttributeError: print "%s:- Unknown file type"%(file)
 		except KeyboardInterrupt: raise
@@ -212,9 +212,8 @@ def update_db(slow, verbose=0):
 		try:
 			mpeg_mode = "%s"%(nfo.info.mode)
 		except:
-			print "#Invalid MPEG: mode"
-			continue
-		print "%s %s %s %s %s %s"%(mpeg_version, mpeg_layer, mpeg_mode, mpeg_samplerate, mpeg_bitrate, mpeg_length)
+			mpeg_mode = ""
+		#print "%s %s %s %s %s %s"%(mpeg_version, mpeg_layer, mpeg_mode, mpeg_samplerate, mpeg_bitrate, mpeg_length)
 		if nfo.tags != None:
 		    if nfo.tags.has_key('TPE1'):
 			artist = nfo.tags['TPE1'].text[0].encode('ascii', 'replace')
@@ -233,7 +232,6 @@ def update_db(slow, verbose=0):
 		    if nfo.tags.has_key('TRCK'):
 			#try:
 			track = nfo.tags['TRCK'].text[0].encode('ascii', 'replace')
-			print track
 			if not track.find("/") == -1:
 				pos = track.find("/")
 				track = int(track[0:pos])
@@ -262,7 +260,7 @@ def update_db(slow, verbose=0):
 		    comment = ""
 			
 		mpeg_emphasis = ''
-		print "%s %s %s %s %s %s"%(artist,album, title, track, genre, year)
+		#print "%s %s %s %s %s %s"%(artist,album, title, track, genre, year)
 		if ( len(songlist.list) > 0 ):
 			song = Song.Song( songlist.list[0] )
 			if (song.artist == artist) and (song.album== album) and (song.title== title) and (int(song.track) == int(track)) and (song.genre == genre) and (song.comment == comment) and (song.year == year) and ( song.mpeg_version == mpeg_version ) and ( int(song.mpeg_bitrate) == int(mpeg_bitrate) ) and ( int(song.mpeg_samplerate) == int(song.mpeg_samplerate) )and (int(song.mpeg_length) == int(mpeg_length) ) and (song.mpeg_emphasis == mpeg_emphasis) and (song.mpeg_mode == mpeg_mode):

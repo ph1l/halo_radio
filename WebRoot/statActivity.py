@@ -22,7 +22,7 @@ class plugin(TopWeb.TopWeb):
 		import HaloRadio.User as User
 		import datetime, time
 		users=[]
-		ACTIVITY_TIMEOUT = 10080
+		ACTIVITY_TIMEOUT = 2592000
 		ulm = UserListMaker.UserListMaker()
 		ulm.GetAll()
 		for user_id in ulm.list:

@@ -9,6 +9,9 @@ class plugin(TopWeb.TopWeb):
 		ulm = UserListMaker.UserListMaker()
 		ulm.GetAll()
 		users = []
+		is_admin=0
+		enable=0
+		wall_enable=0
 		if (self.do_authorize(self.user.rights, "a")):
 			is_admin=1
 			enable=1
