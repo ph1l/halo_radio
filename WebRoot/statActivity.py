@@ -21,6 +21,7 @@ class plugin(TopWeb.TopWeb):
 		import HaloRadio.UserListMaker as UserListMaker
 		import HaloRadio.User as User
 		import datetime, time
+		from operator import itemgetter
 		users=[]
 		ACTIVITY_TIMEOUT = 2592000
 		ulm = UserListMaker.UserListMaker()
@@ -37,6 +38,8 @@ class plugin(TopWeb.TopWeb):
 				entity['userlink']="%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], u.id )
 				entity['seen_on']=u.LastSeen()
 				users.append(entity)
-		context.addGlobal ("users", users)
+		sorted_users = sorted(users, key=itemgetter('seen_on'))
+		sorted_users.reverse()
+		context.addGlobal ("users", sorted_users)
 
 
