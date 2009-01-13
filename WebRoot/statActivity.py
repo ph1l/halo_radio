@@ -18,19 +18,25 @@ class plugin(TopWeb.TopWeb):
 		context.addGlobal ("graphs", graphlist)
 
 		# Recently Active Users
-		import HaloRadio.SessionListMaker as SessionListMaker
-		import HaloRadio.Session as Session
-		slm = SessionListMaker.SessionListMaker()
+		import HaloRadio.UserListMaker as UserListMaker
+		import HaloRadio.User as User
+		import datetime, time
 		users=[]
-		slm.GetActive(10080)
-		for session_id in slm.list:
-			s= Session.Session(session_id)
-			u = s.GetUser()
-			entity={}
-			entity['username']=u.name
-			entity['userlink']="%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], u.id )
-			entity['seen_on']=s.GetActivity()
-			users.append(entity)
+		ACTIVITY_TIMEOUT = 10080
+		ulm = UserListMaker.UserListMaker()
+		ulm.GetAll()
+		for user_id in ulm.list:
+			u= User.User(user_id)
+			if u.name == "Anonymous":
+				continue
+			last_seen = u.LastSeen()
+			now = time.mktime(datetime.datetime.now().timetuple())
+			if time.mktime(last_seen.timetuple()) > now -ACTIVITY_TIMEOUT:
+				entity={}
+				entity['username']=u.name
+				entity['userlink']="%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], u.id )
+				entity['seen_on']=u.LastSeen()
+				users.append(entity)
 		context.addGlobal ("users", users)
 
 
