@@ -26,7 +26,7 @@ class Song(TopTable.TopTable):
 		a song object must be passed a songid.
 	"""
 
-	def __init__( self, id, path="", artist="", album="", title="", track=0, genre="", comment="", year="", mpeg_version=0, mpeg_bitrate=0, mpeg_samplerate=0, mpeg_length=0, mpeg_emphasis="",mpeg_mode="" ):
+	def __init__( self, id, path="", artist="", album="", title="", track=0, genre="", comment="", year="", mime=0, samplerate=0, length=0 ):
 		self.tablename = "songs"
 		id = int(id)
 		if id == 0:
@@ -34,16 +34,16 @@ class Song(TopTable.TopTable):
 
 			if path == "":
 				raise "cannot add a song without a path."
-			id = self.do_my_insert( """INSERT INTO songs SET path="%s", artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mpeg_version=%r,mpeg_bitrate=%r, mpeg_samplerate=%r, mpeg_length=%d, mpeg_emphasis="%s", mpeg_mode="%s";""" %
-				( self.escape(path), self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year), mpeg_version, mpeg_bitrate, mpeg_samplerate, mpeg_length, self.escape(mpeg_emphasis), self.escape(mpeg_mode) ) )
+			id = self.do_my_insert( """INSERT INTO songs SET path="%s", artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mime="%s", samplerate=%r, length=%d;""" %
+				( self.escape(path), self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year), self.escape(mime), samplerate, length ) )
 			self.id = id
 			self.UpdateAddedDate()
 			
 			
 		"""load up the info for the provided id"""
-		rows = self.do_my_query( """SELECT path,artist,album,title,track,genre,comment,year,mpeg_version,mpeg_bitrate,mpeg_samplerate,mpeg_length,mpeg_emphasis,mpeg_mode,requests,plays,kills,added_date,scale FROM songs WHERE id=%d;""" % ( id ) )
+		rows = self.do_my_query( """SELECT path,artist,album,title,track,genre,comment,year,mime,samplerate,length,requests,plays,kills,added_date,scale FROM songs WHERE id=%d;""" % ( id ) )
 		try:
-			( self.path, self.artist, self.album, self.title, self.track, self.genre, self.comment, self.year, self.mpeg_version, self.mpeg_bitrate, self.mpeg_samplerate, self.mpeg_length, self.mpeg_emphasis, self.mpeg_mode, self.requests, self.plays, self.kills, self.added_date, self.scale ) = rows[0]
+			( self.path, self.artist, self.album, self.title, self.track, self.genre, self.comment, self.year, self.mime, self.samplerate, self.length, self.requests, self.plays, self.kills, self.added_date, self.scale ) = rows[0]
 		except IndexError:
 			import HaloRadio.Exception as Exception
 			raise Exception.SongNotFound, id
@@ -52,10 +52,20 @@ class Song(TopTable.TopTable):
 
 
 		return
-	def Update( self, artist="", album="", title="", track=0, genre="", comment="", year="", mpeg_version=0, mpeg_bitrate=0, mpeg_samplerate=0,  mpeg_length=0, mpeg_emphasis="", mpeg_mode="" ):
-		querystr = """UPDATE songs SET artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mpeg_version=%r,mpeg_bitrate=%r, mpeg_samplerate=%r, mpeg_length=%d, mpeg_emphasis="%s", mpeg_mode="%s" WHERE id="%d";""" % ( self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year),mpeg_version,mpeg_bitrate,mpeg_samplerate,mpeg_length,self.escape(mpeg_emphasis), self.escape(mpeg_mode), self.id )
+	def Update( self, artist="", album="", title="", track=0, genre="", comment="", year="", mime="", samplerate=0,  length=0 ):
+		querystr = """UPDATE songs SET artist="%s", album="%s", title="%s", track=%d, genre="%s", comment="%s", year="%s",mime="%s", samplerate=%r, length=%d WHERE id="%d";""" % ( self.escape(artist), self.escape(album), self.escape(title), track, self.escape(genre), self.escape(comment), self.escape(year),self.escape(mime),samplerate,length, self.id )
 		#print querystr
 		self.do_my_do(querystr) 
+		self.artist=artist
+		self.album=album
+		self.title=title
+		self.track=track
+		self.genre=genre
+		self.comment=comment
+		self.year=year
+		self.mime=mime
+		self.samplerate=samplerate
+		self.length=length
 		return
 	
 
@@ -63,12 +73,12 @@ class Song(TopTable.TopTable):
 		"""
 		- Song.GetDisplayTime - 
 		"""
-		if self.mpeg_length == 0:
+		if self.length == 0:
 			return "??:??"
 		else:
 			return "%02d:%02d" % (
-				self.mpeg_length / 60,
-				self.mpeg_length % 60 )
+				self.length / 60,
+				self.length % 60 )
 		
 	def GetDisplayName( self ):
 		"""

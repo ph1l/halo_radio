@@ -211,15 +211,17 @@ else:
 			    except:
 				logger("%d:error setting metadata %s."%(cpid,song.GetDisplayName()))
 	
-			    rate = song.mpeg_samplerate
 			    if song.scale == 0:
 			    	scale=1
 			    else:
 			    	scale=song.scale
-			    if song.mpeg_mode == "mono":
-				cmd = "lame  --decode --silent  \"%s/%s\" - | sox -t wav - -c 2 -t wav - | lame --resample 44.1 -t --silent --scale %s -f -b %d -m j - - " % ( arc_root, song.path, scale, int(br))
-			    else:
+			    if song.mime == "audio/mp3":
 				cmd = "lame --resample 44.1 --mp3input -t --silent --scale %s -f -b %d -m j \"%s/%s\" - " % ( scale, int(br),arc_root, song.path)
+			    elif song.mime == "audio/x-flac":
+				cmd = "flac  --decode --silent -c -F \"%s/%s\" | lame --resample 44.1 -t --silent --scale %s -f -b %d -m j - - " % ( arc_root, song.path, scale, int(br))
+			    else:
+				logger("%d:Error: invalid MIME tag for %s:%s"%(cpid,song.path,song.mime))
+				cmd="false"
 			    logger("%d:%s"%(cpid,cmd))
 			    streams[br]['child_stdout'] = os.popen( cmd,'r',)
 			    streams[br]['nbuf'] =  streams[br]['child_stdout'].read(int(br)*32)
@@ -253,7 +255,7 @@ else:
 
 			if curr == 0:
 				currenttime = time.time()
-				percent = (int(int( ((currenttime-starttime)/song.mpeg_length)*100)/2)*2 )
+				percent = (int(int( ((currenttime-starttime)/song.length)*100)/2)*2 )
 				if percent != oldpercent:
 					#logger("%d:shout song %d percent complete"%(cpid,percent))
 					cfg.SetConfigItem("current_percent","%d"%percent)

@@ -80,7 +80,7 @@ class plugin(TopWeb.TopWeb):
 				request['song'] = song.GetDisplayName()
 				request['songurl'] = "%s?action=songInfo&id=%d"%( self.config['general.cgi_url'], song.id)
 				request['songlen'] = song.GetDisplayLength()
-				total_length += song.mpeg_length
+				total_length += song.length
 				requestlist.append(request)
 			context.addGlobal ("classname", "resultsrow")
 			context.addGlobal ("total_song_legnth", "%02d:%02d" % ( total_length / 60, total_length % 60 ))

@@ -111,6 +111,21 @@ ALTER TABLE users ADD COLUMN active_time datetime;
 			date = u.OldLastSeen()
 			u.UpdateActivity(date)
 		cfg.SetConfigItem("dbversion","5")
+	if dbversion<6:
+		c._do_query( """
+alter table songs change column mpeg_samplerate samplerate float unsigned default 0;
+			""")
+		c._do_query( """
+alter table songs change column mpeg_length length mediumint(9) default 0;
+			""")
+		for column_name in ("mpeg_emphasis","mpeg_mode","mpeg_bitrate","mpeg_version"):
+			c._do_query( """
+alter table songs drop column %s;
+			"""%(column_name))
+		c._do_query( """
+alter table songs add column mime tinytext;
+			""")
+		cfg.SetConfigItem("dbversion","6")
 	return None
 
 def check_dbversion():
@@ -143,7 +158,8 @@ def update_db(slow, verbose=0):
 	#print "timenow %s" % timenow
 
 	if slow:
-		filestr = "find %s -follow -type f -name \"*.mp3\" " % ( arc_root )
+		#filestr = "find %s -follow -type f -name \"*.mp3\" " % ( arc_root )
+		filestr = "find %s -follow -type f " % ( arc_root )
 	else:
 		try:
 			lastupdatesecs=float(cfg.GetConfigItem("lastupdate"))
@@ -154,7 +170,8 @@ def update_db(slow, verbose=0):
 		timediff = timenow - lastupdatesecs
 		#print "timediff %s" % timediff
 
-		filestr = "find %s -type f -cmin -%d -name \"*.mp3\"" % ( arc_root, (timediff/60)+1 )
+		#filestr = "find %s -type f -cmin -%d -name \"*.mp3\"" % ( arc_root, (timediff/60)+1 )
+		filestr = "find %s -type f -cmin -%d " % ( arc_root, (timediff/60)+1 )
 	cfg.SetConfigItem("lastupdate",str(timenow))
 	#print filestr
 	files=os.popen(filestr)
@@ -185,68 +202,65 @@ def update_db(slow, verbose=0):
 		except KeyboardInterrupt: raise
 		except Exception, err: print "%s:%s"%(file,str(err))
 		try:
-			mpeg_version = float(nfo.info.version)
+			samplerate = float(nfo.info.sample_rate)
 		except:
-			print "#Invalid MPEG: Version"
+			print "#Invalid MPEG samplerate:", file
 			continue
 		try:
-			mpeg_layer = float(nfo.info.layer)
+			length = float(nfo.info.length)
 		except:
-			print "#Invalid MPEG: Layer"
+			print "#Invalid MPEG length:", file
 			continue
 		try:
-			mpeg_bitrate = float(nfo.info.bitrate)
+			mime = nfo.mime[0]
 		except:
-			print "#Invalid MPEG: Bitrate"
+			print "#Invalid mime/type:", file
 			continue
-		try:
-			mpeg_samplerate = float(nfo.info.sample_rate)
-		except:
-			print "#Invalid MPEG: samplerate"
-			continue
-		try:
-			mpeg_length = float(nfo.info.length)
-		except:
-			print "#Invalid MPEG: length"
-			continue
-		try:
-			mpeg_mode = "%s"%(nfo.info.mode)
-		except:
-			mpeg_mode = ""
-		#print "%s %s %s %s %s %s"%(mpeg_version, mpeg_layer, mpeg_mode, mpeg_samplerate, mpeg_bitrate, mpeg_length)
 		if nfo.tags != None:
 		    if nfo.tags.has_key('TPE1'):
 			artist = nfo.tags['TPE1'].text[0].encode('ascii', 'replace')
+		    elif nfo.tags.has_key('artist'):
+			artist = nfo.tags['artist'][0].encode('ascii', 'replace')
 		    else:
 			artist = ""
 		    if nfo.tags.has_key('TALB'):
 			album = nfo.tags['TALB'].text[0].encode('ascii', 'replace')
+		    elif nfo.tags.has_key('album'):
+			album = nfo.tags['album'][0].encode('ascii', 'replace')
 		    else:
 			album = ""
 		    if nfo.tags.has_key('TIT1'):
 			title = nfo.tags['TIT1'].text[0].encode('ascii', 'replace')
 		    elif nfo.tags.has_key('TIT2'):
 			title = nfo.tags['TIT2'].text[0].encode('ascii', 'replace')
+		    elif nfo.tags.has_key('title'):
+			title = nfo.tags['title'][0].encode('ascii', 'replace')
 		    else:
 			title = ""
 		    if nfo.tags.has_key('TRCK'):
-			#try:
 			track = nfo.tags['TRCK'].text[0].encode('ascii', 'replace')
-			if not track.find("/") == -1:
-				pos = track.find("/")
-				track = int(track[0:pos])
-			else:
-				track = int(track)
-			#except:
-			#	track = 0
+		    elif nfo.tags.has_key('tracknumber'):
+			track = nfo.tags['tracknumber'][0].encode('ascii', 'replace')
 		    else:
 			track = 0
+
+		    if not track.find("/") == -1:
+			pos = track.find("/")
+			track = int(track[0:pos])
+		    else:
+			track = int(track)
+
 		    if nfo.tags.has_key('TCON'):
 			genre = nfo.tags['TCON'].text[0].encode('ascii', 'replace')
+		    elif nfo.tags.has_key('genre'):
+			genre = nfo.tags['genre'][0].encode('ascii', 'replace')
 		    else:
 			genre = ""
+
 		    if nfo.tags.has_key('TDRC'):
 			year = nfo.tags['TDRC'].text[0].encode('ascii', 'replace')
+		    elif nfo.tags.has_key('date'):
+			year = nfo.tags['date'][0].encode('ascii', 'replace')
 		    else:
 			year = ""
 		    comment = ""
@@ -259,30 +273,29 @@ def update_db(slow, verbose=0):
 		    year = ""
 		    comment = ""
 			
-		mpeg_emphasis = ''
 		#print "%s %s %s %s %s %s"%(artist,album, title, track, genre, year)
 		if ( len(songlist.list) > 0 ):
 			song = Song.Song( songlist.list[0] )
-			if (song.artist == artist) and (song.album== album) and (song.title== title) and (int(song.track) == int(track)) and (song.genre == genre) and (song.comment == comment) and (song.year == year) and ( song.mpeg_version == mpeg_version ) and ( int(song.mpeg_bitrate) == int(mpeg_bitrate) ) and ( int(song.mpeg_samplerate) == int(song.mpeg_samplerate) )and (int(song.mpeg_length) == int(mpeg_length) ) and (song.mpeg_emphasis == mpeg_emphasis) and (song.mpeg_mode == mpeg_mode):
+			if (song.artist == artist) and (song.album== album) and (song.title== title) and (int(song.track) == int(track)) and (song.genre == genre) and (song.comment == comment) and (song.year == year) and ( song.mime==mime ) and ( int(song.samplerate) == int(samplerate) ) and (int(song.length) == int(length) ):
 				continue
 			else:
 				log_message( verbose, 
-					"fl:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
-					artist,album,title,track,genre,comment,year,mpeg_version,mpeg_bitrate,mpeg_samplerate,mpeg_length,mpeg_emphasis,mpeg_mode )
+					"fl:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
+					artist,album,title,track,genre,comment,year,mime,samplerate,length)
 				)
 				log_message( verbose,
-					"db:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
-						song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mpeg_version,song.mpeg_bitrate,song.mpeg_samplerate,song.mpeg_length,song.mpeg_emphasis,song.mpeg_mode )
+					"db:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
+						song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mime,song.samplerate,song.length)
 					)
 				print "#Updating", path
-				song.Update(artist, album, title, track, genre, comment, year, mpeg_version, mpeg_bitrate, mpeg_samplerate, mpeg_length, mpeg_emphasis, mpeg_mode )
+				song.Update(artist, album, title, track, genre, comment, year, mime, samplerate, length )
 				continue
 		
 		print "#Adding", path
-		song = Song.Song( 0, path, artist, album, title, track, genre, comment, year, mpeg_version, mpeg_bitrate, mpeg_samplerate, mpeg_length, mpeg_emphasis, mpeg_mode )
+		song = Song.Song( 0, path, artist, album, title, track, genre, comment, year, mime, samplerate, length )
 		log_message( verbose,
-			"ad:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
-				song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mpeg_version,song.mpeg_bitrate,song.mpeg_samplerate,song.mpeg_length,song.mpeg_emphasis,song.mpeg_mode )
+			"ad:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
+				song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mime,song.samplerate,song.length )
 			)
 
 def clean_db(verbose=0):

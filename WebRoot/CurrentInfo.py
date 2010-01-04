@@ -56,8 +56,8 @@ class plugin(TopWeb.TopWeb):
 			context.addGlobal ("curlength", cur_song.GetDisplayLength())
 			curprcnt = int(self.configdb.GetConfigItem("current_percent"))
 		
-			seen = cur_song.mpeg_length * curprcnt / 100
- 			refresh_delay = int(int( cur_song.mpeg_length) - seen )
+			seen = cur_song.length * curprcnt / 100
+ 			refresh_delay = int(int( cur_song.length) - seen )
 			if refresh_delay < 0:
 				refresh_delay = 150
 			context.addGlobal ("curprcnt", curprcnt )
