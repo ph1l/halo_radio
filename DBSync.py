@@ -112,6 +112,7 @@ ALTER TABLE users ADD COLUMN active_time datetime;
 			u.UpdateActivity(date)
 		cfg.SetConfigItem("dbversion","5")
 	if dbversion<6:
+		c = HaloRadio.db.cursor()
 		c._do_query( """
 alter table songs change column mpeg_samplerate samplerate float unsigned default 0;
 			""")
@@ -130,7 +131,7 @@ alter table songs add column mime tinytext;
 
 def check_dbversion():
 	cfg = Config.Config()
-	current_version=5
+	current_version=6
 
 	try:
 		dbversion=cfg.GetConfigItem("dbversion")
@@ -242,7 +243,7 @@ def update_db(slow, verbose=0):
 		    elif nfo.tags.has_key('tracknumber'):
 			track = nfo.tags['tracknumber'][0].encode('ascii', 'replace')
 		    else:
-			track = 0
+			track = "0"
 
 		    if not track.find("/") == -1:
 			pos = track.find("/")
