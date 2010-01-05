@@ -43,7 +43,7 @@ def check_string( string ):
 def shell_escape_string( String ):
 	newString = ""
 	for i in range(0,len(String)):
-		if String[i] in "'":
+		if String[i] in "\"":
 			newString += "\\"+String[i]
 		else:
 			newString += String[i]
@@ -97,135 +97,41 @@ def process_dir(dir,subroot, verbose=1, dry_run=1 ):
 				print "ERR-DUPE:%d:%s" % ( sid, song.path )
 			continue
 		#print file
-		try: nfo = File(file)
-		except AttributeError: print "%s:- Unknown file type"%(file)
-		except KeyboardInterrupt: raise
-		except Exception, err: print "%s:%s"%(file,str(err))
-		try:
-			mpeg_version = float(nfo.info.version)
-		except:
-			print "#Invalid MPEG: Version"
-			continue
-		try:
-			mpeg_layer = float(nfo.info.layer)
-		except:
-			print "#Invalid MPEG: Layer"
-			continue
-		try:
-			mpeg_bitrate = float(nfo.info.bitrate)
-		except:
-			print "#Invalid MPEG: Bitrate"
-			continue
-		try:
-			mpeg_samplerate = float(nfo.info.sample_rate)
-		except:
-			print "#Invalid MPEG: samplerate"
-			continue
-		try:
-			mpeg_length = float(nfo.info.length)
-		except:
-			print "#Invalid MPEG: length"
-			continue
-		try:
-			mpeg_mode = "%s"%(nfo.info.mode)
-		except:
-			mpeg_mode = ""
-		#print "%s %s %s %s %s %s"%(mpeg_version, mpeg_layer, mpeg_mode, mpeg_samplerate, mpeg_bitrate, mpeg_length)
-		if nfo.tags != None:
-		    if nfo.tags.has_key('TPE1'):
-			artist = nfo.tags['TPE1'].text[0].encode('ascii', 'replace')
-		    else:
-			artist = ""
-		    if nfo.tags.has_key('TALB'):
-			album = nfo.tags['TALB'].text[0].encode('ascii', 'replace')
-		    else:
-			album = ""
-		    if nfo.tags.has_key('TIT1'):
-			title = nfo.tags['TIT1'].text[0].encode('ascii', 'replace')
-		    elif nfo.tags.has_key('TIT2'):
-			title = nfo.tags['TIT2'].text[0].encode('ascii', 'replace')
-		    else:
-			title = ""
-		    if nfo.tags.has_key('TRCK'):
-			#try:
-			track = nfo.tags['TRCK'].text[0].encode('ascii', 'replace')
-			if not track.find("/") == -1:
-				pos = track.find("/")
-				track = int(track[0:pos])
-			else:
-				track = int(track)
-			#except:
-			#	track = 0
-		    else:
-			track = 0
-		    if nfo.tags.has_key('TCON'):
-			genre = nfo.tags['TCON'].text[0].encode('ascii', 'replace')
-		    else:
-			genre = ""
-		    if nfo.tags.has_key('TDRC'):
-			year = nfo.tags['TDRC'].text[0].encode('ascii', 'replace')
-		    else:
-			year = ""
-		    comment = ""
+		song = Song.Song( songlist.list[0] )
+		## move files..
+		fn_artist=make_fn_string(song.artist)
+		fn_album =make_fn_string(song.album)
+		fn_title =make_fn_string(song.title)
+		log_message(verbose,"fn:%s:%s:%s"%(fn_artist,fn_album,fn_title))
+		if fn_album == "":
+			if fn_artist == "" or fn_title == "":
+				print "#Skipping: ", song.path
+				continue
+			new_path="%s/%s/%s---%s.mp3"%(subroot,fn_artist,fn_artist,fn_title)
+		elif song.track == 0:
+			new_path="%s/%s/%s/%s-%s--%s.mp3"%(subroot,fn_artist,fn_album,fn_artist,fn_album,fn_title)
 		else:
-		    artist=""
-		    album=""
-		    title=""
-		    track=0
-		    genre=""
-		    year = ""
-		    comment = ""
-			
-		mpeg_emphasis = ''
-		#print "%s %s %s %s %s %s"%(artist,album, title, track, genre, year)
-		if ( len(songlist.list) > 0 ):
-			song = Song.Song( songlist.list[0] )
-			if not ((song.artist == artist) and (song.album== album) and (song.title== title) and (int(song.track) == int(track)) and (song.genre == genre) and (song.comment == comment) and (song.year == year) and ( song.mpeg_version == mpeg_version ) and ( int(song.mpeg_bitrate) == int(mpeg_bitrate) ) and ( int(song.mpeg_samplerate) == int(song.mpeg_samplerate) )and (int(song.mpeg_length) == int(mpeg_length) ) and (song.mpeg_emphasis == mpeg_emphasis) and (song.mpeg_mode == mpeg_mode)):
-				log_message( verbose, 
-					"fl:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
-					artist,album,title,track,genre,comment,year,mpeg_version,mpeg_bitrate,mpeg_samplerate,mpeg_length,mpeg_emphasis,mpeg_mode )
-				)
-				log_message( verbose,
-					"db:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
-						song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mpeg_version,song.mpeg_bitrate,song.mpeg_samplerate,song.mpeg_length,song.mpeg_emphasis,song.mpeg_mode )
-					)
-				print "#Updating", path
-				#if dry_run == 0:
-				song.Update(artist, album, title, track, genre, comment, year, mpeg_version, mpeg_bitrate, mpeg_samplerate, mpeg_length, mpeg_emphasis, mpeg_mode )
-		
-			## move files..
-			fn_artist=make_fn_string(song.artist)
-			fn_album =make_fn_string(song.album)
-			fn_title =make_fn_string(song.title)
-			log_message(verbose,"fn:%s:%s:%s"%(fn_artist,fn_album,fn_title))
-			if fn_album == "":
-				if fn_artist == "" or fn_title == "":
-					print "#Skipping: ", song.path
-					continue
-				new_path="%s/%s/%s---%s.mp3"%(subroot,fn_artist,fn_artist,fn_title)
-			elif song.track == 0:
-				new_path="%s/%s/%s/%s-%s--%s.mp3"%(subroot,fn_artist,fn_album,fn_artist,fn_album,fn_title)
-			else:
-				new_path="%s/%s/%s/%s-%s-%02d-%s.mp3"%(subroot,fn_artist,fn_album,fn_artist,fn_album,song.track,fn_title)
+			new_path="%s/%s/%s/%s-%s-%02d-%s.mp3"%(subroot,fn_artist,fn_album,fn_artist,fn_album,song.track,fn_title)
 
-			if new_path != song.path:
-				log_message( verbose, 
-					"nf:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
-					song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mpeg_version,song.mpeg_bitrate,song.mpeg_samplerate,song.mpeg_length,song.mpeg_emphasis,song.mpeg_mode )
+		if new_path != song.path:
+			log_message( verbose, 
+				"nf:%s:%s:%s:%s:%s:%s:%s:%s:%s:%s" % (
+					song.artist,song.album,song.title,song.track,song.genre,song.comment,song.year,song.mime,song.samplerate,song.length )
 				)
-				new_dir = os.path.dirname(new_path)
-				if dry_run == 0:
-					if os.path.exists("%s/%s"%(arc_root,new_dir)) == False:
-						if os.system("mkdir -pv %s/%s"%(arc_root,new_dir)) != 0:
-							os.exit()
-					log_message( verbose,"mv:%s:%s" % (song.path,new_path))
-					if os.system("mv -v %s/\"%s\" %s/%s"%(arc_root,song.path,arc_root,new_path)) != 0:
+			new_dir = os.path.dirname(new_path)
+			if dry_run == 0:
+				if os.path.exists("%s/%s"%(arc_root,new_dir)) == False:
+					if os.system("mkdir -pv %s/%s"%(arc_root,new_dir)) != 0:
 						os.exit()
-					song.UpdatePath(new_path)
-				else:
-					print "mv:%s:%s" % (song.path,new_path)
+				log_message( verbose,"mv:%s:%s" % (song.path,new_path))
+				if os.system("mv -v %s/\"%s\" %s/%s"%(arc_root,shell_escape_string(song.path),arc_root,new_path)) != 0:
+					os.exit()
+				song.UpdatePath(new_path)
 			else:
-				print "mv:path unchanged"
+				print "mv:%s:%s" % (song.path,new_path)
+		else:
+			print "mv:path unchanged"
+
 def log_message(ifval,msg):
 	if ifval:
 		print "#",msg
