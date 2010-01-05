@@ -1,0 +1,29 @@
+    <DIV tal:condition="havenextsng">
+    <h2>Coming Up Next :</h2>
+        <a tal:attributes="href nextsngurl" tal:content="nextsng">SongName</a>[<i tal:content="nextlength">00:00</i>](<b tal:content="nextsngreqby">UserName</b>)
+    </DIV>
+    <DIV tal:condition="haverelay">
+    <h2>Now Relaying :</h2>
+    <i tal:content="currelay">RelayName</i>
+	<i><b><a tal:attributes="href killurl">Kill</a></b></i>
+    </DIV>
+    <DIV tal:condition="havesong">
+    <h2>Now Playing :</h2>
+        <a tal:attributes="href cursngurl" tal:content="cursng">SongName</a>[<i tal:content="curlength">00:00</i>]&nbsp;<B tal:content="curprcnt">99</B>%&nbsp;(<B tal:content="curreqby">UserName</B>)
+
+	<i><b><a tal:attributes="href killurl">Kill</a></b></i>
+	
+    </DIV>
+    <h2>Previous :</h2>
+    <DIV tal:repeat="each prevsngs">
+        <a tal:attributes="href each/sngurl" tal:content="each/sng">SongName</a>(<B tal:content="each/reqby">UserName</B>)
+	<br>
+    </DIV>
+    <a tal:attributes="href playhisturl">more...</a>
+    <br>
+    <br>
+    <i>Active Users:</i>
+    <i tal:repeat="user active_users">
+        <b tal:content="user/name">UserName</b>[<i tal:content="user/last_active">time</i>]{<b tal:content="user/host">6.6.6</b>}
+    </i>
+    <br>
