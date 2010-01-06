@@ -19,6 +19,9 @@
 import urllib2, string,re
 import HaloRadio
 
+import MySQLdb
+import _mysql_exceptions
+
 def GetStreamURLList( ):
 	urls= HaloRadio.conf['general.status_urls']
 	return urls.split(",")
@@ -89,3 +92,18 @@ def do_authorize (rights,reqs):
          return 1
    return 0
 
+def GetSearchHints( q, num_hints=10 ):
+        #
+        #
+        sel = HaloRadio.db.cursor()
+        query = """(SELECT DISTINCT SUM(requests)-SUM(kills) as popularity, artist as txt FROM songs WHERE artist REGEXP "[[:<:]]%s.*" GROUP BY artist) UNION (SELECT DISTINCT SUM(requests)-SUM(kills) as popularity, album as txt FROM songs WHERE album REGEXP "[[:<:]]%s.*" GROUP BY album) UNION (SELECT DISTINCT SUM(requests)-SUM(kills) as popularity, title as txt FROM songs WHERE title REGEXP "[[:<:]]%s.*" GROUP BY title) order by popularity DESC LIMIT %d; """ % (q,q,q,num_hints)
+        try:
+                sel.execute(query)
+                rows = sel.fetchall()
+        except _mysql_exceptions.OperationalError, value:
+                ( errno, desc ) = value
+                print "query=%s, errno=%d, err=%s" % ( query, errno, desc )
+	results=[]
+	for row in rows:
+		results.append(row[1])
+	return results

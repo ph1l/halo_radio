@@ -3,6 +3,35 @@
   <link rel=stylesheet type=text/css tal:attributes="href style">
   <title tal:content="title">
   </title>
+<script type="text/javascript">
+
+var xmlhttp=null;
+
+function showHint(str)
+{
+if (str.length==0)
+  { 
+  document.getElementById("txtHint").innerHTML="";
+  return;
+  }
+if (window.XMLHttpRequest)
+  {
+  // code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {
+  // code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+var url="HaloRadio.cgi?action=searchHints&q=" + str;
+url=url+"&sid="+Math.random();
+xmlhttp.open("GET",url,false);
+xmlhttp.send(null);
+document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+}
+</script> 
+
  </head>
   <body onLoad="document.search.search.focus()">
   <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
@@ -20,22 +49,17 @@
   <!-- Begin Content -->
   <BR>
     <FORM name=search tal:attributes="action formaction" METHOD="GET">
-    Query: <INPUT TYPE=TEXT NAME=search>
-	<A HREF=help/SearchQuery.html>?</A>
-	<FONT SIZE=-2><A tal:attributes="href advsearch">Advanced Search</A></FONT>
-    <BR>
-    Result Order: <SELECT NAME=sort SIZE=1>
-    <OPTION>popularity</OPTION>
-    <OPTION>filename</OPTION>
-    </SELECT>
-	<A HREF="help/SearchResultOrder.html">?</A>
-    <BR>
+    Query: <INPUT TYPE=TEXT NAME=search onkeyup="showHint(this.value)" />
     <INPUT TYPE=SUBMIT NAME=action VALUE=searchResults>
     <INPUT TYPE=SUBMIT NAME=action VALUE=imFeelingPopular><A HREF="help/FeelingPopular.html">?</A>
+    <BR>
+    <FONT SIZE=-2><A tal:attributes="href advsearch">Advanced Search</A></FONT>
 <BR>
 
     </FORM>
   <BR>
+  <DIV ID=txtHint>
+  </DIV>
   <!-- End Content -->
   <BR>
   <TABLE Class=foot>
