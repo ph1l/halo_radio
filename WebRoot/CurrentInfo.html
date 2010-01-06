@@ -3,41 +3,9 @@
   <link rel=stylesheet type=text/css tal:attributes="href style">
   <title tal:content="title">
   </title>
- <script type="text/javascript">
-
-var t;
-var timer_is_on=0;
-
-function loadXMLDoc(url)
-{
-if (window.XMLHttpRequest)
-{// code for IE7+, Firefox, Chrome, Opera, Safari
-xmlhttp=new XMLHttpRequest();
-}
-else
-{// code for IE6, IE5
-xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-}
-xmlhttp.open("GET",url,false);
-xmlhttp.send(null);
-document.getElementById('content').innerHTML=xmlhttp.responseText;
-}
-function infiniteLoop()
-{
-loadXMLDoc('HaloRadio.cgi?action=currentInfoContent');
-t=setTimeout("infiniteLoop()",5*1000);
-}
-function doLoop()
-{
-if (!timer_is_on)
-  {
-  timer_is_on=1;
-  infiniteLoop();
-  }
-}
-</script>
+ <script type="text/javascript" SRC="CurrentInfo.js" />
  </head>
-  <body onload='javascript:setTimeout("doLoop()",1000);'>
+  <body onload='javascript:setTimeout("doLoop()",100);'>
   <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
   <tr><td class=shadow>
   <!-- Header -->
@@ -54,7 +22,7 @@ if (!timer_is_on)
     <DIV ID='content'>
 
 <H1>AJAX Enabled Page!</H1>
-<P>You must have javascript enabled to view th content!</P>
+<P>You must have javascript enabled to view this content!</P>
 
     </DIV>
   <!-- End Content -->
