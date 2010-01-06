@@ -3,37 +3,9 @@
   <link rel=stylesheet type=text/css tal:attributes="href style">
   <title tal:content="title">
   </title>
-<script type="text/javascript">
-
-var xmlhttp=null;
-
-function showHint(str)
-{
-if (str.length==0)
-  { 
-  document.getElementById("txtHint").innerHTML="";
-  return;
-  }
-if (window.XMLHttpRequest)
-  {
-  // code for IE7+, Firefox, Chrome, Opera, Safari
-  xmlhttp=new XMLHttpRequest();
-  }
-else
-  {
-  // code for IE6, IE5
-  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-var url="HaloRadio.cgi?action=searchHints&q=" + str;
-url=url+"&sid="+Math.random();
-xmlhttp.open("GET",url,false);
-xmlhttp.send(null);
-document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-}
-</script> 
-
+  <script type="text/javascript" src="Search.js" />
  </head>
-  <body onLoad="document.search.search.focus()">
+  <body onLoad="document.search.search.focus();showHint()">
   <table cellpadding=0 cellspacing=0 border=0 class=shadow width=100%>
   <tr><td class=shadow>
   <!-- Header -->
@@ -49,7 +21,7 @@ document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
   <!-- Begin Content -->
   <BR>
     <FORM name=search tal:attributes="action formaction" METHOD="GET">
-    Query: <INPUT TYPE=TEXT NAME=search onkeyup="showHint(this.value)" />
+    Query: <INPUT ID=searchQueryBox TYPE=TEXT NAME=search autocomplete=off />
     <INPUT TYPE=SUBMIT NAME=action VALUE=searchResults>
     <INPUT TYPE=SUBMIT NAME=action VALUE=imFeelingPopular><A HREF="help/FeelingPopular.html">?</A>
     <BR>
