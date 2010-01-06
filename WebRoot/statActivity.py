@@ -23,7 +23,7 @@ class plugin(TopWeb.TopWeb):
 		import datetime, time
 		from operator import itemgetter
 		users=[]
-		ACTIVITY_TIMEOUT = 2592000
+		ACTIVITY_TIMEOUT = 31536000
 		ulm = UserListMaker.UserListMaker()
 		ulm.GetAll()
 		for user_id in ulm.list:
@@ -31,13 +31,14 @@ class plugin(TopWeb.TopWeb):
 			if u.name == "Anonymous":
 				continue
 			last_seen = u.LastSeen()
-			now = time.mktime(datetime.datetime.now().timetuple())
-			if time.mktime(last_seen.timetuple()) > now -ACTIVITY_TIMEOUT:
-				entity={}
-				entity['username']=u.name
-				entity['userlink']="%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], u.id )
-				entity['seen_on']=u.LastSeen()
-				users.append(entity)
+			if last_seen!=None:
+				now = time.mktime(datetime.datetime.now().timetuple())
+				if time.mktime(last_seen.timetuple()) > now -ACTIVITY_TIMEOUT:
+					entity={}
+					entity['username']=u.name
+					entity['userlink']="%s?action=userInfo&id=%s" % ( self.config['general.cgi_url'], u.id )
+					entity['seen_on']=u.LastSeen()
+					users.append(entity)
 		sorted_users = sorted(users, key=itemgetter('seen_on'))
 		sorted_users.reverse()
 		context.addGlobal ("users", sorted_users)
