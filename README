@@ -79,6 +79,10 @@ All of the mentioned software is available in debian packages except lame
 and djb's daemontools. those two packages are available on my debian
 repository ( see http://kremlor.net/~phil for more info ).
 
+Debian -----
+
+build-essential fakeroot devscripts debhelper
+
 Manual Installation
 ------ ------------
 To install as a user without root access see: Manual Installation (non-root)

@@ -17,9 +17,6 @@ set -e
 
 case "$1" in
     install|upgrade)
-    	# Add User
-    	adduser --system --home /usr/share/haloradio --no-create-home --group --disabled-password --shell /bin/bash radio || /bin/true
-    	adduser --system --no-create-home --group --disabled-password radiolog || /bin/true
 
     ;;
 
