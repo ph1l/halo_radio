@@ -1,3 +1,8 @@
+- Package Problems on Debian Squeeze
+  - /etc/haloradio/HaloRadio.ini permissions
+  - radio user homedir (/var/run/haloradio?)
+  - full path to config file /etc/haloradio/...
+  - python-shout unpackaged...
 - FUNCTIONALITY (needed)
 - automaticly discover value max of songs and track in DB for normalization.
   - (done, but disabled)
