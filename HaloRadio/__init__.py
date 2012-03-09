@@ -40,7 +40,7 @@ def LoadConfig( file, config={}):
 			config[name + "." + string.lower(opt)] = string.strip(cp.get(sec, opt))
 	return config
 
-conf=LoadConfig("HaloRadio.ini", _ConfigDefault)
+conf=LoadConfig("/etc/haloradio/HaloRadio.ini", _ConfigDefault)
 
 try:
 	db=MySQLdb.connect( host=conf['db.host'],
