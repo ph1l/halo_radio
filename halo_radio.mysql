@@ -251,7 +251,7 @@ CREATE TABLE `styles` (
 --
 
 INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','',1,1,1);
-##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1,1,1);
+##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1,1,1,NOW());
 
 --
 -- Dumping data for table `styles`
