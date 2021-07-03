@@ -2,7 +2,7 @@
 # 
 # radiod - This is the stream source.
 #
-#    Copyright (C) 2004-2010 Philip J Freeman
+#    Copyright (C) 2004-2021 Philip J Freeman
 #
 #    This file is part of halo_radio
 #
@@ -255,11 +255,12 @@ else:
 
 			if curr == 0:
 				currenttime = time.time()
-				percent = (int(int( ((currenttime-starttime)/song.length)*100)/2)*2 )
-				if percent != oldpercent:
-					#logger("%d:shout song %d percent complete"%(cpid,percent))
-					cfg.SetConfigItem("current_percent","%d"%percent)
-					oldpercent = percent
+				if song.length != 0:
+					percent = (int(int( ((currenttime-starttime)/song.length)*100)/2)*2 )
+					if percent != oldpercent:
+						#logger("%d:shout song %d percent complete"%(cpid,percent))
+						cfg.SetConfigItem("current_percent","%d"%percent)
+						oldpercent = percent
 			else:
 				curr = int(cfg.GetConfigItem("current_relay"))
 				if curr == 0:
