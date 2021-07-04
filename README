@@ -1,7 +1,12 @@
-                             Halo_Radio 
+                        halo_radio
 
 
-             Copyright (c) 2001-2005, Kremlor Industries
+             Copyright (C) 2001-2021, Philip J Freeman
+
+			PO BOX 2276
+			BERKELEY, CA 94702
+
+			elektron@halo.nu
 
 ------------------------------------------------------------------------
 
@@ -20,7 +25,7 @@
 
 ------------------------------------------------------------------------
 
-[This software is maintained by phil@kremlor.net]
+https://halo.nu/~elektron/halo_radio/
 
 What is halo_radio ?
 --------------------
@@ -37,13 +42,6 @@ allow the system to automaticly maintain a a base playlist of popular songs.
 A backed library to the database makes python based clients trivial to
 code. The biggest problem now is documentation.
 
-
-Troubleshooting / Questions / Rants :
---------------------------------------
-
-    http://kremlor.net/projects/halo_radio/
-
-    http://kremlor.net/mailman/listinfo/halo_radio
 
 
 Software Prerequisites
@@ -155,7 +153,7 @@ To install as a user without root access see: Manual Installation (non-root)
 9) Configure apache for web interface:
 
     Configure your web servers document root to point to your
-    Halo_Radio installation directory. An apache virtual entry
+    halo_radio installation directory. An apache virtual entry
     might look something like this:
 
     <VirtualHost radio.mydomain.com:80>
@@ -198,7 +196,7 @@ To connect with your mp3 client:
 
     $ mplayer http://radio.mydomain.com:8000/radio
    
-If the installation of Halo_Radio failed, check whether all the required
+If the installation of halo_radio failed, check whether all the required
 software is correctly installed. If it still failed, please send bug
 report to the halo_radio mailing list mentioned near the beginning of
 this document.
