@@ -17,9 +17,20 @@ set -e
 # the debian-policy package
 #
 
+setup_hr_users() {
+	if ! getent passwd radiolog >/dev/null; then
+		adduser --quiet --system --home /var/run/haloradio --no-create-home --group --disabled-password --shell /usr/sbin/nologin radiolog
+	fi
+	if ! getent passwd radio >/dev/null; then
+		adduser --quiet --system --home /var/run/haloradio --no-create-home --group --disabled-password --shell /usr/sbin/nologin radio
+	fi
+}
+
 case "$1" in
     configure)
 
+
+    setup_hr_users
     chown -R radio:radio /var/log/haloradio
 
 

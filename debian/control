@@ -28,7 +28,7 @@ Description: haloradio Utilities
 
 Package: haloradio-backend
 Architecture: all
-Depends: haloradio-util (= ${Source-Version}), lame, daemontools, wget, shout-python, mysql-server, icecast2
+Depends: haloradio-util (= ${Source-Version}), lame, daemontools, wget, python-shout, mysql-server, icecast2
 Description: haloradio Backend
 
 Package: haloradio-backend-extra

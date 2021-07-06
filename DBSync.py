@@ -26,6 +26,7 @@ import os,sys,time,getopt, re
 import HaloRadio
 import HaloRadio.Song as Song
 import HaloRadio.SongListMaker as SongListMaker
+import HaloRadio.PlaylistListMaker as PlaylistListMaker
 import HaloRadio.Playlist as Playlist
 import HaloRadio.Config as Config
 #import HaloRadio.MP3Info as MP3Info
@@ -315,8 +316,10 @@ def log_message(ifval,msg):
 		print "#",msg
 
 def make_master_playlist():
+	playlists = PlaylistListMaker.PlaylistListMaker( )
+	playlists.GetWhere( "name='Master'")
 	try:
-		playlist = Playlist.Playlist( 1 )
+		playlist = Playlist.Playlist( playlists.Pop() )
 	except:
 		playlist = Playlist.Playlist( 0, "Master" )
 
@@ -329,8 +332,10 @@ def make_master_playlist():
 		playlist.AddSong( songid )
 
 def make_request_playlist():
+	playlists = PlaylistListMaker.PlaylistListMaker( )
+	playlists.GetWhere( "name='Requested'")
 	try:
-		playlist = Playlist.Playlist( 2 )
+		playlist = Playlist.Playlist( playlists.Pop() )
 	except:
 		playlist = Playlist.Playlist( 0, "Requested" )
 
@@ -342,8 +347,10 @@ def make_request_playlist():
 
 
 def make_smart_auto_playlist():
+	playlists = PlaylistListMaker.PlaylistListMaker( )
+	playlists.GetWhere( "name='AutoAI'")
 	try:
-		playlist = Playlist.Playlist( 3 )
+		playlist = Playlist.Playlist( playlists.Pop() )
 	except:
 		playlist = Playlist.Playlist( 0, "AutoAI" )
 
@@ -354,8 +361,10 @@ def make_smart_auto_playlist():
 		playlist.AddSong( songid )
 
 def make_announce_playlist():
+	playlists = PlaylistListMaker.PlaylistListMaker( )
+	playlists.GetWhere( "name='Announce'")
 	try:
-		playlist = Playlist.Playlist( 4 )
+		playlist = Playlist.Playlist( playlists.Pop() )
 	except:
 		playlist = Playlist.Playlist( 0, "Announce" )
 	playlist.Clear()

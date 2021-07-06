@@ -2,6 +2,6 @@
 #
 #
 
-cd ~radio
+cd /usr/share/haloradio
 exec ./radiod.py
 

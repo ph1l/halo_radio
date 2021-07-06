@@ -15,7 +15,7 @@ CREATE TABLE `config` (
   `data` text,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`(255))
-) TYPE=MyISAM;
+);
 
 --
 -- Dumping data for table `config`
@@ -44,7 +44,7 @@ CREATE TABLE `kill_history` (
   KEY `songid` (`songid`),
   KEY `killby` (`killby`),
   KEY `date` (`date`)
-) TYPE=MyISAM;
+);
 
 
 --
@@ -56,7 +56,7 @@ CREATE TABLE `kill_queue` (
   `songid` int(10) unsigned NOT NULL default '0',
   `requestby` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+);
 
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `play_history` (
   KEY `songid` (`songid`),
   KEY `requestby` (`requestby`),
   KEY `date` (`date`)
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `playlistitems`
@@ -85,7 +85,7 @@ CREATE TABLE `playlistitems` (
   PRIMARY KEY  (`id`),
   KEY `playlistid` (`playlistid`),
   KEY `songid` (`songid`)
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `playlists`
@@ -97,7 +97,7 @@ CREATE TABLE `playlists` (
   `description` text,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`(255))
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `request_queue`
@@ -109,7 +109,7 @@ CREATE TABLE `request_queue` (
   `requestby` int(10) unsigned NOT NULL default '0',
   `hold` int(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `rights`
@@ -121,7 +121,7 @@ CREATE TABLE `rights` (
   `name` tinytext,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `tag` (`tag`)
-) TYPE=MyISAM;
+);
 
 --
 -- Dumping data for table `rights`
@@ -146,7 +146,7 @@ CREATE TABLE `session` (
   PRIMARY KEY  (`id`),
   KEY `active_time` (`active_time`),
   KEY `create_time` (`create_time`)
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `songs`
@@ -179,7 +179,7 @@ CREATE TABLE songs (
   KEY requests (requests),
   KEY kills (kills),
   KEY added_date (added_date)
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `user_song_stats`
@@ -195,7 +195,7 @@ CREATE TABLE `user_song_stats` (
   UNIQUE KEY `songiduserid` (`songid`,`userid`),
   KEY `requests` (`requests`),
   KEY `kills` (`kills`)
-) TYPE=MyISAM;
+);
 
 --
 -- Table structure for table `users`
@@ -216,7 +216,7 @@ CREATE TABLE `users` (
   `enable` tinyint(1) unsigned NOT NULL default 1,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
-) TYPE=MyISAM;
+);
 
 CREATE TABLE `wall` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -226,7 +226,7 @@ CREATE TABLE `wall` (
   PRIMARY KEY  (`id`),
   KEY `userid` (`userid`),
   KEY `date` (`date`)
-) TYPE=MyISAM;
+);
 
 CREATE TABLE relays (
   id int(10) unsigned NOT NULL auto_increment,
@@ -238,20 +238,20 @@ CREATE TABLE relays (
   requests smallint(5) unsigned default '0',
   kills smallint(5) unsigned default '0',
   PRIMARY KEY  (id)
-) TYPE=MyISAM;
+);
 
 CREATE TABLE `styles` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `style` tinytext NOT NULL,
   PRIMARY KEY (`id`)
-) TYPE=MyISAM;
+);
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` VALUES (1,'Anonymous','','G','',0,0,'2005-01-01 00:13:13','',1,1,1);
-##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1,1,1);
+##INSERT INTO `users` VALUES (2,'ADMIN',password('ADMINPASSWORD'),'a','',0,0,NOW(),'',1,1,1,NOW());
 
 --
 -- Dumping data for table `styles`

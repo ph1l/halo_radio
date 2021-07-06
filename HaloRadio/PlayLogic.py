@@ -105,6 +105,7 @@ class PlayLogic:
 
 		import HaloRadio.RequestListMaker as RequestListMaker
 		import HaloRadio.PlayHistListMaker as PlayHistListMaker
+		import HaloRadio.PlaylistListMaker as PlaylistListMaker
 		import HaloRadio.Playlist as Playlist
 		import HaloRadio.Config as Config
 		import time
@@ -118,7 +119,9 @@ class PlayLogic:
 		announce_delay = int(HaloRadio.conf['general.announce_delay'])
 		timestamp = time.time()
 		if timestamp > last_announce + ( announce_delay * 60 ) :
-			pl = Playlist.Playlist(4)
+			playlists = PlaylistListMaker.PlaylistListMaker()
+			playlists.GetWhere( "name='Announce'")
+			pl = Playlist.Playlist(playlists.Pop())
 
 			try:
 				song = pl.GetRandomSong()
