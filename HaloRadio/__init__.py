@@ -48,6 +48,7 @@ try:
 			user=conf['db.user'],
 			passwd=conf['db.pass']
 			)
+	db.autocommit(True)
 except _mysql_exceptions.OperationalError, (errno, errmsg):
 	print "Content-type: text/html\n\nMySQL DB ERROR: %d, %s" % (errno, errmsg)
 	import sys
